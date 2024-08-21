@@ -1,5 +1,9 @@
 from flask.cli import AppGroup
 from .users import seed_users, undo_users
+from .listings import seed_listings, undo_listings
+from .categories import seed_categories, undo_categories
+from .listing_categories import seed_listing_categories, undo_listing_categories
+from .reviews import seed_reviews, undo_reviews
 
 from app.models.db import db, environment, SCHEMA
 
@@ -7,22 +11,29 @@ from app.models.db import db, environment, SCHEMA
 # So we can type `flask seed --help`
 seed_commands = AppGroup('seed')
 
-
 # Creates the `flask seed all` command
 @seed_commands.command('all')
 def seed():
+    # Only undo if we are in production, or adjust as needed for other environments
     if environment == 'production':
-        # Before seeding in production, you want to run the seed undo 
-        # command, which will  truncate all tables prefixed with 
-        # the schema name (see comment in users.py undo_users function).
-        # Make sure to add all your other model's undo functions below
+        undo_reviews()
+        undo_listing_categories()
+        undo_listings()
+        undo_categories()
         undo_users()
+    # Seed data after undoing old data
     seed_users()
+    seed_categories()
+    seed_listings()
+    seed_listing_categories()
+    seed_reviews()
     # Add other seed functions here
-
 
 # Creates the `flask seed undo` command
 @seed_commands.command('undo')
 def undo():
+    undo_reviews()
+    undo_listing_categories()
+    undo_listings()
+    undo_categories()
     undo_users()
-    # Add other undo functions here
