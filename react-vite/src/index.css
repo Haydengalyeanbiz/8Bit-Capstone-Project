@@ -1,1 +1,74 @@
 /* TODO: Add sitewide styles */
+@import url('https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&family=Wix+Madefor+Display:wght@400..800&display=swap');
+
+:root {
+	/* ! COLORS */
+	--primary-color: #000000;
+	--secondary-clr: #1c347b;
+	--third-clr: #06508c;
+	--heavy-accent-clr: #207df0;
+	--light-accent-clr: #7339ca;
+
+	/* ! FONT FAMILIES */
+	--ff-headers: 'Goldman', sans-serif;
+	--ff-primary: 'Wix Madefor Display', sans-serif;
+
+	/* ! FONT SIZE */
+	--fs-primary: 16px;
+	--fs-small: 18px;
+	--fs-medium: 24px;
+	--fs-large: 30px;
+	--fs-x-large: 36px;
+	--fs-huge: 48px;
+	--fs-gigantic: 68px;
+
+	/* ! FONT WEIGHT */
+	--fw-normal: 400;
+	--fw-medium: 600;
+	--fw-bold: 700;
+	--fw-bolder: 800;
+	--fw-boldest: 900;
+}
+
+body,
+html {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-image: linear-gradient(
+		to right,
+		var(--primary-color),
+		var(--secondary-clr)
+	);
+	color: white;
+}
+
+h1 {
+	font-family: var(--ff-headers);
+	font-weight: var(--fw-boldest);
+	font-size: var(--fs-gigantic);
+}
+
+h2 {
+	font-family: var(--ff-headers);
+	font-size: var(--fw-bolder);
+	font-weight: var(--fs-huge);
+}
+
+h3 {
+	font-family: var(--ff-headers);
+}
+
+p,
+a {
+	font-family: var(--ff-primary);
+	font-size: var(--fs-primary);
+	font-weight: var(--fw-medium);
+	text-decoration: none;
+}
+
+a:visited {
+	color: white;
+}
