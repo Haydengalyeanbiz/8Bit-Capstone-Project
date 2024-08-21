@@ -6,7 +6,7 @@ import {
 } from 'redux';
 import thunk from 'redux-thunk';
 import sessionReducer from './session';
-import listingsReducer from './lisitng';
+import listingsReducer from './listing';
 
 const rootReducer = combineReducers({
 	session: sessionReducer,

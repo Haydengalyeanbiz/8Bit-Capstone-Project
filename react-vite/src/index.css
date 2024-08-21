@@ -3,7 +3,7 @@
 
 :root {
 	/* ! COLORS */
-	--primary-color: #000000;
+	--primary-clr: #000000;
 	--secondary-clr: #1c347b;
 	--third-clr: #06508c;
 	--heavy-accent-clr: #207df0;
@@ -37,10 +37,11 @@ html {
 }
 
 body {
-	background-image: linear-gradient(
-		to right,
-		var(--primary-color),
-		var(--secondary-clr)
+	background: linear-gradient(
+		0.25turn,
+		var(--primary-clr),
+		var(--secondary-clr),
+		var(--primary-clr)
 	);
 	color: white;
 }

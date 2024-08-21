@@ -1,0 +1,8 @@
+.listing-holder {
+	display: flex;
+}
+
+.listing-form {
+	display: flex;
+	flex-direction: column;
+}
