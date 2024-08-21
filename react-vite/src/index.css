@@ -73,3 +73,13 @@ a {
 a:visited {
 	color: white;
 }
+
+input,
+button {
+	font-family: var(--ff-primary);
+	cursor: pointer;
+}
+
+label {
+	font-family: var(--ff-primary);
+}
