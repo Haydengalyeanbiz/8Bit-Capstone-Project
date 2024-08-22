@@ -1,11 +1,12 @@
 import { useSelector } from 'react-redux';
 import { FaStar } from 'react-icons/fa';
+import { useModal } from '../../context/Modal'; // Import useModal hook
+import ReviewForm from '../ReviewFormModal/ReviewFormModal'; // Import the ReviewForm component
 import './ReviewWhole.css';
 
-export const ReviewWhole = ({ reviews }) => {
-	if (!reviews || reviews.length === 0) {
-		return <p>No reviews available.</p>;
-	}
+export const ReviewWhole = ({ reviews, listingId, isOwner }) => {
+	const sessionUser = useSelector((state) => state.session.user);
+	const { setModalContent } = useModal(); // Destructure setModalContent from useModal
 
 	const renderStars = (rating) => {
 		return (
@@ -19,6 +20,10 @@ export const ReviewWhole = ({ reviews }) => {
 				))}
 			</div>
 		);
+	};
+
+	const handleOpenReviewModal = () => {
+		setModalContent(<ReviewForm listingId={listingId} />);
 	};
 
 	return (
@@ -37,6 +42,11 @@ export const ReviewWhole = ({ reviews }) => {
 			) : (
 				<p>No reviews yet.</p>
 			)}
+			{/* Show the 'Leave a Review' button if the user is not the owner */}
+			{sessionUser && !isOwner && (
+				<button onClick={handleOpenReviewModal}>Leave a Review</button>
+			)}
 		</div>
 	);
 };
+export default ReviewWhole;
