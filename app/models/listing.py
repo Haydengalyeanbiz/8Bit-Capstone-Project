@@ -2,7 +2,7 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from .listing_category import ListingCategory  # Import ListingCategory
 
 class Listing(db.Model):
-    __tablename__ = add_prefix_for_prod('listings')
+    __tablename__ = 'listings'
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
 

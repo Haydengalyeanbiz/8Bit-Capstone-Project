@@ -18,13 +18,13 @@ def seed():
     if environment == 'production':
         undo_reviews()
         undo_listing_categories()
-        undo_listings()
         undo_categories()
+        undo_listings()
         undo_users()
     # Seed data after undoing old data
     seed_users()
-    seed_categories()
     seed_listings()
+    seed_categories()
     seed_listing_categories()
     seed_reviews()
     # Add other seed functions here
