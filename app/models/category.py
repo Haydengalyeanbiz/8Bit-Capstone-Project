@@ -1,5 +1,5 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
-from .listing_category import ListingCategory  # Import ListingCategory
+from .listing_category import listing_categories  # Import ListingCategory
 
 class Category(db.Model):
     __tablename__ = add_prefix_for_prod('categories')
@@ -9,4 +9,4 @@ class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False, unique=True)
 
-    listings = db.relationship('Listing', secondary=ListingCategory.__tablename__, back_populates='categories')
+    listings = db.relationship('Listing', secondary=listing_categories, back_populates='categories')

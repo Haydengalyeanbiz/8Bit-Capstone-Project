@@ -1,11 +1,11 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 
-class ListingCategory(db.Model):
-    __tablename__ = 'listing_categories'
+listing_categories = db.Table(
+    'listing_categories',
+    db.Model.metadata,
+    db.Column('listing_id', db.Integer, db.ForeignKey(add_prefix_for_prod('listings.id')), primary_key=True),
+    db.Column('category_id', db.Integer, db.ForeignKey(add_prefix_for_prod('categories.id')), primary_key=True)
+)
 
-    id = db.Column(db.Integer, primary_key=True)
-    listing_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('listings.id')))
-    category_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('categories.id')))
-
-    if environment == "production":
-        __table_args__ = {'schema': SCHEMA}
+if environment == "production":
+    listing_categories.schema = SCHEMA

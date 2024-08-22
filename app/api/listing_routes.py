@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from app.models import Listing, db, Category, ListingCategory
+from app.models import Listing, db, Category, listing_categories
 from flask_login import current_user, login_required
 from app.forms.new_listing import ListingForm
 from app.api.aws_helpers import upload_file_to_s3, get_unique_filename, allowed_file
@@ -13,7 +13,7 @@ def get_all_listings():
     listing_list = [listing.to_dict() for listing in listings]
     return listing_list
 
-# ?---------------------------------CREATE NEW LISTING---------------------------------
+# # ?---------------------------------CREATE NEW LISTING---------------------------------
 @listing_routes.route('/new', methods=['POST'])
 @login_required
 def create_listing():
@@ -48,10 +48,11 @@ def create_listing():
 
         selected_categories = form.data['categories']
         for category_id in selected_categories:
-            category = Category.query.get(category_id)
-            if category:
-                listing_category = ListingCategory(listing_id=new_listing.id, category_id=category.id)
-                db.session.add(listing_category)
+            stmt = listing_categories.insert().values(
+                listing_id=new_listing.id,
+                category_id=category_id
+            )
+            db.session.execute(stmt)
 
         db.session.commit()
 

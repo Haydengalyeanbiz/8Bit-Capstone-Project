@@ -1,5 +1,5 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
-from .listing_category import ListingCategory  # Import ListingCategory
+from .listing_category import listing_categories  # Import ListingCategory
 
 class Listing(db.Model):
     __tablename__ = 'listings'
@@ -19,7 +19,7 @@ class Listing(db.Model):
     user = db.relationship('User', back_populates='listings')
     reviews = db.relationship('Review', back_populates='listing', cascade='all, delete-orphan')
     cart_items = db.relationship('CartItem', back_populates='listing', cascade="all, delete-orphan")
-    categories = db.relationship('Category', secondary=ListingCategory.__tablename__, back_populates='listings')
+    categories = db.relationship('Category', secondary=listing_categories, back_populates='listings')
 
     def to_dict(self):
         return {

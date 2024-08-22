@@ -1,4 +1,4 @@
-from app.models import db, ListingCategory, environment, SCHEMA
+from app.models import db, listing_categories, environment, SCHEMA
 from sqlalchemy.sql import text
 
 def seed_listing_categories():
@@ -29,11 +29,11 @@ def seed_listing_categories():
 
     # Loop through the data and create ListingCategory instances
     for lc_data in listing_categories_data:
-        listing_category = ListingCategory(
+        stmt = listing_categories.insert().values(
             listing_id=lc_data['listing_id'],
             category_id=lc_data['category_id']
         )
-        db.session.add(listing_category)
+        db.session.execute(stmt)
 
     # Commit the transaction to save the data in the database
     db.session.commit()
