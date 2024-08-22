@@ -4,7 +4,7 @@
 	align-items: center;
 	height: 90dvh;
 	position: relative;
-	overflow: hidden;
+	/* overflow-x: hidden; */
 }
 
 .login-forms-container {
@@ -29,11 +29,11 @@
 .left {
 	transform: rotate(-45deg);
 	left: -300px;
-	top: 50px;
+	top: -100px;
 }
 
 .right {
-	transform: rotate(25deg);
-	right: -300px;
-	bottom: -300px;
+	transform: rotate(-30deg);
+	right: -100px;
+	bottom: -100px;
 }

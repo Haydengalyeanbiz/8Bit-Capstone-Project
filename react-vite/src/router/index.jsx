@@ -1,10 +1,9 @@
 import { createBrowserRouter } from 'react-router-dom';
-// import LoginFormPage from '../components/LoginFormPage';
-// import SignupFormPage from '../components/SignupFormPage';
-import { Listings } from '../components/Listings/Listings';
-// import { ListingForm } from '../components/ListingForm/ListingForm';
+import { Home } from '../components/Home/Home';
 import Layout from './Layout';
 import { HomeNU } from '../components/HomeNU.jsx/HomeNU';
+import { ListingPage } from '../components/ListingPage/ListingPage';
+import { ListingForm } from '../components/ListingForm/ListingForm';
 
 export const router = createBrowserRouter([
 	{
@@ -12,7 +11,15 @@ export const router = createBrowserRouter([
 		children: [
 			{
 				path: '/',
-				element: <Listings />,
+				element: <Home />,
+			},
+			{
+				path: '/listings/:id',
+				element: <ListingPage />, // Redirect all other paths to login if not authenticated
+			},
+			{
+				path: '/listings/new',
+				element: <ListingForm />, // Redirect all other paths to login if not authenticated
 			},
 			{
 				path: '*',

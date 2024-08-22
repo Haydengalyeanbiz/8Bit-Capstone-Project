@@ -1,6 +1,6 @@
 .listing-container {
-	display: flex;
-	flex-wrap: wrap;
+	display: grid;
+	grid-template-columns: repeat(3, minmax(250px, 1fr));
 	gap: 2rem;
 	width: 100%;
 }
@@ -13,9 +13,47 @@
 	border-bottom-left-radius: 12px;
 	padding: 1rem 0.3rem;
 	background-color: var(--primary-clr);
+	min-width: 300px;
+	cursor: pointer;
 }
 
 .listing-image {
-	height: 200px;
-	width: fit-content;
+	height: auto;
+	width: 100%;
+}
+
+.listing-title {
+	margin: 0;
+	font-size: 1.5rem;
+	color: var(--accent-clr);
+}
+
+.listing-heart-btn {
+	background: none;
+	border: none;
+	cursor: pointer;
+	color: var(--accent-clr);
+	font-size: 1.2rem;
+	margin-left: 0.5rem;
+}
+
+.listing-description {
+	margin: 0.5rem 0;
+	color: var(--secondary-clr);
+}
+
+.listing-price {
+	font-size: 1.2rem;
+	color: var(--accent-clr);
+	margin: 0.5rem 0;
+}
+
+.add-to-cart-listing {
+	background-color: var(--accent-clr);
+	border: none;
+	padding: 0.5rem;
+	color: white;
+	cursor: pointer;
+	border-radius: 5px;
+	font-size: 1rem;
 }

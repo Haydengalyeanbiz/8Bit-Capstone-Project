@@ -1,5 +1,6 @@
 // * ACTION TYPES
 const GET_ALL_LISTINGS = 'listings/GET_ALL_LISTINGS';
+const GET_A_LISTING = 'listings/GET_A_LISTING';
 const CREATE_NEW_LISTING = 'listings/CREATE_NEW_LISTING';
 
 // *ACTION CREATORS
@@ -7,6 +8,13 @@ export const getAllListings = (lisitngs) => {
 	return {
 		type: GET_ALL_LISTINGS,
 		payload: lisitngs,
+	};
+};
+
+export const getAListing = (listing) => {
+	return {
+		type: GET_A_LISTING,
+		payload: listing,
 	};
 };
 
@@ -18,7 +26,7 @@ export const createNewListing = (listing) => {
 };
 
 // *THUNKS
-
+// ?---------------GET ALL LISTINGS
 export const fetchAllListings = () => async (dispatch) => {
 	const response = await fetch(`/api/listings`);
 	if (response.ok) {
@@ -27,7 +35,17 @@ export const fetchAllListings = () => async (dispatch) => {
 		return listings;
 	}
 };
+// ?---------------GET A LISTING
+export const fetchGetListing = (id) => async (dispatch) => {
+	const response = await fetch(`/api/listings/${id}`);
+	if (response.ok) {
+		const listing = await response.json();
+		dispatch(getAListing(listing));
+		return listing;
+	}
+};
 
+// ?--------------CREATE A LISTING
 export const fetchAddListing = (formData) => async (dispatch) => {
 	try {
 		const response = await fetch('/api/listings/new', {
@@ -51,12 +69,15 @@ export const fetchAddListing = (formData) => async (dispatch) => {
 
 const initialState = {
 	AllListings: [],
+	selectedListing: {},
 };
 
 function listingsReducer(state = initialState, action) {
 	switch (action.type) {
 		case GET_ALL_LISTINGS:
 			return { ...state, AllListings: action.payload };
+		case GET_A_LISTING:
+			return { ...state, selectedListing: action.payload };
 		case CREATE_NEW_LISTING:
 			return { ...state, AllListings: [...state.AllListings, action.payload] };
 		default:

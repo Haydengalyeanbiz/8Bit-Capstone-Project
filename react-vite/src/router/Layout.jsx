@@ -10,6 +10,7 @@ export default function Layout() {
 	const navigate = useNavigate();
 	const [isLoaded, setIsLoaded] = useState(false);
 	const sessionUser = useSelector((state) => state.session.user);
+	const [isScrolled, setIsScrolled] = useState(false);
 
 	useEffect(() => {
 		dispatch(thunkAuthenticate()).then(() => setIsLoaded(true));
@@ -21,11 +22,26 @@ export default function Layout() {
 		}
 	}, [isLoaded, sessionUser, navigate]);
 
+	useEffect(() => {
+		const handleScroll = () => {
+			if (window.scrollY > 50) {
+				setIsScrolled(true);
+			} else {
+				setIsScrolled(false);
+			}
+		};
+
+		window.addEventListener('scroll', handleScroll);
+		return () => {
+			window.removeEventListener('scroll', handleScroll);
+		};
+	}, []);
+
 	return (
 		<>
 			<ModalProvider>
-				<Navigation />
-				{isLoaded && <Outlet />}
+				<Navigation isScrolled={isScrolled} />
+				<div className='main-content'>{isLoaded && <Outlet />}</div>
 				<Modal />
 			</ModalProvider>
 		</>

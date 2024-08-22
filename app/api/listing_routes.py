@@ -13,7 +13,16 @@ def get_all_listings():
     listing_list = [listing.to_dict() for listing in listings]
     return listing_list
 
-# # ?---------------------------------CREATE NEW LISTING---------------------------------
+# ?---------------------------------GET A LISTING---------------------------------
+@listing_routes.route('/<int:id>')
+def get_listing(id):
+    listing = Listing.query.get(id)
+    if listing:
+        return listing.to_dict(), 200
+    else:
+        return {'error': 'Listing not found'}, 404
+    
+# ?---------------------------------CREATE NEW LISTING---------------------------------
 @listing_routes.route('/new', methods=['POST'])
 @login_required
 def create_listing():
