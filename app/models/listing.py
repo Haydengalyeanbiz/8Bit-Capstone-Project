@@ -2,10 +2,7 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from .listing_category import ListingCategory  # Import ListingCategory
 
 class Listing(db.Model):
-    __tablename__ = 'listings'
-
-    if environment == "production":
-        __table_args__ = {'schema': SCHEMA}
+    __tablename__ = add_prefix_for_prod('listings')
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
