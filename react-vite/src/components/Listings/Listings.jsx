@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchAllListings } from '../../redux/lisitng';
+import { fetchAllListings } from '../../redux/listing';
 import './Listings.css';
 import { FaRegHeart } from 'react-icons/fa6';
 

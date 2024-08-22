@@ -1,0 +1,39 @@
+.login-main-holder {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: 90dvh;
+	position: relative;
+	overflow: hidden;
+}
+
+.login-forms-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 1rem;
+	z-index: 10;
+	border: solid 3px var(--third-clr);
+	border-radius: 12px;
+	padding: 1.5rem;
+	background-color: var(--primary-clr);
+}
+
+/* !LOGIN IMAGE STYLING */
+.login-image {
+	position: absolute;
+	opacity: 0.6;
+	width: 700px;
+}
+
+.left {
+	transform: rotate(-45deg);
+	left: -300px;
+	top: 50px;
+}
+
+.right {
+	transform: rotate(25deg);
+	right: -300px;
+	bottom: -300px;
+}

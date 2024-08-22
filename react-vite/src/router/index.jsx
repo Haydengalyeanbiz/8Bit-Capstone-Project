@@ -1,9 +1,10 @@
 import { createBrowserRouter } from 'react-router-dom';
-import LoginFormPage from '../components/LoginFormPage';
-import SignupFormPage from '../components/SignupFormPage';
-// import { Listing } from '../components/Listings/Listings';
-import { ListingForm } from '../components/ListingForm/ListingForm';
+// import LoginFormPage from '../components/LoginFormPage';
+// import SignupFormPage from '../components/SignupFormPage';
+import { Listings } from '../components/Listings/Listings';
+// import { ListingForm } from '../components/ListingForm/ListingForm';
 import Layout from './Layout';
+import { HomeNU } from '../components/HomeNU.jsx/HomeNU';
 
 export const router = createBrowserRouter([
 	{
@@ -11,19 +12,11 @@ export const router = createBrowserRouter([
 		children: [
 			{
 				path: '/',
-				element: <h1>Welcome!</h1>,
+				element: <Listings />,
 			},
 			{
-				path: 'login',
-				element: <LoginFormPage />,
-			},
-			{
-				path: 'signup',
-				element: <SignupFormPage />,
-			},
-			{
-				path: 'listings',
-				element: <ListingForm />,
+				path: '*',
+				element: <HomeNU />, // Redirect all other paths to login if not authenticated
 			},
 		],
 	},

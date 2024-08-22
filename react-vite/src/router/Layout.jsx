@@ -1,24 +1,33 @@
-import { useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { ModalProvider, Modal } from "../context/Modal";
-import { thunkAuthenticate } from "../redux/session";
-import Navigation from "../components/Navigation/Navigation";
+import { useEffect, useState } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { ModalProvider, Modal } from '../context/Modal';
+import { thunkAuthenticate } from '../redux/session';
+import Navigation from '../components/Navigation/Navigation';
 
 export default function Layout() {
-  const dispatch = useDispatch();
-  const [isLoaded, setIsLoaded] = useState(false);
-  useEffect(() => {
-    dispatch(thunkAuthenticate()).then(() => setIsLoaded(true));
-  }, [dispatch]);
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const [isLoaded, setIsLoaded] = useState(false);
+	const sessionUser = useSelector((state) => state.session.user);
 
-  return (
-    <>
-      <ModalProvider>
-        <Navigation />
-        {isLoaded && <Outlet />}
-        <Modal />
-      </ModalProvider>
-    </>
-  );
+	useEffect(() => {
+		dispatch(thunkAuthenticate()).then(() => setIsLoaded(true));
+	}, [dispatch]);
+
+	useEffect(() => {
+		if (isLoaded && !sessionUser) {
+			navigate('/login');
+		}
+	}, [isLoaded, sessionUser, navigate]);
+
+	return (
+		<>
+			<ModalProvider>
+				<Navigation />
+				{isLoaded && <Outlet />}
+				<Modal />
+			</ModalProvider>
+		</>
+	);
 }
