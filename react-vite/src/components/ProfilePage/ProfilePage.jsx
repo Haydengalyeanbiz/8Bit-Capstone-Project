@@ -51,9 +51,9 @@ export const ProfilePage = () => {
 	};
 
 	const handleDeleteReview = (id) => {
-		if (window.confirm('Are you sure you want to delete this review?')) {
-			dispatch(fetchDeleteReview(id));
-		}
+		dispatch(fetchDeleteReview(id)).then(() => {
+			dispatch(fetchUserReviews(sessionUser.id));
+		});
 	};
 
 	return (
