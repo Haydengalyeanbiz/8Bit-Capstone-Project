@@ -77,23 +77,23 @@ def create_listing():
         return jsonify({'errors': form.errors}), 400
 
 # ?---------------------------------UPDATE A LISTING---------------------------------
-@listing_routes.route('/<int:id>', methods=['PUT'])
+@listing_routes.route('/<int:id>/edit', methods=['PUT'])
 @login_required
 def update_listing(id):
     listing = Listing.query.get(id)
-    
+
     if not listing:
         return {'error': 'Listing not found'}, 404
-    
+
     if listing.user_id != current_user.id:
         return {'error': 'Unauthorized'}, 403
-    
+
     form = ListingForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-    
+
     if form.validate_on_submit():
-        if 'image' in request.files:
-            image = request.files['image']
+        if form.image.data:  # Only update the image if a new one is provided
+            image = form.image.data
             if allowed_file(image.filename):
                 image.filename = get_unique_filename(image.filename)
                 upload_result = upload_file_to_s3(image)
@@ -101,28 +101,18 @@ def update_listing(id):
                     return jsonify({"errors": upload_result.get('errors', 'File upload failed')}), 400
                 listing.image_url = upload_result['url']
 
-        listing.title = form.data['title']
-        listing.description = form.data['description']
-        listing.price = form.data['price']
-        listing.quantity = form.data['quantity']
+        # Update listing details
+        listing.title = form.title.data
+        listing.description = form.description.data
+        listing.price = form.price.data
+        listing.quantity = form.quantity.data
 
-        # Update categories
-        db.session.execute(
-            listing_categories.delete().where(listing_categories.c.listing_id == listing.id)
-        )
-        selected_categories = form.data['categories']
-        for category_id in selected_categories:
-            stmt = listing_categories.insert().values(
-                listing_id=listing.id,
-                category_id=category_id
-            )
-            db.session.execute(stmt)
-
+        # Commit changes
         db.session.commit()
         return jsonify(listing.to_dict()), 200
-    
-    print("Form validation failed with errors:", form.errors)  # Log validation errors
+
     return jsonify({'errors': form.errors}), 400
+
 
 # ?---------------------------------DELETE A LISTING---------------------------------
 @listing_routes.route('/<int:id>', methods=['DELETE'])

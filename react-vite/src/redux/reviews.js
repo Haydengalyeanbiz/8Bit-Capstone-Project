@@ -47,15 +47,20 @@ export const fetchReviews = (listingId) => async (dispatch) => {
 export const fetchCreateReview = (listingId, formData) => async (dispatch) => {
 	const response = await fetch(`/api/reviews/${listingId}`, {
 		method: 'POST',
-		body: formData,
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify(formData), // Ensure this is correct
 	});
+
+	const data = await response.json();
+
 	if (response.ok) {
-		const newReview = await response.json();
-		dispatch(createReview(newReview));
-		return newReview;
+		dispatch(createReview(data));
+		return data;
 	} else {
-		const errorText = await response.json();
-		return { errors: errorText };
+		console.error('Server Error:', data.errors); // Log errors
+		return { errors: data.errors };
 	}
 };
 

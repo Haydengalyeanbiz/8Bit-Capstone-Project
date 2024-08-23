@@ -12,6 +12,9 @@ def create_review(listing_id):
     form = ReviewForm()
     form['csrf_token'].data = request.cookies['csrf_token']
 
+    # Debugging statement to print received form data
+    print("Form Data:", form.data)
+
     if form.validate_on_submit():
         new_review = Review(
             user_id=current_user.id,
@@ -21,7 +24,15 @@ def create_review(listing_id):
         )
         db.session.add(new_review)
         db.session.commit()
+
+        # Debugging statement to confirm review creation
+        print("Review Created:", new_review)
+
         return new_review.to_dict(), 201
+    else:
+        # Debugging statement to print errors
+        print("Form Errors:", form.errors)
+
     return {'errors': form.errors}, 400
 
 #?----------------------GET ALL LISTING REVIEWS----------------------------

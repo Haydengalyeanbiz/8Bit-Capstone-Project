@@ -1,15 +1,16 @@
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchGetListing } from '../../redux/listing';
+import { fetchGetListing, fetchDeleteListing } from '../../redux/listing';
 import { fetchReviews } from '../../redux/reviews';
 import { FaRegHeart } from 'react-icons/fa6';
 import './ListingPage.css';
-import ReviewWhole from '../ReviewWhole/ReviewWhole'; // Import ReviewWhole component
+import ReviewWhole from '../ReviewWhole/ReviewWhole';
 
 export const ListingPage = () => {
 	const { id } = useParams();
 	const dispatch = useDispatch();
+	const navigate = useNavigate(); // Use navigate for redirection
 	const listing = useSelector((state) => state.listings.selectedListing);
 	const reviews = useSelector((state) => state.reviews.listingReviews);
 	const sessionUser = useSelector((state) => state.session.user);
@@ -39,6 +40,15 @@ export const ListingPage = () => {
 
 	const isOwner = sessionUser && sessionUser.id === listing.user_id;
 
+	const handleEdit = () => {
+		navigate(`/listings/${id}/edit`);
+	};
+
+	const handleDelete = () => {
+		dispatch(fetchDeleteListing(id));
+		navigate('/'); // Navigate to home or any other page after deletion
+	};
+
 	return (
 		<div className='whole-listing-page'>
 			<div className='listing-p-wrapper'>
@@ -61,7 +71,14 @@ export const ListingPage = () => {
 						<button className='listing-heart-btn'>
 							<FaRegHeart />
 						</button>
-						<button>Add to cart</button>
+						{isOwner ? (
+							<>
+								<button onClick={handleEdit}>Edit Listing</button>
+								<button onClick={handleDelete}>Delete Listing</button>
+							</>
+						) : (
+							<button>Add to cart</button>
+						)}
 					</div>
 				</div>
 			</div>

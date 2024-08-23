@@ -1,18 +1,17 @@
 from flask_wtf import FlaskForm
-from flask_wtf.file import FileField, FileAllowed, FileRequired
+from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, TextAreaField, DecimalField, IntegerField, SelectMultipleField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, Optional
 from app.api.aws_helpers import ALLOWED_EXTENSIONS
 from app.models import Category
-
 
 class ListingForm(FlaskForm):
     title = StringField('Listing Title', validators=[DataRequired()])
     description = TextAreaField('Listing Description', validators=[DataRequired()])
     price = DecimalField('Price', places=2, validators=[DataRequired()])
     quantity = IntegerField('Quantity', validators=[DataRequired()])
-    image = FileField("Image File", validators=[FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])
-    categories = SelectMultipleField('Categories', choices=[], coerce=int, validators=[DataRequired()])
+    image = FileField("Image File", validators=[Optional(), FileAllowed(list(ALLOWED_EXTENSIONS))])
+    categories = SelectMultipleField('Categories', choices=[], coerce=int, validators=[Optional()])
 
     def __init__(self, *args, **kwargs):
         super(ListingForm, self).__init__(*args, **kwargs)

@@ -33,29 +33,39 @@ function Navigation({ isScrolled }) {
 
 	return (
 		<div className={`nav-bar ${isScrolled ? 'scrolled' : ''}`}>
-			<h2
-				className='logo'
-				onClick={() => handleClick()}
-			>
-				8Bit
-			</h2>
-			{user && (
-				<div className='nav-bar-btns'>
-					<button
-						className='profile-btn'
-						onClick={() => handleProfile(user.id)}
-					>
-						<FaUserCircle />
-					</button>
-					<button
-						className='shopping-btn'
-						onClick={() => handleShopping(user.id)}
-					>
-						<FaShoppingCart />
-					</button>
-					<button onClick={logout}>Log Out</button>
+			<div className='navbar-content'>
+				<div>
+					<input
+						type='search'
+						name='search'
+						id='searchbar'
+					/>
+					<button></button>
 				</div>
-			)}
+				<h2
+					className='logo'
+					onClick={() => handleClick()}
+				>
+					8Bit
+				</h2>
+				{user && (
+					<div className='nav-bar-btns'>
+						<button
+							className='profile-btn'
+							onClick={() => handleProfile(user.id)}
+						>
+							<FaUserCircle />
+						</button>
+						<button
+							className='shopping-btn'
+							onClick={() => handleShopping(user.id)}
+						>
+							<FaShoppingCart />
+						</button>
+						<button onClick={logout}>Log Out</button>
+					</div>
+				)}
+			</div>
 		</div>
 	);
 }

@@ -1,10 +1,12 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { FaStar } from 'react-icons/fa';
-import { useModal } from '../../context/Modal'; // Import useModal hook
-import ReviewForm from '../ReviewFormModal/ReviewFormModal'; // Import the ReviewForm component
+import { useModal } from '../../context/Modal';
+import ReviewForm from '../ReviewFormModal/ReviewFormModal';
+import { fetchDeleteReview } from '../../redux/reviews';
 import './ReviewWhole.css';
 
 export const ReviewWhole = ({ reviews, listingId, isOwner }) => {
+	const dispatch = useDispatch();
 	const sessionUser = useSelector((state) => state.session.user);
 	const { setModalContent } = useModal(); // Destructure setModalContent from useModal
 
@@ -15,7 +17,7 @@ export const ReviewWhole = ({ reviews, listingId, isOwner }) => {
 					<FaStar
 						className='star'
 						key={index}
-						color={index < rating ? '#207df0' : '#e4e5e9'} // Filled star for ratings, empty star for others
+						color={index < rating ? '#207df0' : '#e4e5e9'}
 					/>
 				))}
 			</div>
@@ -24,6 +26,12 @@ export const ReviewWhole = ({ reviews, listingId, isOwner }) => {
 
 	const handleOpenReviewModal = () => {
 		setModalContent(<ReviewForm listingId={listingId} />);
+	};
+
+	const handleDeleteReview = (reviewId) => {
+		if (window.confirm('Are you sure you want to delete this review?')) {
+			dispatch(fetchDeleteReview(reviewId));
+		}
 	};
 
 	return (
@@ -40,6 +48,16 @@ export const ReviewWhole = ({ reviews, listingId, isOwner }) => {
 						<h3>{review.username || 'Anonymous'}</h3>
 						<p>{review.comment}</p>
 						{renderStars(review.rating)}
+						{sessionUser && sessionUser.id === review.user_id && (
+							<div className='review-actions'>
+								<button onClick={() => handleOpenReviewModal(review)}>
+									Edit
+								</button>
+								<button onClick={() => handleDeleteReview(review.id)}>
+									Delete
+								</button>
+							</div>
+						)}
 					</div>
 				))
 			) : (

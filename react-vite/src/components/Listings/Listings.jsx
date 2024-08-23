@@ -24,7 +24,7 @@ export const Listings = () => {
 				listings.map((listing) => (
 					<div
 						onClick={() => handleNavigate(listing.id)}
-						className='listing-structure'
+						className='listing-structure border-gradient'
 						key={listing.id}
 					>
 						<div>

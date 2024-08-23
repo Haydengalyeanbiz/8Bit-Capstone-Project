@@ -86,7 +86,7 @@ export const fetchAddListing = (formData) => async (dispatch) => {
 // ?--------------UPDATE A LISTING
 export const fetchUpdateListing = (id, formData) => async (dispatch) => {
 	try {
-		const response = await fetch(`/api/listings/${id}`, {
+		const response = await fetch(`/api/listings/${id}/edit`, {
 			method: 'PUT',
 			body: formData,
 		});

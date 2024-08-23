@@ -1,0 +1,25 @@
+/* TOP BUTTONS */
+.button-group {
+	display: flex;
+	gap: 1rem;
+	padding: 1rem 0;
+}
+
+.toggle-btn {
+	padding: 0.5rem 1rem;
+	background-color: #f0f0f0;
+	border: 1px solid #ccc;
+	cursor: pointer;
+	border-radius: 5px;
+	transition: background-color 0.3s ease;
+}
+
+.toggle-btn:hover {
+	background-color: #e0e0e0;
+}
+
+.toggle-btn.selected {
+	background-color: var(--heavy-accent-clr);
+	color: #fff;
+	border-color: var(--heavy-accent-clr);
+}

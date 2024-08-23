@@ -8,13 +8,20 @@
 .listing-structure {
 	display: flex;
 	flex-direction: column;
-	border: solid 3px var(--light-accent-clr);
-	border-top-right-radius: 12px;
-	border-bottom-left-radius: 12px;
+	border: solid 3px;
+	border-image-slice: 1;
 	padding: 1rem 0.3rem;
 	background-color: var(--primary-clr);
 	min-width: 300px;
 	cursor: pointer;
+}
+
+.border-gradient {
+	border-image-source: linear-gradient(
+		to left,
+		var(--heavy-accent-clr),
+		var(--light-accent-clr)
+	);
 }
 
 .listing-image {
