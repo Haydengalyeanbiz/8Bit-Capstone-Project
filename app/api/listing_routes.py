@@ -36,45 +36,58 @@ def create_listing():
     form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():
-        image = request.files.get('image')
-        if not image:
-            return jsonify({"errors": "Image file is required"}), 400
+        try:
+            # Handle image upload
+            image = request.files.get('image')
+            if not image:
+                return jsonify({"errors": "Image file is required"}), 400
 
-        if not allowed_file(image.filename):
-            return jsonify({"errors": "File type not permitted"}), 400
+            if not allowed_file(image.filename):
+                return jsonify({"errors": "File type not permitted"}), 400
 
-        image.filename = get_unique_filename(image.filename)
-        upload_result = upload_file_to_s3(image)
+            image.filename = get_unique_filename(image.filename)
+            upload_result = upload_file_to_s3(image)
 
-        if 'url' not in upload_result:
-            return jsonify({"errors": upload_result.get('errors', 'File upload failed')}), 400
+            if 'url' not in upload_result:
+                return jsonify({"errors": upload_result.get('errors', 'File upload failed')}), 400
 
-        new_listing = Listing(
-            user_id=current_user.id,
-            title=form.data['title'],
-            description=form.data['description'],
-            price=form.data['price'],
-            quantity=form.data['quantity'],
-            image_url=upload_result['url']
-        )
-
-        db.session.add(new_listing)
-        db.session.commit()
-
-        selected_categories = form.data['categories']
-        for category_id in selected_categories:
-            stmt = listing_categories.insert().values(
-                listing_id=new_listing.id,
-                category_id=category_id
+            # Create the new listing
+            new_listing = Listing(
+                user_id=current_user.id,
+                title=form.data['title'],
+                description=form.data['description'],
+                price=form.data['price'],
+                quantity=form.data['quantity'],
+                image_url=upload_result['url']
             )
-            db.session.execute(stmt)
 
-        db.session.commit()
+            db.session.add(new_listing)
+            db.session.commit()
 
-        return jsonify(new_listing.to_dict()), 201
+            # Handle category associations
+            selected_categories = form.data.get('categories', [])
+            if selected_categories:
+                for category_id in selected_categories:
+                    stmt = listing_categories.insert().values(
+                        listing_id=new_listing.id,
+                        category_id=category_id
+                    )
+                    db.session.execute(stmt)
+
+            db.session.commit()
+
+            return jsonify(new_listing.to_dict()), 201
+        
+        except Exception as e:
+            db.session.rollback()  # Rollback in case of error
+            print(f"Error occurred: {e}")  # Log the error
+            return jsonify({"errors": "An error occurred while creating the listing. Please try again."}), 500
+
     else:
+        # If form validation fails
         print("Form validation failed with errors:", form.errors)  # Log validation errors
         return jsonify({'errors': form.errors}), 400
+
 
 # ?---------------------------------UPDATE A LISTING---------------------------------
 @listing_routes.route('/<int:id>/edit', methods=['PUT'])
