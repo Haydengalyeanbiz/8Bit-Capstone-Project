@@ -30,5 +30,4 @@ class Listing(db.Model):
             'price': str(self.price), 
             'quantity': self.quantity,
             'image_url': self.image_url,
-            'categories': [category.name for category in self.categories],
         }

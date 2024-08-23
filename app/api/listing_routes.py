@@ -37,19 +37,28 @@ def create_listing():
 
     if form.validate_on_submit():
         try:
+            # Log the incoming form data
+            print("Form Data:", form.data)
+
             # Handle image upload
             image = request.files.get('image')
             if not image:
-                return jsonify({"errors": "Image file is required"}), 400
+                print("Error: Image file is required")  # Log missing image error
+                return ({"errors": "Image file is required"}), 400
 
             if not allowed_file(image.filename):
-                return jsonify({"errors": "File type not permitted"}), 400
+                print(f"Error: File type not permitted for filename {image.filename}")  # Log invalid file type error
+                return ({"errors": "File type not permitted"}), 400
 
             image.filename = get_unique_filename(image.filename)
             upload_result = upload_file_to_s3(image)
 
             if 'url' not in upload_result:
-                return jsonify({"errors": upload_result.get('errors', 'File upload failed')}), 400
+                print(f"Error: File upload failed with result {upload_result}")  # Log file upload error
+                return ({"errors": upload_result.get('errors', 'File upload failed')}), 400
+
+            # Log the successful image upload URL
+            print(f"Image uploaded successfully: {upload_result['url']}")
 
             # Create the new listing
             new_listing = Listing(
@@ -64,10 +73,14 @@ def create_listing():
             db.session.add(new_listing)
             db.session.commit()
 
+            # Log the creation of the new listing
+            print(f"New listing created: {new_listing.to_dict()}")
+
             # Handle category associations
             selected_categories = form.data.get('categories', [])
             if selected_categories:
                 for category_id in selected_categories:
+                    print(f"Associating category ID {category_id} with listing ID {new_listing.id}")
                     stmt = listing_categories.insert().values(
                         listing_id=new_listing.id,
                         category_id=category_id
@@ -76,17 +89,20 @@ def create_listing():
 
             db.session.commit()
 
-            return jsonify(new_listing.to_dict()), 201
+            # Log the successful creation and association
+            print(f"Listing {new_listing.id} successfully created with categories: {selected_categories}")
+
+            return (new_listing.to_dict()), 201
         
         except Exception as e:
             db.session.rollback()  # Rollback in case of error
             print(f"Error occurred: {e}")  # Log the error
-            return jsonify({"errors": "An error occurred while creating the listing. Please try again."}), 500
+            return ({"errors": "An error occurred while creating the listing. Please try again."}), 500
 
     else:
         # If form validation fails
         print("Form validation failed with errors:", form.errors)  # Log validation errors
-        return jsonify({'errors': form.errors}), 400
+        return ({'errors': form.errors}), 400
 
 
 # ?---------------------------------UPDATE A LISTING---------------------------------
