@@ -23,6 +23,7 @@ class Review(db.Model):
             'user_id': self.user_id,
             'username': self.user.username,
             'listing_id': self.listing_id,
+            # 'listing_title': 
             'rating': self.rating,
             'comment': self.comment,
             'created_at': self.created_at,

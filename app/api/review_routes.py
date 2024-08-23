@@ -52,6 +52,12 @@ def update_review(review_id):
         return review.to_dict(), 200
     return {'errors': form.errors}, 400
 
+#?--------------------------GET ALL USER REVIEWS---------------------------
+@review_routes.route('/user/<int:user_id>')
+def get_user_reviews(user_id):
+    reviews = Review.query.filter_by(user_id=user_id).all()
+    return {'reviews': [review.to_dict() for review in reviews]}
+
 #?--------------------------DELETE REVIEW---------------------------
 @review_routes.route('/<int:review_id>', methods=['DELETE'])
 @login_required

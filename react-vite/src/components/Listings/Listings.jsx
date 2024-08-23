@@ -40,6 +40,20 @@ export const Listings = () => {
 							src={listing.image_url}
 							alt={listing.title}
 						/>
+						<div className='listing-categories'>
+							{listing.categories && listing.categories.length > 0 ? (
+								listing.categories.map((category) => (
+									<span
+										key={category.id}
+										className='listing-category'
+									>
+										{category}
+									</span>
+								))
+							) : (
+								<span className='listing-no-category'>No categories</span>
+							)}
+						</div>
 						<div className='listing-'>
 							<p className='listing-price'>${listing.price} - USD</p>
 							<button className='add-to-cart-listing'>Add to cart</button>

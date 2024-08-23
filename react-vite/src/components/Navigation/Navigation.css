@@ -14,11 +14,11 @@
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a shadow for effect */
 }
 
-.profile-dropdown {
-	position: absolute;
-}
-
 .main-content {
 	margin-top: 50px;
 	padding: 1rem;
+}
+
+.logo {
+	font-size: 30px;
 }

@@ -8,11 +8,13 @@ import thunk from 'redux-thunk';
 import sessionReducer from './session';
 import listingsReducer from './listing';
 import reviewsReducer from './reviews';
+import profileReducer from './profileActions';
 
 const rootReducer = combineReducers({
 	session: sessionReducer,
 	listings: listingsReducer,
 	reviews: reviewsReducer,
+	profile: profileReducer,
 });
 
 let enhancer;

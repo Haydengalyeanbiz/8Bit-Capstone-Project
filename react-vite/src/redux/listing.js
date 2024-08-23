@@ -2,6 +2,8 @@
 const GET_ALL_LISTINGS = 'listings/GET_ALL_LISTINGS';
 const GET_A_LISTING = 'listings/GET_A_LISTING';
 const CREATE_NEW_LISTING = 'listings/CREATE_NEW_LISTING';
+const UPDATE_LISTING = 'listings/UPDATE_LISTING';
+const DELETE_LISTING = 'listings/DELETE_LISTING';
 
 // *ACTION CREATORS
 export const getAllListings = (lisitngs) => {
@@ -22,6 +24,20 @@ export const createNewListing = (listing) => {
 	return {
 		type: CREATE_NEW_LISTING,
 		payload: listing,
+	};
+};
+
+export const updateListing = (listing) => {
+	return {
+		type: UPDATE_LISTING,
+		payload: listing,
+	};
+};
+
+export const deleteListing = (listingId) => {
+	return {
+		type: DELETE_LISTING,
+		payload: listingId,
 	};
 };
 
@@ -67,6 +83,48 @@ export const fetchAddListing = (formData) => async (dispatch) => {
 	}
 };
 
+// ?--------------UPDATE A LISTING
+export const fetchUpdateListing = (id, formData) => async (dispatch) => {
+	try {
+		const response = await fetch(`/api/listings/${id}`, {
+			method: 'PUT',
+			body: formData,
+		});
+
+		if (response.ok) {
+			const updatedListing = await response.json();
+			dispatch(updateListing(updatedListing));
+			return updatedListing;
+		} else {
+			const errorText = await response.json();
+			return { errors: errorText };
+		}
+	} catch (error) {
+		console.error('Error updating the listing:', error);
+		return { errors: 'An unexpected error occurred' };
+	}
+};
+
+// ?--------------DELETE A LISTING
+export const fetchDeleteListing = (id) => async (dispatch) => {
+	try {
+		const response = await fetch(`/api/listings/${id}`, {
+			method: 'DELETE',
+		});
+
+		if (response.ok) {
+			dispatch(deleteListing(id));
+			return { message: 'Listing deleted successfully' };
+		} else {
+			const errorText = await response.json();
+			return { errors: errorText };
+		}
+	} catch (error) {
+		console.error('Error deleting the listing:', error);
+		return { errors: 'An unexpected error occurred' };
+	}
+};
+
 const initialState = {
 	AllListings: [],
 	selectedListing: {},
@@ -80,6 +138,28 @@ function listingsReducer(state = initialState, action) {
 			return { ...state, selectedListing: action.payload };
 		case CREATE_NEW_LISTING:
 			return { ...state, AllListings: [...state.AllListings, action.payload] };
+		case UPDATE_LISTING:
+			return {
+				...state,
+				AllListings: state.AllListings.map((listing) =>
+					listing.id === action.payload.id ? action.payload : listing
+				),
+				selectedListing:
+					state.selectedListing.id === action.payload.id
+						? action.payload
+						: state.selectedListing,
+			};
+		case DELETE_LISTING:
+			return {
+				...state,
+				AllListings: state.AllListings.filter(
+					(listing) => listing.id !== action.payload
+				),
+				selectedListing:
+					state.selectedListing.id === action.payload
+						? {}
+						: state.selectedListing,
+			};
 		default:
 			return state;
 	}

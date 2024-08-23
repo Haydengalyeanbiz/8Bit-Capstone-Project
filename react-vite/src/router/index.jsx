@@ -4,6 +4,7 @@ import Layout from './Layout';
 import { HomeNU } from '../components/HomeNU.jsx/HomeNU';
 import { ListingPage } from '../components/ListingPage/ListingPage';
 import { ListingForm } from '../components/ListingForm/ListingForm';
+// import { ProfilePage } from '../components/ProfilePage/ProfilePage';
 
 export const router = createBrowserRouter([
 	{
@@ -21,6 +22,10 @@ export const router = createBrowserRouter([
 				path: '/listings/new',
 				element: <ListingForm />, // Redirect all other paths to login if not authenticated
 			},
+			// {
+			// 	path: '/profile/:id',
+			// 	element: <ProfilePage />, // Redirect all other paths to login if not authenticated
+			// },
 			{
 				path: '*',
 				element: <HomeNU />, // Redirect all other paths to login if not authenticated
