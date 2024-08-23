@@ -28,6 +28,9 @@ export const ReviewWhole = ({ reviews, listingId, isOwner }) => {
 
 	return (
 		<div>
+			{sessionUser && !isOwner && (
+				<button onClick={handleOpenReviewModal}>Leave a Review</button>
+			)}
 			{reviews && reviews.length > 0 ? (
 				reviews.map((review) => (
 					<div
@@ -41,10 +44,6 @@ export const ReviewWhole = ({ reviews, listingId, isOwner }) => {
 				))
 			) : (
 				<p>No reviews yet.</p>
-			)}
-			{/* Show the 'Leave a Review' button if the user is not the owner */}
-			{sessionUser && !isOwner && (
-				<button onClick={handleOpenReviewModal}>Leave a Review</button>
 			)}
 		</div>
 	);
