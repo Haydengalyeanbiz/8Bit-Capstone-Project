@@ -6,11 +6,15 @@ import {
 	fetchUserReviews,
 } from '../../redux/profileActions';
 import { fetchDeleteListing } from '../../redux/listing';
+import { fetchDeleteReview } from '../../redux/reviews';
+import { useModal } from '../../context/Modal';
+import EditReviewFormModal from '../EditReviewFormModal/EditReviewFormModal';
 import './ProfilePage.css';
 
 export const ProfilePage = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const { setModalContent } = useModal();
 	const sessionUser = useSelector((state) => state.session.user);
 	const userListings = useSelector(
 		(state) => state.profile.userListings.listings
@@ -37,22 +41,18 @@ export const ProfilePage = () => {
 	};
 
 	const handleDeleteListing = (id) => {
-		if (window.confirm('Are you sure you want to delete this listing?')) {
-			dispatch(fetchDeleteListing(id)).then(() => {
-				dispatch(fetchUserListings(sessionUser.id));
-			});
-		}
+		dispatch(fetchDeleteListing(id)).then(() => {
+			dispatch(fetchUserListings(sessionUser.id));
+		});
 	};
 
-	const handleEditReview = (id) => {
-		// Logic to handle review edit, possibly opening a modal or navigating to an edit page
-		console.log('Edit review with id:', id);
-		// dispatch(editReview(id)); // Uncomment when the editReview action is available
+	const handleEditReview = (review) => {
+		setModalContent(<EditReviewFormModal review={review} />);
 	};
 
 	const handleDeleteReview = (id) => {
 		if (window.confirm('Are you sure you want to delete this review?')) {
-			dispatch(deleteReview(id));
+			dispatch(fetchDeleteReview(id));
 		}
 	};
 
@@ -107,12 +107,11 @@ export const ProfilePage = () => {
 					{userReviews && userReviews.length > 0 ? (
 						userReviews.map((review) => (
 							<div key={review.id}>
-								<h3>Review for {review.listingTitle}</h3>
+								<h3>Review for {review.listing_title}</h3>
 								<p>Rating: {review.rating}</p>
 								<p>{review.comment}</p>
-								<button onClick={() => handleEditReview(review.id)}>
-									Edit
-								</button>
+								<p>{review.created_at}</p>
+								<button onClick={() => handleEditReview(review)}>Edit</button>
 								<button onClick={() => handleDeleteReview(review.id)}>
 									Delete
 								</button>

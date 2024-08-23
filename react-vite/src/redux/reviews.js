@@ -68,7 +68,10 @@ export const fetchCreateReview = (listingId, formData) => async (dispatch) => {
 export const fetchUpdateReview = (reviewId, formData) => async (dispatch) => {
 	const response = await fetch(`/api/reviews/${reviewId}`, {
 		method: 'PUT',
-		body: formData,
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify(formData),
 	});
 	if (response.ok) {
 		const updatedReview = await response.json();

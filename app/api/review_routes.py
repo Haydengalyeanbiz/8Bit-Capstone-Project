@@ -56,12 +56,18 @@ def update_review(review_id):
     form = ReviewForm()
     form['csrf_token'].data = request.cookies['csrf_token']
 
+    # Debugging: print the form data and errors
+    print("Form data received:", form.data)
+    print("Form validation errors:", form.errors)
+
     if form.validate_on_submit():
         review.rating = form.data['rating']
         review.comment = form.data['comment']
         db.session.commit()
         return review.to_dict(), 200
+
     return {'errors': form.errors}, 400
+
 
 #?--------------------------GET ALL USER REVIEWS---------------------------
 @review_routes.route('/user/<int:user_id>')

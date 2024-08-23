@@ -42,9 +42,9 @@ export const Listings = () => {
 						/>
 						<div className='listing-categories'>
 							{listing.categories && listing.categories.length > 0 ? (
-								listing.categories.map((category) => (
+								listing.categories.map((category, index) => (
 									<span
-										key={category.id}
+										key={index}
 										className='listing-category'
 									>
 										{category}

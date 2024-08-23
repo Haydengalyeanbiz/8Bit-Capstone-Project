@@ -34,14 +34,16 @@ function Navigation({ isScrolled }) {
 	return (
 		<div className={`nav-bar ${isScrolled ? 'scrolled' : ''}`}>
 			<div className='navbar-content'>
-				<div>
-					<input
-						type='search'
-						name='search'
-						id='searchbar'
-					/>
-					<button></button>
-				</div>
+				{user && (
+					<div>
+						<input
+							type='search'
+							name='search'
+							id='searchbar'
+						/>
+						<button></button>
+					</div>
+				)}
 				<h2
 					className='logo'
 					onClick={() => handleClick()}
