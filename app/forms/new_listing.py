@@ -10,7 +10,7 @@ class ListingForm(FlaskForm):
     description = TextAreaField('Listing Description', validators=[DataRequired()])
     price = DecimalField('Price', places=2, validators=[DataRequired()])
     quantity = IntegerField('Quantity', validators=[DataRequired()])
-    image = FileField("Image File", validators=[Optional(), FileAllowed(list(ALLOWED_EXTENSIONS))])
+    image_url = FileField("Image File", validators=[Optional(), FileAllowed(list(ALLOWED_EXTENSIONS))])
     categories = SelectMultipleField('Categories', choices=[], coerce=int, validators=[Optional()])
 
     def __init__(self, *args, **kwargs):

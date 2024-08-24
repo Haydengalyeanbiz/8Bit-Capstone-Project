@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { fetchAddListing } from '../../redux/listing';
 import './ListingForm.css';
 
 export const ListingForm = () => {
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const [price, setPrice] = useState('');
@@ -30,12 +32,12 @@ export const ListingForm = () => {
 		const errors = {};
 
 		// Validate title
-		if (title.length < 5 || title.length > 20) {
+		if (title.length < 5 || title.length > 100) {
 			errors.title = 'Title must be between 5 and 20 characters.';
 		}
 
 		// Validate description
-		if (description.length < 20 || description.length > 200) {
+		if (description.length < 20 || description.length > 500) {
 			errors.description = 'Description must be between 20 and 200 characters.';
 		}
 
@@ -122,6 +124,7 @@ export const ListingForm = () => {
 					quantity: false,
 					image: false,
 				});
+				navigate(`/listings/${response.id}`);
 			}
 		}
 	};

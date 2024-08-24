@@ -63,6 +63,7 @@ export const fetchGetListing = (id) => async (dispatch) => {
 
 // ?--------------CREATE A LISTING
 export const fetchAddListing = (formData) => async (dispatch) => {
+	console.log(formData);
 	try {
 		const response = await fetch('/api/listings/new', {
 			method: 'POST',

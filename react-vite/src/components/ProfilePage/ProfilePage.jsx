@@ -9,6 +9,7 @@ import { fetchDeleteListing } from '../../redux/listing';
 import { fetchDeleteReview } from '../../redux/reviews';
 import { useModal } from '../../context/Modal';
 import EditReviewFormModal from '../EditReviewFormModal/EditReviewFormModal';
+import { Wishlist } from '../Wishlist/Wishlist'; // Import the Wishlist component
 import './ProfilePage.css';
 
 export const ProfilePage = () => {
@@ -20,7 +21,7 @@ export const ProfilePage = () => {
 		(state) => state.profile.userListings.listings
 	);
 	const userReviews = useSelector((state) => state.profile.userReviews.reviews);
-	const [showListings, setShowListings] = useState(true);
+	const [view, setView] = useState('listings'); // Change to manage multiple views
 
 	useEffect(() => {
 		if (sessionUser) {
@@ -28,9 +29,6 @@ export const ProfilePage = () => {
 			dispatch(fetchUserReviews(sessionUser.id));
 		}
 	}, [dispatch, sessionUser]);
-
-	const handleShowListings = () => setShowListings(true);
-	const handleShowReviews = () => setShowListings(false);
 
 	const handleNewList = () => {
 		navigate('/listings/new');
@@ -59,24 +57,28 @@ export const ProfilePage = () => {
 	return (
 		<div>
 			<h1>Welcome {sessionUser.first_name} to your dashboard</h1>
-
 			<div className='button-group'>
 				<button
-					className={`toggle-btn ${showListings ? 'selected' : ''}`}
-					onClick={handleShowListings}
+					className={`toggle-btn ${view === 'listings' ? 'selected' : ''}`}
+					onClick={() => setView('listings')}
 				>
 					Your Listings
 				</button>
 				<button
-					className={`toggle-btn ${!showListings ? 'selected' : ''}`}
-					onClick={handleShowReviews}
+					className={`toggle-btn ${view === 'reviews' ? 'selected' : ''}`}
+					onClick={() => setView('reviews')}
 				>
 					Your Reviews
 				</button>
+				<button
+					className={`toggle-btn ${view === 'wishlist' ? 'selected' : ''}`}
+					onClick={() => setView('wishlist')}
+				>
+					Your Wishlist
+				</button>
 				<button onClick={handleNewList}>Add New Listing</button>
 			</div>
-
-			{showListings ? (
+			{view === 'listings' && (
 				<section>
 					<h2>Your Listings</h2>
 					{userListings && userListings.length > 0 ? (
@@ -101,7 +103,8 @@ export const ProfilePage = () => {
 						<p>No listings found.</p>
 					)}
 				</section>
-			) : (
+			)}
+			{view === 'reviews' && (
 				<section>
 					<h2>Your Reviews</h2>
 					{userReviews && userReviews.length > 0 ? (
@@ -122,6 +125,8 @@ export const ProfilePage = () => {
 					)}
 				</section>
 			)}
+			{view === 'wishlist' && <Wishlist />}{' '}
+			{/* Render Wishlist when selected */}
 		</div>
 	);
 };
