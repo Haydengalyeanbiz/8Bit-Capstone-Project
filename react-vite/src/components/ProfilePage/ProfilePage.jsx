@@ -56,8 +56,9 @@ export const ProfilePage = () => {
 
 	return (
 		<div>
-			<h1>Welcome {sessionUser.first_name} to your dashboard</h1>
+			<h1>Welcome {sessionUser.first_name} to your GameRoom!</h1>
 			<div className='button-group'>
+				<button onClick={handleNewList}>Add New Listing</button>
 				<button
 					className={`toggle-btn ${view === 'listings' ? 'selected' : ''}`}
 					onClick={() => setView('listings')}
@@ -76,7 +77,6 @@ export const ProfilePage = () => {
 				>
 					Your Wishlist
 				</button>
-				<button onClick={handleNewList}>Add New Listing</button>
 			</div>
 			{view === 'listings' && (
 				<section>

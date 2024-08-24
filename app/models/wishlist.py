@@ -12,12 +12,13 @@ class Wishlist(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=db.func.now())
 
     user = db.relationship('User', back_populates='wishlist')
-    listing = db.relationship('Listing')
+    listing = db.relationship('Listing', back_populates='wishlist_items')
 
     def to_dict(self):
         return {
             'id': self.id,
             'user_id': self.user_id,
             'listing_id': self.listing_id,
-            'created_at': self.created_at
+            'created_at': self.created_at,
+            'listing': self.listing.to_dict()
         }

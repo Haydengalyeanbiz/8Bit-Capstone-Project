@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchAllListings } from '../../redux/listing';
 import './Listings.css';
-import { FaRegHeart } from 'react-icons/fa6';
+import { AddToWishlist } from '../AddToWishlist/AddToWishlist';
 
 export const Listings = () => {
 	const navigate = useNavigate();
@@ -29,9 +29,7 @@ export const Listings = () => {
 					>
 						<div>
 							<h2 className='listing-title'>{listing.title}</h2>
-							<button className='listing-heart-btn'>
-								<FaRegHeart />
-							</button>
+							<AddToWishlist listing={listing} />
 						</div>
 						<p className='listing-description'>{listing.description}</p>
 

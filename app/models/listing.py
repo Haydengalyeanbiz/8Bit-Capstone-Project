@@ -20,6 +20,7 @@ class Listing(db.Model):
     reviews = db.relationship('Review', back_populates='listing', cascade='all, delete-orphan')
     cart_items = db.relationship('CartItem', back_populates='listing', cascade="all, delete-orphan")
     categories = db.relationship('Category', secondary=listing_categories, back_populates='listings')
+    wishlist_items = db.relationship('Wishlist', back_populates='listing', cascade="all, delete-orphan")
 
     def to_dict(self):
         return {

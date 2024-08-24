@@ -26,8 +26,7 @@ const deleteFromWishlist = (item) => {
 	};
 };
 
-// ?-------------------THUNKS------------------
-
+// ?-------------------THUNKS-------------------
 // ? --------------GET WISHLIST-----------------
 export const fetchUserWishlist = (id) => async (dispatch) => {
 	const response = await fetch(`/api/wishlists/${id}`);
@@ -38,30 +37,38 @@ export const fetchUserWishlist = (id) => async (dispatch) => {
 };
 
 // ? --------------ADD TO WISHLIST-----------------
-export const fetchAddToWishlist = (item) => async (dispatch) => {
-	const response = await fetch(`/api/wishlists`, {
+export const fetchAddToWishlist = (listing) => async (dispatch) => {
+	const response = await fetch(`/api/wishlists/add`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
 		},
-		body: JSON.stringify(item),
+		body: JSON.stringify({ listing_id: listing.id }), // Send only listing_id
 	});
 
 	if (response.ok) {
 		const newItem = await response.json();
 		dispatch(addToWishlist(newItem));
+	} else {
+		// Handle errors
+		const error = await response.json();
+		console.error('Failed to add to wishlist:', error);
 	}
 };
 
 // ? --------------DELETE FROM WISHLIST-----------------
 export const fetchDeleteFromWishlist = (itemId) => async (dispatch) => {
-	const response = await fetch(`/api/wishlists/${itemId}`, {
+	const response = await fetch(`/api/wishlists/${itemId}/delete`, {
 		method: 'DELETE',
 	});
 
 	if (response.ok) {
 		const deletedItem = await response.json();
 		dispatch(deleteFromWishlist(deletedItem));
+	} else {
+		// Handle errors if needed
+		const error = await response.json();
+		console.error('Failed to delete from wishlist:', error);
 	}
 };
 

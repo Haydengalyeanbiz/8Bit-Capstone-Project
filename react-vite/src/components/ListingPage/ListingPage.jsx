@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchGetListing, fetchDeleteListing } from '../../redux/listing';
 import { fetchReviews } from '../../redux/reviews';
-import { FaRegHeart } from 'react-icons/fa6';
+import { AddToWishlist } from '../AddToWishlist/AddToWishlist';
 import './ListingPage.css';
 import ReviewWhole from '../ReviewWhole/ReviewWhole';
 
@@ -68,9 +68,7 @@ export const ListingPage = () => {
 						{averageRating && <p>Average Rating: {averageRating} / 5</p>}
 					</div>
 					<div>
-						<button className='listing-heart-btn'>
-							<FaRegHeart />
-						</button>
+						<AddToWishlist listing={listing} />
 						{isOwner ? (
 							<>
 								<button onClick={handleEdit}>Edit Listing</button>
