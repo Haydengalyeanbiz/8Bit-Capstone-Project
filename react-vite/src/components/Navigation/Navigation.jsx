@@ -4,8 +4,11 @@ import { FaShoppingCart } from 'react-icons/fa';
 import { FaUserCircle } from 'react-icons/fa';
 import { thunkLogout } from '../../redux/session';
 import './Navigation.css';
+import { useModal } from '../../context/Modal'; // Adjust the path as needed
+import { ShoppingCart } from '../ShoppingCart/ShoppingCart';
 
 function Navigation({ isScrolled }) {
+	const { setModalContent } = useModal();
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const user = useSelector((state) => state.session.user);
@@ -21,10 +24,9 @@ function Navigation({ isScrolled }) {
 		}
 	};
 
-	const handleShopping = (id) => {
-		navigate(`/shopping-cart/${id}`);
+	const handleCartClick = () => {
+		setModalContent(<ShoppingCart />);
 	};
-
 	const logout = (e) => {
 		e.preventDefault();
 		dispatch(thunkLogout());
@@ -60,7 +62,7 @@ function Navigation({ isScrolled }) {
 						</button>
 						<button
 							className='shopping-btn'
-							onClick={() => handleShopping(user.id)}
+							onClick={handleCartClick}
 						>
 							<FaShoppingCart />
 						</button>

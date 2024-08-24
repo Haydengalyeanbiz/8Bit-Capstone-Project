@@ -10,6 +10,7 @@ import listingsReducer from './listing';
 import reviewsReducer from './reviews';
 import profileReducer from './profileActions';
 import wishlistReducer from './wishlist';
+import cartReducer from './shoppingCart';
 
 const rootReducer = combineReducers({
 	session: sessionReducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
 	reviews: reviewsReducer,
 	profile: profileReducer,
 	wishlist: wishlistReducer,
+	shoppingCart: cartReducer,
 });
 
 let enhancer;

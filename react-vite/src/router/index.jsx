@@ -1,11 +1,12 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { Home } from '../components/Home/Home';
 import Layout from './Layout';
+import { Home } from '../components/Home/Home';
 import { HomeNU } from '../components/HomeNU.jsx/HomeNU';
 import { ListingPage } from '../components/ListingPage/ListingPage';
 import { ListingForm } from '../components/ListingForm/ListingForm';
 import { ProfilePage } from '../components/ProfilePage/ProfilePage';
 import EditListingForm from '../components/EditListingForm/EditListingForm';
+import { ShoppingCart } from '../components/ShoppingCart/ShoppingCart';
 
 export const router = createBrowserRouter([
 	{
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
 			{
 				path: '/profile/:id',
 				element: <ProfilePage />, // Redirect all other paths to login if not authenticated
+			},
+			{
+				path: '/current/shopping-cart',
+				element: <ShoppingCart />,
 			},
 			{
 				path: '*',
