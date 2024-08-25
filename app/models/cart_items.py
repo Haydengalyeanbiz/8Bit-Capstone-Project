@@ -21,5 +21,15 @@ class CartItem(db.Model):
             'cart_id': self.cart_id,
             'listing_id': self.listing_id,
             'quantity': self.quantity,
-            'created_at': self.created_at
+            'created_at': self.created_at,
+            'listing': {
+                'id': self.listing.id,
+                'title': self.listing.title,
+                'description': self.listing.description,
+                'price': self.listing.price,
+                'image_url': self.listing.image_url,
+                'created_at': self.listing.created_at,
+                'updated_at': self.listing.updated_at,
+                # Add other listing fields as needed
+            }
         }

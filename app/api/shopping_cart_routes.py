@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
-from app.models import db, Cart, CartItem
+from app.models import db, Cart, CartItem, Listing
 
 cart_routes = Blueprint('carts', __name__)
 
@@ -32,14 +32,29 @@ def add_to_cart():
         db.session.add(cart)
         db.session.commit()
 
+    listing = Listing.query.get(listing_id)
+
+    if not listing:
+        return {'error': 'Listing not found'}, 404
+
+    if listing.quantity < quantity:
+        return {'error': 'Not enough quantity available'}, 400
+
     cart_item = CartItem.query.filter_by(cart_id=cart.id, listing_id=listing_id).first()
 
     if cart_item:
+        # Check if the new quantity would exceed available listing quantity
+        if cart_item.quantity + quantity > listing.quantity:
+            return {'error': 'Not enough quantity available'}, 400
+
         cart_item.quantity += quantity
     else:
+        # Add the item to the cart
         cart_item = CartItem(cart_id=cart.id, listing_id=listing_id, quantity=quantity)
         db.session.add(cart_item)
 
+    # Update the listing quantity
+    listing.quantity -= quantity
     db.session.commit()
 
     return jsonify(cart.to_dict()), 201

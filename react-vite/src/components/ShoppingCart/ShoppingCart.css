@@ -1,10 +1,10 @@
-/* Modal.css */
-#modal {
+#shopping-cart-modal {
 	position: fixed;
-	top: 0;
+	top: 70px;
 	right: 0;
-	width: 30%;
+	width: 40%;
 	height: 100%;
+	color: black;
 	background-color: white;
 	box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
 	z-index: 1000;
@@ -14,17 +14,31 @@
 	transition: transform 0.3s ease-in-out;
 }
 
-#modal-background {
+#shopping-cart-modal #modal-background {
 	position: fixed;
 	top: 0;
 	left: 0;
-	width: 70%;
+	width: 100%;
 	height: 100%;
 	background-color: rgba(0, 0, 0, 0.3);
-	z-index: 999;
+	z-index: 9999;
 }
 
-#modal-content {
+#shopping-cart-modal #modal-content {
 	flex-grow: 1;
 	overflow-y: auto;
+}
+
+.shop-cart-image {
+	height: 100px;
+}
+
+.cart-minus-btn {
+	border: 3px solid var(--heavy-accent-clr);
+	background-color: var(--primary-clr);
+}
+
+.cart-add-btn {
+	border: 3px solid var(--heavy-accent-clr);
+	background-color: var(--primary-clr);
 }

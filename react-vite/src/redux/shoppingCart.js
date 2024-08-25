@@ -5,7 +5,6 @@ const UPDATE_CART_ITEM = 'cart/UPDATE_CART_ITEM';
 const REMOVE_FROM_CART = 'cart/REMOVE_FROM_CART';
 
 // * ACTION CREATORS
-
 const getCart = (cart) => {
 	return {
 		type: GET_CART,
@@ -46,11 +45,28 @@ export const fetchCart = (id) => async (dispatch) => {
 	}
 };
 
-// ? --------------ADD TO CART-----------------
+// ? --------------ADD CART ITEM-----------------
 export const fetchAddToCart =
 	(listingId, quantity = 1) =>
-	async (dispatch) => {
-		const response = await fetch(`/api/carts/add`, {
+	async (dispatch, getState) => {
+		const state = getState();
+		const currentCartItem = state.shoppingCart.cart.cart_items.find(
+			(item) => item.listing_id === listingId
+		);
+
+		const availableQuantity = state.listings.AllListings.find(
+			(listing) => listing.id === listingId
+		).quantity;
+
+		if (
+			currentCartItem &&
+			currentCartItem.quantity + quantity > availableQuantity
+		) {
+			console.error('Not enough quantity available');
+			return;
+		}
+
+		const response = await fetch(`/api/shopping-cart/add`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -59,8 +75,10 @@ export const fetchAddToCart =
 		});
 
 		if (response.ok) {
-			const newItem = await response.json();
-			dispatch(addToCart(newItem));
+			const updatedCart = await response.json();
+			dispatch(addToCart(updatedCart));
+		} else {
+			console.error('Failed to add to cart:', response.statusText);
 		}
 	};
 
@@ -93,20 +111,23 @@ export const fetchRemoveFromCart = (itemId) => async (dispatch) => {
 
 // * CART REDUCER
 
-const initialState = { cart: null };
+const initialState = { cart: { cart_items: [] } };
 
 export default function cartReducer(state = initialState, action) {
 	switch (action.type) {
 		case GET_CART:
-			return { ...state, cart: action.payload };
-		case ADD_TO_CART:
+			return { ...state, cart: action.payload || { cart_items: [] } };
+		case ADD_TO_CART: {
+			const updatedCartItems = action.payload.cart_items;
+
 			return {
 				...state,
 				cart: {
 					...state.cart,
-					cart_items: [...state.cart.cart_items, action.payload],
+					cart_items: updatedCartItems,
 				},
 			};
+		}
 		case UPDATE_CART_ITEM:
 			return {
 				...state,

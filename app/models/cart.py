@@ -18,5 +18,5 @@ class Cart(db.Model):
             'id': self.id,
             'user_id': self.user_id,
             'created_at': self.created_at,
-            'cart_items': [item.to_dict() for item in self.cart_items]
+            'cart_items': [item.to_dict() for item in self.cart_items] if self.cart_items else []
         }

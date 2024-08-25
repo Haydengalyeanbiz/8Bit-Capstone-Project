@@ -1,21 +1,28 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchAllListings } from '../../redux/listing';
 import './Listings.css';
 import { AddToWishlist } from '../AddToWishlist/AddToWishlist';
+import { fetchAddToCart } from '../../redux/shoppingCart';
 
 export const Listings = () => {
-	const navigate = useNavigate();
+	// const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const listings = useSelector((state) => state.listings.AllListings);
+	const user_id = useSelector((state) => state.session.user.id);
 
 	useEffect(() => {
 		dispatch(fetchAllListings());
 	}, [dispatch]);
 
-	const handleNavigate = (id) => {
-		navigate(`/listings/${id}`);
+	// const handleNavigate = (id) => {
+	// 	navigate(`/listings/${id}`);
+	// };
+
+	const handleAddToCart = (userId, listingId) => {
+		console.log(userId, listingId);
+		dispatch(fetchAddToCart(listingId, userId));
 	};
 
 	return (
@@ -23,7 +30,7 @@ export const Listings = () => {
 			{listings && listings.length > 0 ? (
 				listings.map((listing) => (
 					<div
-						onClick={() => handleNavigate(listing.id)}
+						// onClick={() => handleNavigate(listing.id)}
 						className='listing-structure border-gradient'
 						key={listing.id}
 					>
@@ -54,7 +61,12 @@ export const Listings = () => {
 						</div>
 						<div className='listing-'>
 							<p className='listing-price'>${listing.price} - USD</p>
-							<button className='add-to-cart-listing'>Add to cart</button>
+							<button
+								onClick={() => handleAddToCart(user_id, listing.id)}
+								className='add-to-cart-listing'
+							>
+								Add to cart
+							</button>
 						</div>
 					</div>
 				))
