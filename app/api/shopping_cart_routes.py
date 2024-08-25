@@ -64,7 +64,7 @@ def add_to_cart():
 @login_required
 def update_cart_item(item_id):
     data = request.json
-    quantity = data.get('quantity')
+    new_quantity = data.get('quantity')
 
     cart_item = CartItem.query.get(item_id)
 
@@ -74,10 +74,27 @@ def update_cart_item(item_id):
     if cart_item.cart.user_id != current_user.id:
         return {'error': 'Unauthorized'}, 403
 
-    if quantity <= 0:
+    if new_quantity <= 0:
         return {'error': 'Quantity must be greater than 0'}, 400
 
-    cart_item.quantity = quantity
+    listing = Listing.query.get(cart_item.listing_id)
+
+    if not listing:
+        return {'error': 'Listing not found'}, 404
+
+    # Calculate the difference between the new quantity and the old quantity
+    quantity_difference = new_quantity - cart_item.quantity
+
+    # Check if there's enough stock for the update
+    if listing.quantity < quantity_difference:
+        return {'error': 'Not enough quantity available'}, 400
+
+    # Update the listing quantity
+    listing.quantity -= quantity_difference
+
+    # Update the cart item quantity
+    cart_item.quantity = new_quantity
+
     db.session.commit()
 
     return jsonify(cart_item.to_dict()), 200
@@ -94,7 +111,13 @@ def remove_from_cart(item_id):
     if cart_item.cart.user_id != current_user.id:
         return {'error': 'Unauthorized'}, 403
 
+    listing = Listing.query.get(cart_item.listing_id)
+
+    if listing:
+        # Add the quantity back to the listing
+        listing.quantity += cart_item.quantity
+
     db.session.delete(cart_item)
     db.session.commit()
 
-    return jsonify({'message': 'Item removed from cart'}), 200
+    return {'message': 'Item removed from cart'}, 200

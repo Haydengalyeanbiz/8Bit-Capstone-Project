@@ -84,11 +84,13 @@ export const fetchAddToCart =
 		if (response.ok) {
 			const updatedCart = await response.json();
 			dispatch(addToCart(updatedCart));
+
+			// Optionally, you can dispatch an action to update the listing quantity in the state
+			// e.g., dispatch(updateListingQuantity(listingId, availableQuantity - quantity));
 		} else {
 			console.error('Failed to add to cart:', response.statusText);
 		}
 	};
-
 // ? --------------UPDATE CART ITEM-----------------
 export const fetchUpdateCartItem = (itemId, quantity) => async (dispatch) => {
 	const response = await fetch(`/api/shopping-cart/${itemId}`, {
