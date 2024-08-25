@@ -1,76 +1,116 @@
-import { useEffect } from 'react';
-// import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchAllListings } from '../../redux/listing';
 import './Listings.css';
-import { AddToWishlist } from '../AddToWishlist/AddToWishlist';
+import { fetchAllListings } from '../../redux/listing';
+import { fetchAllCategories } from '../../redux/category';
 import { fetchAddToCart } from '../../redux/shoppingCart';
 
 export const Listings = () => {
-	// const navigate = useNavigate();
+	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const listings = useSelector((state) => state.listings.AllListings);
+	const categories = useSelector((state) => state.categories.categories);
+	const [selectedCategory, setSelectedCategory] = useState(null);
 
 	useEffect(() => {
+		dispatch(fetchAllCategories());
 		dispatch(fetchAllListings());
 	}, [dispatch]);
 
-	// const handleNavigate = (id) => {
-	// 	navigate(`/listings/${id}`);
-	// };
+	const handleNavigate = (id) => {
+		navigate(`/listings/${id}`);
+	};
 
 	const handleAddToCart = (listingId) => {
 		dispatch(fetchAddToCart(listingId));
 	};
 
-	return (
-		<div className='listing-container'>
-			{listings && listings.length > 0 ? (
-				listings.map((listing) => (
-					<div
-						// onClick={() => handleNavigate(listing.id)}
-						className='listing-structure border-gradient'
-						key={listing.id}
-					>
-						<div>
-							<h2 className='listing-title'>{listing.title}</h2>
-							<AddToWishlist listing={listing} />
-						</div>
-						<p className='listing-description'>{listing.description}</p>
+	const handleCategoryClick = (category) => {
+		setSelectedCategory((prevCategory) =>
+			prevCategory === category ? null : category
+		);
+	};
 
-						<img
-							className='listing-image'
-							src={listing.image_url}
-							alt={listing.title}
-						/>
-						<div className='listing-categories'>
-							{listing.categories && listing.categories.length > 0 ? (
-								listing.categories.map((category, index) => (
-									<span
-										key={index}
-										className='listing-category'
+	const filterListingsByCategory = (listings, selectedCategory) => {
+		if (selectedCategory) {
+			return listings.filter((listing) =>
+				listing.categories.includes(selectedCategory.name)
+			);
+		}
+		return listings;
+	};
+
+	const filteredListings = filterListingsByCategory(listings, selectedCategory);
+	return (
+		<div className='home-listings-cat-wrapper'>
+			<div className='category-container'>
+				{categories &&
+					categories.map((category) => (
+						<button
+							key={category.id}
+							onClick={() => handleCategoryClick(category)}
+							className={
+								selectedCategory === category
+									? 'category-button active'
+									: 'category-button'
+							}
+						>
+							{category.name}
+						</button>
+					))}
+			</div>
+			<div className='listing-container'>
+				{filteredListings && filteredListings.length > 0 ? (
+					filteredListings.map((listing) => (
+						<div
+							className='listing-structure'
+							key={listing.id}
+							onClick={() => handleNavigate(listing.id)}
+						>
+							<div className='listing-header-container'>
+								<h2 className='listing-title'>{listing.title}</h2>
+							</div>
+
+							<img
+								className='listing-image'
+								src={listing.image_url}
+								alt={listing.title}
+							/>
+							<div>
+								<div className='listing-categories'>
+									{listing.categories && listing.categories.length > 0 ? (
+										listing.categories.map((category, index) => (
+											<p
+												key={index}
+												className='listing-category'
+											>
+												{category}
+											</p>
+										))
+									) : (
+										<span className='listing-no-category'>No categories</span>
+									)}
+								</div>
+								<div
+									className='listing-footer-container'
+									onClick={(e) => e.stopPropagation()}
+								>
+									<p className='listing-price'>${listing.price}</p>
+									<button
+										onClick={() => handleAddToCart(listing.id)}
+										className='add-to-cart-listing'
 									>
-										{category}
-									</span>
-								))
-							) : (
-								<span className='listing-no-category'>No categories</span>
-							)}
+										Add to cart
+									</button>
+								</div>
+							</div>
 						</div>
-						<div className='listing-'>
-							<p className='listing-price'>${listing.price} - USD</p>
-							<button
-								onClick={() => handleAddToCart(listing.id)}
-								className='add-to-cart-listing'
-							>
-								Add to cart
-							</button>
-						</div>
-					</div>
-				))
-			) : (
-				<p>No listings available.</p>
-			)}
+					))
+				) : (
+					<p>No listings available.</p>
+				)}
+			</div>
 		</div>
 	);
 };

@@ -10,3 +10,10 @@ class Category(db.Model):
     name = db.Column(db.String(255), nullable=False, unique=True)
 
     listings = db.relationship('Listing', secondary=listing_categories, back_populates='categories')
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            # Add any other fields you need
+        }

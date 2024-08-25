@@ -11,10 +11,12 @@ import reviewsReducer from './reviews';
 import profileReducer from './profileActions';
 import wishlistReducer from './wishlist';
 import cartReducer from './shoppingCart';
+import categoryReducer from './category';
 
 const rootReducer = combineReducers({
 	session: sessionReducer,
 	listings: listingsReducer,
+	categories: categoryReducer,
 	reviews: reviewsReducer,
 	profile: profileReducer,
 	wishlist: wishlistReducer,

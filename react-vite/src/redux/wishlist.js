@@ -74,20 +74,18 @@ export const fetchDeleteFromWishlist = (itemId) => async (dispatch) => {
 
 // * WISHLIST REDUCER
 
-const initialState = { wishlist: [] };
+const initialState = { items: [] };
 
 export default function wishlistReducer(state = initialState, action) {
 	switch (action.type) {
 		case GET_USER_WISHLIST:
-			return { ...state, wishlist: action.payload };
+			return { ...state, items: action.payload };
 		case ADD_USER_WISHLIST:
-			return { ...state, wishlist: [...state.wishlist, action.payload] };
+			return { ...state, items: [...state.items, action.payload] };
 		case DELETE_USER_WISHLIST:
 			return {
 				...state,
-				wishlist: state.wishlist.filter(
-					(item) => item.id !== action.payload.id
-				),
+				items: state.items.filter((item) => item.id !== action.payload.id),
 			};
 		default:
 			return state;

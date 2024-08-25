@@ -54,6 +54,7 @@ function Navigation({ isScrolled }) {
 				</h2>
 				{user && (
 					<div className='nav-bar-btns'>
+						<button onClick={logout}>Log Out</button>
 						<button
 							className='profile-btn'
 							onClick={() => handleProfile(user.id)}
@@ -66,7 +67,6 @@ function Navigation({ isScrolled }) {
 						>
 							<FaShoppingCart />
 						</button>
-						<button onClick={logout}>Log Out</button>
 					</div>
 				)}
 			</div>

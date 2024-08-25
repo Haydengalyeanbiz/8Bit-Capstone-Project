@@ -1,36 +1,70 @@
+.home-listings-cat-wrapper {
+	background-color: var(--primary-clr);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+	border-top: solid 3px var(--heavy-accent-clr);
+}
+
+.category-container {
+	display: flex;
+	padding: 2rem 0;
+	gap: 1rem;
+}
+
+.category-button {
+	border: solid 1px var(--heavy-accent-clr);
+	border-radius: 12px;
+	padding: 0.5rem 1rem;
+	cursor: pointer;
+	background-color: transparent;
+}
+
+.category-button.active {
+	border-color: var(--heavy-accent-clr);
+	background-color: var(--light-accent-clr);
+	color: white;
+}
+
 .listing-container {
 	display: grid;
-	grid-template-columns: repeat(3, minmax(250px, 1fr));
+	grid-template-columns: repeat(4, minmax(300px, 1fr));
+	margin: 0 auto;
 	gap: 2rem;
-	width: 100%;
+	width: 90%;
+	padding: 1rem 0;
 }
 
 .listing-structure {
 	display: flex;
 	flex-direction: column;
-	border: solid 3px;
+	justify-content: space-between;
+	border: solid 3px var(--heavy-accent-clr);
+	border-radius: 12px;
+	height: 410px;
 	border-image-slice: 1;
 	padding: 1rem 0.3rem;
 	background-color: var(--primary-clr);
-	min-width: 300px;
+	width: 100%; /* Ensures the item takes the full width within the grid cell */
+	max-width: 300px;
 	cursor: pointer;
 }
 
-.border-gradient {
-	border-image-source: linear-gradient(
-		to left,
-		var(--heavy-accent-clr),
-		var(--light-accent-clr)
-	);
+.listing-image {
+	height: 300px;
+	width: 300px;
 }
 
-.listing-image {
-	height: auto;
-	width: 100%;
+.listing-header-container {
+	display: flex;
+	justify-content: space-between;
+	gap: 1rem;
 }
 
 .listing-title {
 	margin: 0;
+	padding: 0;
 	font-size: 1.5rem;
 	color: var(--accent-clr);
 }
@@ -44,9 +78,16 @@
 	margin-left: 0.5rem;
 }
 
-.listing-description {
-	margin: 0.5rem 0;
-	color: var(--secondary-clr);
+.listing-categories {
+	display: flex;
+	justify-content: center;
+	gap: 1rem;
+	width: 100%;
+}
+
+.listing-footer-container {
+	display: flex;
+	justify-content: space-between;
 }
 
 .listing-price {
@@ -56,11 +97,12 @@
 }
 
 .add-to-cart-listing {
-	background-color: var(--accent-clr);
-	border: none;
-	padding: 0.5rem;
+	border: solid 3px var(--heavy-accent-clr);
+	border-radius: 12px;
+	transition: all 0.2s ease-in-out;
+}
+
+.add-to-cart-listing:hover {
 	color: white;
-	cursor: pointer;
-	border-radius: 5px;
-	font-size: 1rem;
+	background-color: var(--light-accent-clr);
 }

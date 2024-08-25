@@ -19,7 +19,7 @@ def seed_listings():
             'description': 'A brand new Xbox Series X console.',
             'price': 499.99,
             'quantity': 5,
-            'image_url': 'https://capstonebitprojectbucket.s3.amazonaws.com/xbox.jpg',
+            'image_url': 'https://capstonebitprojectbucket.s3.amazonaws.com/xbox-white.png',
         },
         {
             'user_id': 2,

@@ -31,7 +31,7 @@
 
 .main-content {
 	margin-top: 70px; /* Increase margin to accommodate the navbar height */
-	padding: 1rem;
+	padding: 1rem 0;
 }
 
 .logo {
