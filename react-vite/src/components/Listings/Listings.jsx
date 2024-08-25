@@ -10,7 +10,6 @@ export const Listings = () => {
 	// const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const listings = useSelector((state) => state.listings.AllListings);
-	const user_id = useSelector((state) => state.session.user.id);
 
 	useEffect(() => {
 		dispatch(fetchAllListings());
@@ -20,9 +19,8 @@ export const Listings = () => {
 	// 	navigate(`/listings/${id}`);
 	// };
 
-	const handleAddToCart = (userId, listingId) => {
-		console.log(userId, listingId);
-		dispatch(fetchAddToCart(listingId, userId));
+	const handleAddToCart = (listingId) => {
+		dispatch(fetchAddToCart(listingId));
 	};
 
 	return (
@@ -62,7 +60,7 @@ export const Listings = () => {
 						<div className='listing-'>
 							<p className='listing-price'>${listing.price} - USD</p>
 							<button
-								onClick={() => handleAddToCart(user_id, listing.id)}
+								onClick={() => handleAddToCart(listing.id)}
 								className='add-to-cart-listing'
 							>
 								Add to cart

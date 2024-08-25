@@ -54,9 +54,16 @@ export const fetchAddToCart =
 			(item) => item.listing_id === listingId
 		);
 
-		const availableQuantity = state.listings.AllListings.find(
+		const listing = state.listings.AllListings.find(
 			(listing) => listing.id === listingId
-		).quantity;
+		);
+
+		if (!listing) {
+			console.error('Listing not found');
+			return;
+		}
+
+		const availableQuantity = listing.quantity;
 
 		if (
 			currentCartItem &&
