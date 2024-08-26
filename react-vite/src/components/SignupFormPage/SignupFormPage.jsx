@@ -135,7 +135,8 @@ function SignupFormPage() {
 							onBlur={handleBlur('email')}
 							required
 						/>
-						{errors.email && <p className='errors-su'>{errors.email}</p>}
+						<p className='errors-su'>{errors.email}</p>
+						{/* {errors.email && } */}
 					</div>
 
 					<div className='input-wrapper'>
@@ -150,9 +151,9 @@ function SignupFormPage() {
 							onBlur={handleBlur('firstName')}
 							required
 						/>
-						{errors.firstName && (
-							<p className='errors-su'>{errors.firstName}</p>
-						)}
+						<p className='errors-su'>{errors.firstName}</p>
+						{/* {errors.firstName && (
+						)} */}
 					</div>
 
 					<div className='input-wrapper'>
@@ -167,7 +168,8 @@ function SignupFormPage() {
 							onBlur={handleBlur('lastName')}
 							required
 						/>
-						{errors.lastName && <p className='errors-su'>{errors.lastName}</p>}
+						<p className='errors-su'>{errors.lastName}</p>
+						{/* {errors.lastName && } */}
 					</div>
 
 					<div className='input-wrapper'>
@@ -182,7 +184,8 @@ function SignupFormPage() {
 							onBlur={handleBlur('address')}
 							required
 						/>
-						{errors.address && <p className='errors-su'>{errors.address}</p>}
+						<p className='errors-su'>{errors.address}</p>
+						{/* {errors.address && } */}
 					</div>
 				</div>
 				<div className='su-form-right'>
@@ -198,7 +201,8 @@ function SignupFormPage() {
 							onBlur={handleBlur('username')}
 							required
 						/>
-						{errors.username && <p className='errors-su'>{errors.username}</p>}
+						<p className='errors-su'>{errors.username}</p>
+						{/* {errors.username && } */}
 					</div>
 
 					<div className='input-wrapper'>
@@ -213,7 +217,8 @@ function SignupFormPage() {
 							onBlur={handleBlur('password')}
 							required
 						/>
-						{errors.password && <p className='errors-su'>{errors.password}</p>}
+						<p className='errors-su'>{errors.password}</p>
+						{/* {errors.password && <p className='errors-su'>{errors.password}</p>} */}
 					</div>
 					<div className='input-wrapper'>
 						<label
@@ -229,14 +234,15 @@ function SignupFormPage() {
 							onBlur={handleBlur('confirmPassword')}
 							required
 						/>
-
-						{errors.confirmPassword && (
-							<p className='errors-su'>{errors.confirmPassword}</p>
-						)}
+						<p className='errors-su'>{errors.confirmPassword}</p>
+						{/* {errors.confirmPassword && (
+							
+						)} */}
 					</div>
 				</div>
 			</form>
 			<button
+				className='sign-up-submit-btn'
 				onClick={handleSubmit}
 				type='submit'
 			>

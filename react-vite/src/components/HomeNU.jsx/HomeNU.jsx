@@ -26,28 +26,30 @@ export const HomeNU = () => {
 		<div>
 			<Carousel /> {/* Add the Carousel here */}
 			<div className='login-main-holder'>
-				<h1 className='homenu-title'>Welcome to 8bit</h1>
 				<div className='login-forms-container'>
-					<p>log-in now, or sign up!</p>
-					<div className='login-btns-container'>
-						<button
-							className='homenu-btn'
-							onClick={() => setSelected('login')}
-						>
-							Login
-						</button>
-						<button
-							className='homenu-btn'
-							onClick={() => setSelected('signup')}
-						>
-							Sign Up
-						</button>
-						<button
-							className='homenu-btn'
-							onClick={handleDemo}
-						>
-							Demo-login
-						</button>
+					<div>
+						<h1 className='homenu-title'>Welcome to 8bit</h1>
+						<p>log-in now, or sign up!</p>
+						<div className='login-btns-container'>
+							<button
+								className='homenu-btn'
+								onClick={() => setSelected('login')}
+							>
+								Login
+							</button>
+							<button
+								className='homenu-btn'
+								onClick={() => setSelected('signup')}
+							>
+								Sign Up
+							</button>
+							<button
+								className='homenu-btn'
+								onClick={handleDemo}
+							>
+								Demo-login
+							</button>
+						</div>
 					</div>
 					<div>
 						{selected === 'login' && <LoginFormPage />}

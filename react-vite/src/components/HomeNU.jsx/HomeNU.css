@@ -1,6 +1,7 @@
 .login-main-holder {
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
 	align-items: center;
 	height: 90dvh;
 	gap: 1rem;
@@ -8,13 +9,15 @@
 }
 .login-forms-container {
 	display: flex;
-	flex-direction: column;
+	height: 80%;
+	width: 80%;
+	justify-content: space-around;
 	align-items: center;
 	gap: 1rem;
 	z-index: 10;
 	border: solid 3px var(--third-clr);
 	border-radius: 12px;
-	padding: 1.5rem;
+	padding: 1.5rem 0 1.5rem 1.5rem;
 }
 
 .homenu-title {
