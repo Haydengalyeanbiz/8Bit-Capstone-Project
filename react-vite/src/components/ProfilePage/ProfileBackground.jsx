@@ -6,7 +6,7 @@ export const ProfileBackground = () => {
 			<div className='carousel-overlay'>
 				<img
 					className='profile-background-image'
-					src='/images/gameroom.webp'
+					src='/images/main-background.gif'
 					alt='pixel art gameroom'
 				/>
 			</div>

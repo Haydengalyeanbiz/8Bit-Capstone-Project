@@ -22,7 +22,6 @@ export const Wishlist = () => {
 
 	return (
 		<div className='wishlist-wrapper'>
-			<h2>Your Wishlist</h2>
 			<div className='wishlist-grid'>
 				{wishlist && wishlist.length > 0 ? (
 					wishlist.map((item) => (

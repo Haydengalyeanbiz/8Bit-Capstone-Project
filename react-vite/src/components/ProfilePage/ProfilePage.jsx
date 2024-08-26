@@ -56,7 +56,7 @@ export const ProfilePage = () => {
 	};
 
 	return (
-		<div>
+		<div className='profile-page-wrapper'>
 			<ProfileBackground />
 			<div className='profile-page-masthead'>
 				<h1>Welcome {sessionUser.first_name} to your GameRoom!</h1>
@@ -81,55 +81,83 @@ export const ProfilePage = () => {
 				>
 					Your Wishlist
 				</button>
+				<button>Edit Profile</button>
 			</div>
-			{view === 'listings' && (
-				<section>
-					<h2>Your Listings</h2>
-					{userListings && userListings.length > 0 ? (
-						userListings.map((listing) => (
-							<div key={listing.id}>
-								<h3>{listing.title}</h3>
-								<p>{listing.description}</p>
-								<img
-									src={listing.image_url}
-									alt={listing.title}
-								/>
-								<p>Price: ${listing.price}</p>
-								<button onClick={() => handleEditListing(listing.id)}>
-									Edit
-								</button>
-								<button onClick={() => handleDeleteListing(listing.id)}>
-									Delete
-								</button>
-							</div>
-						))
-					) : (
-						<p>No listings found.</p>
-					)}
-				</section>
-			)}
-			{view === 'reviews' && (
-				<section>
-					<h2>Your Reviews</h2>
-					{userReviews && userReviews.length > 0 ? (
-						userReviews.map((review) => (
-							<div key={review.id}>
-								<h3>Review for {review.listing_title}</h3>
-								<p>Rating: {review.rating}</p>
-								<p>{review.comment}</p>
-								<p>{review.created_at}</p>
-								<button onClick={() => handleEditReview(review)}>Edit</button>
-								<button onClick={() => handleDeleteReview(review.id)}>
-									Delete
-								</button>
-							</div>
-						))
-					) : (
-						<p>No reviews found.</p>
-					)}
-				</section>
-			)}
-			{view === 'wishlist' && <Wishlist />}{' '}
+			<div className='profile-actions-wrapper'>
+				{view === 'listings' && (
+					<section className='profile-page-section'>
+						{userListings && userListings.length > 0 ? (
+							userListings.map((listing) => (
+								<div
+									className='listing-div-structure'
+									key={listing.id}
+								>
+									<h3>{listing.title}</h3>
+									<p>{listing.description}</p>
+									<img
+										className='prof-listing-image'
+										src={listing.image_url}
+										alt={listing.title}
+									/>
+									<p>Price: ${listing.price}</p>
+									<div className='listing-btn-group'>
+										<button
+											className='list-btn edit'
+											onClick={() => handleEditListing(listing.id)}
+										>
+											Edit
+										</button>
+										<button
+											className='list-btn delete'
+											onClick={() => handleDeleteListing(listing.id)}
+										>
+											Delete
+										</button>
+									</div>
+								</div>
+							))
+						) : (
+							<p>No listings found.</p>
+						)}
+					</section>
+				)}
+				{view === 'reviews' && (
+					<section className='profile-page-section'>
+						{userReviews && userReviews.length > 0 ? (
+							userReviews.map((review) => (
+								<div
+									className='review-prof-structure'
+									key={review.id}
+								>
+									<h3 className='review-prof-title'>
+										Review for {review.listing_title}
+									</h3>
+									<p>Rating: {review.rating}</p>
+									<p className='review-comment'>{review.comment}</p>
+									<p>{review.created_at.slice(0, 16)}</p>
+									<div className='listing-btn-group'>
+										<button
+											className='list-btn edit'
+											onClick={() => handleEditReview(review)}
+										>
+											Edit
+										</button>
+										<button
+											className='list-btn delete'
+											onClick={() => handleDeleteReview(review.id)}
+										>
+											Delete
+										</button>
+									</div>
+								</div>
+							))
+						) : (
+							<p>No reviews found.</p>
+						)}
+					</section>
+				)}
+				{view === 'wishlist' && <Wishlist />}{' '}
+			</div>
 		</div>
 	);
 };
