@@ -35,7 +35,7 @@ export const ReviewWhole = ({ reviews, listingId, isOwner }) => {
 	};
 
 	return (
-		<div>
+		<div className='review-whole-structure'>
 			{sessionUser && !isOwner && (
 				<button onClick={handleOpenReviewModal}>Leave a Review</button>
 			)}

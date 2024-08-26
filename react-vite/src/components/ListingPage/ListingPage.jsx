@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchGetListing, fetchDeleteListing } from '../../redux/listing';
 import { fetchReviews } from '../../redux/reviews';
 import { FaRegHeart, FaHeart } from 'react-icons/fa6';
+import { FaStar } from 'react-icons/fa';
 import {
 	fetchAddToWishlist,
 	fetchDeleteFromWishlist,
@@ -110,15 +111,21 @@ export const ListingPage = () => {
 				<div className='listing-p-text-container'>
 					<div className='half-listing-text'>
 						<p>{listing.description}</p>
-						{averageRating && <p>Average Rating: {averageRating} / 5</p>}
+						{averageRating && (
+							<p className='average-star-list'>
+								<FaStar /> {averageRating}
+							</p>
+						)}
 					</div>
 					<div className='other-half-listing-text'>
-						<button
-							onClick={handleToggleWishlist}
-							className='wishlist-toggle-btn'
-						>
-							{isInWishlist ? <FaHeart /> : <FaRegHeart />}
-						</button>
+						{!isOwner && (
+							<button
+								onClick={handleToggleWishlist}
+								className='wishlist-toggle-btn'
+							>
+								{isInWishlist ? <FaHeart /> : <FaRegHeart />}
+							</button>
+						)}
 						{isOwner ? (
 							<div className='edit-btns-container'>
 								<button
@@ -135,7 +142,7 @@ export const ListingPage = () => {
 								</button>
 							</div>
 						) : (
-							<button>Add to cart</button>
+							<button className='edit list-btn'>Add to cart</button>
 						)}
 					</div>
 				</div>
