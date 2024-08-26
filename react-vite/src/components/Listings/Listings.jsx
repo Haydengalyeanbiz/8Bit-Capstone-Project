@@ -9,6 +9,7 @@ import { fetchAddToCart } from '../../redux/shoppingCart';
 export const Listings = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const user = useSelector((state) => state.session.user);
 	const listings = useSelector((state) => state.listings.AllListings);
 	const categories = useSelector((state) => state.categories.categories);
 	const [selectedCategory, setSelectedCategory] = useState(null);
@@ -21,6 +22,12 @@ export const Listings = () => {
 	const handleNavigate = (id) => {
 		navigate(`/listings/${id}`);
 	};
+
+	const handleEdit = (id) => {
+		navigate(`/listings/${id}/edit`);
+	};
+
+	// const handleDelete = ()
 
 	const handleAddToCart = (listingId) => {
 		dispatch(fetchAddToCart(listingId));
@@ -62,51 +69,62 @@ export const Listings = () => {
 			</div>
 			<div className='listing-container'>
 				{filteredListings && filteredListings.length > 0 ? (
-					filteredListings.map((listing) => (
-						<div
-							className='listing-structure'
-							key={listing.id}
-							onClick={() => handleNavigate(listing.id)}
-						>
-							<div className='listing-header-container'>
+					filteredListings.map((listing) => {
+						const isOwner = user && user.id === listing.user_id;
+						return (
+							<div
+								className='listing-structure'
+								key={listing.id}
+								onClick={() => handleNavigate(listing.id)}
+							>
 								<h2 className='listing-title'>{listing.title}</h2>
-							</div>
 
-							<img
-								className='listing-image'
-								src={listing.image_url}
-								alt={listing.title}
-							/>
-							<div>
-								<div className='listing-categories'>
-									{listing.categories && listing.categories.length > 0 ? (
-										listing.categories.map((category, index) => (
-											<p
-												key={index}
-												className='listing-category'
-											>
-												{category}
-											</p>
-										))
-									) : (
-										<span className='listing-no-category'>No categories</span>
-									)}
-								</div>
-								<div
-									className='listing-footer-container'
-									onClick={(e) => e.stopPropagation()}
-								>
-									<p className='listing-price'>${listing.price}</p>
-									<button
-										onClick={() => handleAddToCart(listing.id)}
-										className='add-to-cart-listing'
+								<img
+									className='listing-image'
+									src={listing.image_url}
+									alt={listing.title}
+								/>
+								<div>
+									<div className='listing-categories'>
+										{listing.categories && listing.categories.length > 0 ? (
+											listing.categories.map((category, index) => (
+												<p
+													key={index}
+													className='listing-category'
+												>
+													{category}
+												</p>
+											))
+										) : (
+											<span className='listing-no-category'>No categories</span>
+										)}
+									</div>
+									<div
+										className='listing-footer-container'
+										onClick={(e) => e.stopPropagation()}
 									>
-										Add to cart
-									</button>
+										<p className='listing-price'>${listing.price}</p>
+										{isOwner ? (
+											<>
+												<button
+													onClick={() =>
+														handleEdit(`/listings/${listing.id}/edit`)
+													}
+												>
+													Edit Listing
+												</button>
+												<button>Delete Listing</button>
+											</>
+										) : (
+											<button onClick={() => handleAddToCart(listing.id)}>
+												Add to cart
+											</button>
+										)}
+									</div>
 								</div>
 							</div>
-						</div>
-					))
+						);
+					})
 				) : (
 					<p>No listings available.</p>
 				)}

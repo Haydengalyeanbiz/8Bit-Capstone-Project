@@ -7,8 +7,10 @@ import { FaRegHeart, FaHeart } from 'react-icons/fa6';
 import {
 	fetchAddToWishlist,
 	fetchDeleteFromWishlist,
-	fetchUserWishlist, // Assuming you have this action to fetch the wishlist
+	fetchUserWishlist,
 } from '../../redux/wishlist';
+import { useModal } from '../../context/Modal';
+import DeleteListingModal from '../DeleteListingModal/DeleteListingModal';
 import './ListingPage.css';
 import ReviewWhole from '../ReviewWhole/ReviewWhole';
 
@@ -19,24 +21,27 @@ export const ListingPage = () => {
 	const listing = useSelector((state) => state.listings.selectedListing);
 	const reviews = useSelector((state) => state.reviews.listingReviews);
 	const sessionUser = useSelector((state) => state.session.user);
-	const wishlist = useSelector((state) => state.wishlist.items);
+	const wishlist = useSelector((state) => state.wishlist.items || []);
 	const [isInWishlist, setIsInWishlist] = useState(false);
 
-	// Fetch listing and reviews once on component mount
+	const { setModalContent, closeModal } = useModal();
+
+	// Fetch listing and reviews on component mount
 	useEffect(() => {
 		dispatch(fetchGetListing(id));
 		dispatch(fetchReviews(id));
-	}, [dispatch, id]);
+		dispatch(fetchUserWishlist(sessionUser.id)); // Fetch user's wishlist
+	}, [dispatch, id, sessionUser.id]);
 
+	// Check if the listing is in the wishlist after the listing and wishlist are fetched
 	useEffect(() => {
-		if (listing?.id) {
+		if (listing?.id && wishlist.length > 0) {
 			const isListed = wishlist.some((item) => item.listing_id === listing.id);
-			if (isListed !== isInWishlist) {
-				setIsInWishlist(isListed);
-			}
+			setIsInWishlist(isListed);
 		}
-	}, [listing?.id, wishlist, isInWishlist]);
+	}, [listing?.id, wishlist]);
 
+	// Handle adding/removing from wishlist
 	const handleToggleWishlist = async () => {
 		if (isInWishlist) {
 			const wishlistItem = wishlist.find(
@@ -44,24 +49,23 @@ export const ListingPage = () => {
 			);
 			if (wishlistItem) {
 				await dispatch(fetchDeleteFromWishlist(wishlistItem.id));
-				await dispatch(fetchUserWishlist()); // Re-fetch the wishlist to update the state
+				setIsInWishlist(false); // Update the state immediately
 			}
 		} else {
-			await dispatch(fetchAddToWishlist(listing));
-			await dispatch(fetchUserWishlist()); // Re-fetch the wishlist to update the state
+			const result = await dispatch(fetchAddToWishlist(listing));
+			if (result) {
+				setIsInWishlist(true); // Update the state immediately
+			}
 		}
 	};
 
 	const calculateAverageRating = (reviews) => {
 		if (reviews.length === 0) return null;
-
 		const totalRating = reviews.reduce(
 			(total, review) => total + review.rating,
 			0
 		);
-		const averageRating = (totalRating / reviews.length).toFixed(1);
-
-		return averageRating;
+		return (totalRating / reviews.length).toFixed(1);
 	};
 
 	const averageRating = calculateAverageRating(reviews);
@@ -73,8 +77,17 @@ export const ListingPage = () => {
 	};
 
 	const handleDelete = () => {
-		dispatch(fetchDeleteListing(id));
-		navigate('/'); // Navigate to home or any other page after deletion
+		setModalContent(
+			<DeleteListingModal
+				show={true}
+				onConfirm={() => {
+					dispatch(fetchDeleteListing(id));
+					closeModal();
+					navigate('/');
+				}}
+				onCancel={closeModal}
+			/>
+		);
 	};
 
 	if (!listing) {
@@ -99,7 +112,7 @@ export const ListingPage = () => {
 						<p>{listing.description}</p>
 						{averageRating && <p>Average Rating: {averageRating} / 5</p>}
 					</div>
-					<div>
+					<div className='other-half-listing-text'>
 						<button
 							onClick={handleToggleWishlist}
 							className='wishlist-toggle-btn'
@@ -107,10 +120,20 @@ export const ListingPage = () => {
 							{isInWishlist ? <FaHeart /> : <FaRegHeart />}
 						</button>
 						{isOwner ? (
-							<>
-								<button onClick={handleEdit}>Edit Listing</button>
-								<button onClick={handleDelete}>Delete Listing</button>
-							</>
+							<div className='edit-btns-container'>
+								<button
+									className='list-btn edit'
+									onClick={handleEdit}
+								>
+									Edit Listing
+								</button>
+								<button
+									className='list-btn delete'
+									onClick={handleDelete}
+								>
+									Delete Listing
+								</button>
+							</div>
 						) : (
 							<button>Add to cart</button>
 						)}
