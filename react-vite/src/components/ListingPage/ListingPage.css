@@ -37,6 +37,7 @@
 .other-half-listing-text {
 	display: flex;
 	flex-direction: column;
+	align-items: center;
 	gap: 0.4rem;
 }
 
@@ -48,13 +49,29 @@
 
 .list-btn {
 	border: solid 1px var(--light-accent-clr);
+	border-radius: 12px;
 	padding: 0.4rem 1rem;
 }
 
 .edit {
+	background-color: var(--light-accent-clr);
+	transition: all 0.2s ease-in-out;
+}
+
+.edit:hover {
+	background-color: var(--secondary-clr);
+	border: solid 1px var(--secondary-clr);
+	color: white;
 }
 
 .delete {
+	background-color: var(--heavy-accent-clr);
+	transition: all 0.2s ease-in-out;
+}
+
+.delete:hover {
+	background-color: #e74c3c;
+	border: solid 1px #e74c3c;
 }
 
 .listing-p-image-container {
@@ -72,4 +89,9 @@
 
 .wishlist-toggle-btn {
 	font-size: var(--fs-large);
+	width: fit-content;
+}
+
+.wishlist-toggle-btn:hover {
+	color: var(--heavy-accent-clr);
 }

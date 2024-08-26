@@ -88,6 +88,10 @@ button {
 	cursor: pointer;
 }
 
+button:hover {
+	color: white;
+}
+
 label {
 	font-family: var(--ff-primary);
 }
