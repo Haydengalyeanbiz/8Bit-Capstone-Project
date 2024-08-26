@@ -9,9 +9,9 @@ import { useModal } from '../../context/Modal';
 const EditReviewFormModal = ({ review }) => {
 	const dispatch = useDispatch();
 	const { closeModal } = useModal();
-	const [rating, setRating] = useState(review.rating); // Set initial state with existing review data
+	const [rating, setRating] = useState(review.rating);
 	const [hover, setHover] = useState(review.rating);
-	const [comment, setComment] = useState(review.comment); // Set initial state with existing review data
+	const [comment, setComment] = useState(review.comment);
 	const [formErrors, setFormErrors] = useState({});
 	const [hasSubmitted, setHasSubmitted] = useState(false);
 
@@ -34,21 +34,19 @@ const EditReviewFormModal = ({ review }) => {
 		e.preventDefault();
 		setHasSubmitted(true);
 
-		// Check for form errors before submitting
 		if (Object.keys(formErrors).length === 0) {
 			const formData = {
 				rating,
 				comment,
 			};
 
-			const result = await dispatch(fetchUpdateReview(review.id, formData)); // Dispatch the update action
+			const result = await dispatch(fetchUpdateReview(review.id, formData)); //
 
 			// Check for errors in the response
 			if (result.errors) {
 				console.log('Server Errors:', result.errors);
-				setFormErrors(result.errors); // Display server-side errors if any
+				setFormErrors(result.errors);
 			} else {
-				// Close modal and reset fields on successful update
 				closeModal();
 				setRating(0);
 				setComment('');

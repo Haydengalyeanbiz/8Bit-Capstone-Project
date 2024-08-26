@@ -9,7 +9,8 @@ import { fetchDeleteListing } from '../../redux/listing';
 import { fetchDeleteReview } from '../../redux/reviews';
 import { useModal } from '../../context/Modal';
 import EditReviewFormModal from '../EditReviewFormModal/EditReviewFormModal';
-import { Wishlist } from '../Wishlist/Wishlist'; // Import the Wishlist component
+import { Wishlist } from '../Wishlist/Wishlist';
+import { ProfileBackground } from './ProfileBackground';
 import './ProfilePage.css';
 
 export const ProfilePage = () => {
@@ -56,7 +57,10 @@ export const ProfilePage = () => {
 
 	return (
 		<div>
-			<h1>Welcome {sessionUser.first_name} to your GameRoom!</h1>
+			<ProfileBackground />
+			<div className='profile-page-masthead'>
+				<h1>Welcome {sessionUser.first_name} to your GameRoom!</h1>
+			</div>
 			<div className='button-group'>
 				<button onClick={handleNewList}>Add New Listing</button>
 				<button
@@ -126,7 +130,6 @@ export const ProfilePage = () => {
 				</section>
 			)}
 			{view === 'wishlist' && <Wishlist />}{' '}
-			{/* Render Wishlist when selected */}
 		</div>
 	);
 };

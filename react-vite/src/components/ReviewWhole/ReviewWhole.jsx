@@ -2,13 +2,18 @@ import { useSelector, useDispatch } from 'react-redux';
 import { FaStar } from 'react-icons/fa';
 import { useModal } from '../../context/Modal';
 import ReviewForm from '../ReviewFormModal/ReviewFormModal';
+import EditReviewFormModal from '../EditReviewFormModal/EditReviewFormModal';
+import DeleteReviewModal from '../DeleteReviewModal.css/DeleteReviewModal';
 import { fetchDeleteReview } from '../../redux/reviews';
 import './ReviewWhole.css';
 
 export const ReviewWhole = ({ reviews, listingId, isOwner }) => {
 	const dispatch = useDispatch();
 	const sessionUser = useSelector((state) => state.session.user);
-	const { setModalContent } = useModal(); // Destructure setModalContent from useModal
+	const { setModalContent, closeModal } = useModal();
+	const hasReviewed = reviews.some(
+		(review) => review.user_id === sessionUser?.id
+	);
 
 	const renderStars = (rating) => {
 		return (
@@ -29,14 +34,20 @@ export const ReviewWhole = ({ reviews, listingId, isOwner }) => {
 	};
 
 	const handleDeleteReview = (reviewId) => {
-		if (window.confirm('Are you sure you want to delete this review?')) {
-			dispatch(fetchDeleteReview(reviewId));
-		}
+		setModalContent(
+			<DeleteReviewModal
+				onConfirm={() => {
+					dispatch(fetchDeleteReview(reviewId));
+					closeModal(); // Close the modal after deletion
+				}}
+				onCancel={closeModal}
+			/>
+		);
 	};
 
 	return (
 		<div className='reviews-wrapper'>
-			{sessionUser && !isOwner && (
+			{sessionUser && !isOwner && !hasReviewed && (
 				<button
 					className='leave-review-btn'
 					onClick={handleOpenReviewModal}
@@ -58,7 +69,9 @@ export const ReviewWhole = ({ reviews, listingId, isOwner }) => {
 								<div className='review-actions'>
 									<button
 										className='list-btn edit'
-										onClick={() => handleOpenReviewModal(review)}
+										onClick={() =>
+											setModalContent(<EditReviewFormModal review={review} />)
+										}
 									>
 										Edit
 									</button>
@@ -79,4 +92,5 @@ export const ReviewWhole = ({ reviews, listingId, isOwner }) => {
 		</div>
 	);
 };
+
 export default ReviewWhole;
