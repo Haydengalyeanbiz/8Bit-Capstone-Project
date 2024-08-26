@@ -37,13 +37,21 @@ def seed_listings():
             'quantity': 3,
             'image_url': 'aws-link-pc',
         },
+         {
+            'user_id': 2,
+            'title': 'Xbox Controller',
+            'description': 'A brand new Xbox controller',
+            'price': 59.99,
+            'quantity': 10,
+            'image_url': 'https://capstonebitprojectbucket.s3.amazonaws.com/xbox-controller.png',
+        },
         {
             'user_id': 3,
             'title': 'Gaming Headset',
             'description': 'A top-quality gaming headset.',
             'price': 99.99,
             'quantity': 15,
-            'image_url': 'aws-link-headset',
+            'image_url': 'https://capstonebitprojectbucket.s3.amazonaws.com/Gaming-Headset-Transparent.png',
         },
         {
             'user_id': 3,

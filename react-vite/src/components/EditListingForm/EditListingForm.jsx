@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUpdateListing, fetchGetListing } from '../../redux/listing';
+import { fetchAllCategories } from '../../redux/category';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../ListingForm/ListingForm.css'; // Reuse styles
 
@@ -8,26 +9,21 @@ export const EditListingForm = () => {
 	const { id } = useParams(); // Get listing ID from the URL
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const listing = useSelector((state) => state.listings.selectedListing); // Assuming you have this in your store
+	const listing = useSelector((state) => state.listings.selectedListing);
+	const categories = useSelector((state) => state.categories.categories);
+	console.log('THIS IS THE CATEGORIES=========>', categories);
 
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const [price, setPrice] = useState('');
 	const [quantity, setQuantity] = useState('');
-	const [image, setImage] = useState(null);
+	const [image_url, setImageUrl] = useState(null);
 	const [imagePreview, setImagePreview] = useState(null);
-	// const [selectedCategories, setSelectedCategories] = useState([]);
-	// const [formErrors, setFormErrors] = useState({});
-	// const [touched, setTouched] = useState({
-	// 	title: false,
-	// 	description: false,
-	// 	price: false,
-	// 	quantity: false,
-	// 	image: false,
-	// });
+	const [selectedCategories, setSelectedCategories] = useState([]);
 
 	// Fetch the listing data when the component mounts
 	useEffect(() => {
+		dispatch(fetchAllCategories());
 		dispatch(fetchGetListing(id));
 	}, [dispatch, id]);
 
@@ -39,21 +35,31 @@ export const EditListingForm = () => {
 			setPrice(listing.price || '');
 			setQuantity(listing.quantity || '');
 			setImagePreview(listing.image_url || '');
-			setImage(listing.image_url || '');
-			// setSelectedCategories(listing.categories || []);
+
+			// Map category names to IDs
+			if (listing.categories && Array.isArray(listing.categories)) {
+				const selectedCategoryIds = categories
+					.filter((cat) => listing.categories.includes(cat.name))
+					.map((cat) => cat.id);
+
+				setSelectedCategories(selectedCategoryIds);
+			} else {
+				setSelectedCategories([]); // Set to empty array if no categories exist
+			}
 		}
-	}, [listing]);
+	}, [listing, categories]);
 
 	// Handle category change
-	// const handleCategoryChange = (e) => {
-	// 	const selectedValue = parseInt(e.target.value, 10);
-	// 	setSelectedCategories((prevSelectedCategories) =>
-	// 		prevSelectedCategories.includes(selectedValue)
-	// 			? prevSelectedCategories.filter((id) => id !== selectedValue)
-	// 			: [...prevSelectedCategories, selectedValue]
-	// 	);
-	// };
-
+	const handleCategoryChange = (e) => {
+		const selectedValue = parseInt(e.target.value, 10);
+		setSelectedCategories((prevSelectedCategories) =>
+			prevSelectedCategories.includes(selectedValue)
+				? prevSelectedCategories.filter((id) => id !== selectedValue)
+				: [...prevSelectedCategories, selectedValue]
+		);
+		console.log('THIS IS SELECTED VALUE', selectedValue);
+	};
+	console.log('THIS IS SELECTED CATEGORIES!', selectedCategories);
 	// Handle form submission
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -65,11 +71,13 @@ export const EditListingForm = () => {
 		formData.append('quantity', quantity);
 
 		// Check if the user has selected a new image
-		if (image) {
-			formData.append('image', image);
-		} else {
-			formData.append('image_url', listing.image_url); // Keep the current image if not updated
+		if (image_url) {
+			formData.append('image_url', image_url); // Use 'image_url' here
 		}
+
+		selectedCategories.forEach((category) => {
+			formData.append('categories', category);
+		});
 
 		const response = await dispatch(fetchUpdateListing(id, formData));
 
@@ -79,7 +87,7 @@ export const EditListingForm = () => {
 	};
 
 	// Add a check to ensure listing data is loaded before rendering the form
-	if (!listing) {
+	if (!listing || !categories) {
 		return <div>Loading...</div>;
 	}
 
@@ -92,115 +100,72 @@ export const EditListingForm = () => {
 			>
 				<div className='listing-form-input-holder'>
 					<div className='listing-inputs'>
-						<label>
-							<input
-								className='listing-input-field'
-								placeholder='Listing Title'
-								type='text'
-								value={title}
-								onChange={(e) => setTitle(e.target.value)}
-								required
-							/>
-						</label>
-						<label>
-							<textarea
-								className='listing-input-field-text'
-								placeholder='Listing Description'
-								value={description}
-								onChange={(e) => setDescription(e.target.value)}
-								required
-							/>
-						</label>
-						<label>
-							<input
-								className='listing-input-field'
-								placeholder='Price'
-								type='number'
-								step='0.01'
-								value={price}
-								onChange={(e) => setPrice(e.target.value)}
-								required
-							/>
-						</label>
-						<label>
-							<input
-								className='listing-input-field'
-								placeholder='Quantity'
-								type='number'
-								value={quantity}
-								onChange={(e) => setQuantity(e.target.value)}
-								required
-							/>
-						</label>
+						<div className='left-input-div'>
+							<label className='listing-label-div'>
+								Listing Title
+								<input
+									className='listing-input-field'
+									placeholder='PlayStation controller'
+									type='text'
+									value={title}
+									onChange={(e) => setTitle(e.target.value)}
+									required
+								/>
+							</label>
+							<label className='listing-label-div-description'>
+								Listing Description
+								<textarea
+									className='listing-input-field-text'
+									placeholder='A brand new PlayStation controller'
+									value={description}
+									onChange={(e) => setDescription(e.target.value)}
+									required
+								/>
+							</label>
+							<label className='listing-label-div'>
+								Price
+								<input
+									className='listing-input-field'
+									placeholder='59.99'
+									type='number'
+									step='0.01'
+									value={price}
+									onChange={(e) => setPrice(e.target.value)}
+									required
+								/>
+							</label>
+							<label className='listing-label-div'>
+								Stock
+								<input
+									className='listing-input-field'
+									placeholder='In Stock amount'
+									type='number'
+									value={quantity}
+									onChange={(e) => setQuantity(e.target.value)}
+									required
+								/>
+							</label>
+						</div>
 
-						{/* Hardcoded categories input */}
-						{/* <label>
-							<div className='listing-input-field-select'>
-								<label>
-									<input
-										type='checkbox'
-										value={1}
-										checked={selectedCategories.includes(1)}
-										onChange={handleCategoryChange}
-									/>
-									Games
-								</label>
-								<label>
-									<input
-										type='checkbox'
-										value={2}
-										checked={selectedCategories.includes(2)}
-										onChange={handleCategoryChange}
-									/>
-									Xbox
-								</label>
-								<label>
-									<input
-										type='checkbox'
-										value={3}
-										checked={selectedCategories.includes(3)}
-										onChange={handleCategoryChange}
-									/>
-									PlayStation
-								</label>
-								<label>
-									<input
-										type='checkbox'
-										value={4}
-										checked={selectedCategories.includes(4)}
-										onChange={handleCategoryChange}
-									/>
-									Nintendo
-								</label>
-								<label>
-									<input
-										type='checkbox'
-										value={5}
-										checked={selectedCategories.includes(5)}
-										onChange={handleCategoryChange}
-									/>
-									PC
-								</label>
-								<label>
-									<input
-										type='checkbox'
-										value={6}
-										checked={selectedCategories.includes(6)}
-										onChange={handleCategoryChange}
-									/>
-									Accessories
-								</label>
-								<label>
-									<input
-										type='checkbox'
-										value={7}
-										checked={selectedCategories.includes(7)}
-										onChange={handleCategoryChange}
-									/>
-									Console
-								</label>
-							</div>
-						</label> */}
+						{/* Categories selection */}
+						<div>
+							<label> Categories</label>
+							<label>
+								<div className='listing-input-field-select'>
+									{categories.map((category) => (
+										<label key={category.id}>
+											<input
+												type='checkbox'
+												value={category.id}
+												checked={selectedCategories.includes(category.id)}
+												onChange={handleCategoryChange}
+											/>
+											{category.name}
+										</label>
+									))}
+								</div>
+							</label>
+						</div>
 					</div>
 					<button
 						className='listing-submit-btn'
@@ -223,7 +188,7 @@ export const EditListingForm = () => {
 							className='listing-input-field-photo'
 							type='file'
 							accept='image/*'
-							// onChange={handleImageChange}
+							onChange={(e) => setImageUrl(e.target.files[0])} // Use 'setImageUrl' here
 						/>
 					</label>
 				</div>

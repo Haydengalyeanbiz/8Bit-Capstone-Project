@@ -53,7 +53,7 @@
 
 .listing-image {
 	height: 300px;
-	width: 300px;
+	width: auto;
 }
 
 .listing-header-container {

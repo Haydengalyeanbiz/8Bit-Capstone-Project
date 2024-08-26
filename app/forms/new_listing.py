@@ -11,7 +11,7 @@ class ListingForm(FlaskForm):
     price = DecimalField('Price', places=2, validators=[DataRequired()])
     quantity = IntegerField('Quantity', validators=[DataRequired()])
     image_url = FileField("Image File", validators=[Optional(), FileAllowed(list(ALLOWED_EXTENSIONS))])
-    categories = SelectMultipleField('Categories', choices=[], coerce=int, validators=[Optional()])
+    categories = SelectMultipleField('Categories', choices=[], coerce=int, validators=[DataRequired()])
 
     def __init__(self, *args, **kwargs):
         super(ListingForm, self).__init__(*args, **kwargs)

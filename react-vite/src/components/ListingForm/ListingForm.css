@@ -7,8 +7,9 @@
 	flex-direction: row-reverse;
 	justify-content: space-around;
 	border-radius: 12px;
-	padding: 1rem;
-	margin: 1rem;
+	border: solid 3px var(--light-accent-clr);
+
+	margin: 0 1rem;
 	height: auto;
 }
 
@@ -17,63 +18,87 @@
 	flex-direction: column;
 	justify-content: space-around;
 	align-items: center;
+	justify-content: center;
 	gap: 1rem;
 	width: 55%;
-	border: solid 3px var(--heavy-accent-clr);
+	/* border: solid 3px var(--heavy-accent-clr); */
 	border-radius: 12px;
 	padding: 0.3rem;
-	background-color: var(--third-clr);
+	/* background-color: var(--third-clr); */
+	height: 500px;
 }
 
 .listing-form-image-holder {
 	display: flex;
 	flex-direction: column;
-	justify-content: space-around;
+	justify-content: center;
 	align-items: center;
 	width: 40%;
-	border: solid 2px var(--heavy-accent-clr);
+
+	/* border: solid 2px var(--heavy-accent-clr); */
 	border-radius: 12px;
-	background-color: var(--third-clr);
+	/* background-color: var(--third-clr); */
 }
 
 .listing-inputs {
 	display: flex;
-	flex-direction: column;
+	align-items: center;
 	justify-content: space-around;
 	gap: 0.2rem;
-	height: auto;
-	width: 80%;
+	height: 90%;
+	width: 100%;
+}
+
+.left-input-div {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 1.3rem;
+	width: 60%;
+}
+
+.listing-label-div {
+	display: flex;
+	flex-direction: column;
+	height: 60px;
+}
+
+.listing-label-div-description {
+	height: 130px;
 }
 
 .listing-input-field {
 	border: solid 3px var(--heavy-accent-clr);
 	border-radius: 12px;
-	background-color: black;
-	color: white;
+	background-color: white;
+	color: var(--primary-clr);
 	height: 30px;
-	width: 100%;
+	width: 400px;
 }
 
 .listing-input-field-select {
 	border: solid 2px var(--heavy-accent-clr);
 	border-radius: 12px;
-	color: white;
+	color: var(--primary-clr);
+	height: auto;
 	display: flex;
 	flex-direction: column;
-	background-color: var(--primary-clr);
+	background-color: white;
 	padding: 1rem;
 	font-size: var(--fs-primary);
+	width: 250px;
 }
 
 .listing-input-field-text {
 	border: solid 2px var(--heavy-accent-clr);
-	background-color: black;
+	background-color: white;
 	border-radius: 12px;
-	color: white;
+	color: var(--primary-clr);
 
-	max-width: 100%;
-	min-width: 100%;
-	height: 130px;
+	max-width: 400px;
+	min-width: 400px;
+	min-height: 100px;
+	max-height: 100px;
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
@@ -95,17 +120,21 @@
 	border: solid 2px var(--heavy-accent-clr);
 	border-radius: 12px;
 	background-color: var(--primary-clr);
-	max-width: 400px;
-	min-width: 400px;
+	width: 400px;
 	height: 400px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	overflow: hidden;
 }
 
 .listing-image {
-	max-width: 400px;
-	height: auto;
+	max-width: 100%;
+	max-height: 100%;
+	object-fit: contain;
 }
 
 .error {
 	color: red;
+	margin: 0;
 }

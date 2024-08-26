@@ -23,6 +23,7 @@ export const ListingForm = () => {
 		price: false,
 		quantity: false,
 		image: false,
+		categories: false,
 	});
 
 	const user = useSelector((state) => state.session.user);
@@ -55,8 +56,8 @@ export const ListingForm = () => {
 		if (!title) errors.title = 'Title is required.';
 		if (!description) errors.description = 'Description is required.';
 		if (!price) errors.price = 'Price is required.';
-		if (!quantity) errors.quantity = 'Quantity is required.';
-		if (!image) errors.image = 'Image is required.';
+		if (!quantity) errors.quantity = 'Stock amount is required.';
+
 		if (selectedCategories.length === 0)
 			errors.categories = 'At least one category is required.';
 
@@ -83,8 +84,15 @@ export const ListingForm = () => {
 				? prevSelectedCategories.filter((id) => id !== selectedValue)
 				: [...prevSelectedCategories, selectedValue]
 		);
-	};
+		console.log('SELECTED VALUE =====>', selectedValue);
 
+		// Mark categories as touched when a change occurs
+		setTouched((prevState) => ({
+			...prevState,
+			categories: true,
+		}));
+	};
+	console.log('THIS IS THE CATEGORIES ====>', selectedCategories);
 	const handleSubmit = async (e) => {
 		if (user) {
 			e.preventDefault();
@@ -138,134 +146,143 @@ export const ListingForm = () => {
 			>
 				<div className='listing-form-input-holder'>
 					<div className='listing-inputs'>
-						<label>
-							<input
-								className='listing-input-field'
-								placeholder='Listing Title'
-								type='text'
-								value={title}
-								onChange={(e) => setTitle(e.target.value)}
-								onBlur={() => handleBlur('title')}
-								required
-							/>
-							{touched.title && formErrors.title && (
-								<p className='error'>{formErrors.title}</p>
-							)}
-						</label>
-						<label>
-							<textarea
-								className='listing-input-field-text'
-								placeholder='Listing Description'
-								value={description}
-								onChange={(e) => setDescription(e.target.value)}
-								onBlur={() => handleBlur('description')}
-								required
-							/>
-							{touched.description && formErrors.description && (
-								<p className='error'>{formErrors.description}</p>
-							)}
-						</label>
-						<label>
-							<input
-								className='listing-input-field'
-								placeholder='Price'
-								type='number'
-								step='0.01'
-								value={price}
-								onChange={(e) => setPrice(e.target.value)}
-								onBlur={() => handleBlur('price')}
-								required
-							/>
-							{touched.price && formErrors.price && (
-								<p className='error'>{formErrors.price}</p>
-							)}
-						</label>
-						<label>
-							<input
-								className='listing-input-field'
-								placeholder='Quantity'
-								type='number'
-								value={quantity}
-								onChange={(e) => setQuantity(e.target.value)}
-								onBlur={() => handleBlur('quantity')}
-								required
-							/>
-							{touched.quantity && formErrors.quantity && (
-								<p className='error'>{formErrors.quantity}</p>
-							)}
-						</label>
+						<div className='left-input-div'>
+							<label className='listing-label-div'>
+								Lisiting Title
+								<input
+									className='listing-input-field'
+									placeholder='PlayStation controller'
+									type='text'
+									value={title}
+									onChange={(e) => setTitle(e.target.value)}
+									onBlur={() => handleBlur('title')}
+									required
+								/>
+								{touched.title && formErrors.title && (
+									<p className='error'>{formErrors.title}</p>
+								)}
+							</label>
+							<label className='listing-label-div-description'>
+								Listing Description
+								<textarea
+									className='listing-input-field-text'
+									placeholder='A brand new PlayStation controller'
+									value={description}
+									onChange={(e) => setDescription(e.target.value)}
+									onBlur={() => handleBlur('description')}
+									required
+								/>
+								{touched.description && formErrors.description && (
+									<p className='error'>{formErrors.description}</p>
+								)}
+							</label>
+							<label className='listing-label-div'>
+								Price
+								<input
+									className='listing-input-field'
+									placeholder='59.99'
+									type='number'
+									step='0.01'
+									value={price}
+									onChange={(e) => setPrice(e.target.value)}
+									onBlur={() => handleBlur('price')}
+									required
+								/>
+								{touched.price && formErrors.price && (
+									<p className='error'>{formErrors.price}</p>
+								)}
+							</label>
+							<label className='listing-label-div'>
+								Stock
+								<input
+									className='listing-input-field'
+									placeholder='In Stock amount'
+									type='number'
+									value={quantity}
+									onChange={(e) => setQuantity(e.target.value)}
+									onBlur={() => handleBlur('quantity')}
+									required
+								/>
+								{touched.quantity && formErrors.quantity && (
+									<p className='error'>{formErrors.quantity}</p>
+								)}
+							</label>
+						</div>
 
 						{/* Hardcoded categories input */}
-						<label>
-							<div className='listing-input-field-select'>
-								<label>
-									<input
-										type='checkbox'
-										value='1'
-										checked={selectedCategories.includes(1)}
-										onChange={handleCategoryChange}
-									/>
-									Games
-								</label>
-								<label>
-									<input
-										type='checkbox'
-										value='2'
-										checked={selectedCategories.includes(2)}
-										onChange={handleCategoryChange}
-									/>
-									Xbox
-								</label>
-								<label>
-									<input
-										type='checkbox'
-										value='3'
-										checked={selectedCategories.includes(3)}
-										onChange={handleCategoryChange}
-									/>
-									PlayStation
-								</label>
-								<label>
-									<input
-										type='checkbox'
-										value='4'
-										checked={selectedCategories.includes(4)}
-										onChange={handleCategoryChange}
-									/>
-									Nintendo
-								</label>
-								<label>
-									<input
-										type='checkbox'
-										value='5'
-										checked={selectedCategories.includes(5)}
-										onChange={handleCategoryChange}
-									/>
-									PC
-								</label>
-								<label>
-									<input
-										type='checkbox'
-										value='6'
-										checked={selectedCategories.includes(6)}
-										onChange={handleCategoryChange}
-									/>
-									Accessories
-								</label>
-								<label>
-									<input
-										type='checkbox'
-										value='7'
-										checked={selectedCategories.includes(7)}
-										onChange={handleCategoryChange}
-									/>
-									Console
-								</label>
-							</div>
-							{touched.categories && formErrors.categories && (
-								<p className='error'>{formErrors.categories}</p>
-							)}
-						</label>
+						<div>
+							<label> Categories</label>
+							<label>
+								<div className='listing-input-field-select'>
+									<label>
+										<input
+											type='checkbox'
+											value='1'
+											checked={selectedCategories.includes(1)}
+											onChange={handleCategoryChange}
+										/>
+										Games
+									</label>
+									<label>
+										<input
+											type='checkbox'
+											value='2'
+											checked={selectedCategories.includes(2)}
+											onChange={handleCategoryChange}
+										/>
+										Xbox
+									</label>
+									<label>
+										<input
+											type='checkbox'
+											value='3'
+											checked={selectedCategories.includes(3)}
+											onChange={handleCategoryChange}
+										/>
+										PlayStation
+									</label>
+									<label>
+										<input
+											type='checkbox'
+											value='4'
+											checked={selectedCategories.includes(4)}
+											onChange={handleCategoryChange}
+										/>
+										Nintendo
+									</label>
+									<label>
+										<input
+											type='checkbox'
+											value='5'
+											checked={selectedCategories.includes(5)}
+											onChange={handleCategoryChange}
+										/>
+										PC
+									</label>
+									<label>
+										<input
+											type='checkbox'
+											value='6'
+											checked={selectedCategories.includes(6)}
+											onChange={handleCategoryChange}
+										/>
+										Accessories
+									</label>
+									<label>
+										<input
+											type='checkbox'
+											value='7'
+											checked={selectedCategories.includes(7)}
+											onChange={handleCategoryChange}
+										/>
+										Console
+									</label>
+								</div>
+								{touched.categories && formErrors.categories && (
+									<p className='error'>{formErrors.categories}</p>
+								)}
+							</label>
+						</div>
 					</div>
 					<button
 						className='listing-submit-btn'
