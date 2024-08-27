@@ -9,6 +9,7 @@ import { fetchDeleteListing } from '../../redux/listing';
 import { fetchDeleteReview } from '../../redux/reviews';
 import { useModal } from '../../context/Modal';
 import EditReviewFormModal from '../EditReviewFormModal/EditReviewFormModal';
+import DeleteListingModal from '../DeleteListingModal/DeleteListingModal';
 import { Wishlist } from '../Wishlist/Wishlist';
 import { ProfileBackground } from './ProfileBackground';
 import './ProfilePage.css';
@@ -16,7 +17,7 @@ import './ProfilePage.css';
 export const ProfilePage = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const { setModalContent } = useModal();
+	const { setModalContent, closeModal } = useModal();
 	const sessionUser = useSelector((state) => state.session.user);
 	const userListings = useSelector(
 		(state) => state.profile.userListings.listings
@@ -40,9 +41,18 @@ export const ProfilePage = () => {
 	};
 
 	const handleDeleteListing = (id) => {
-		dispatch(fetchDeleteListing(id)).then(() => {
-			dispatch(fetchUserListings(sessionUser.id));
-		});
+		setModalContent(
+			<DeleteListingModal
+				show={true}
+				onConfirm={() => {
+					dispatch(fetchDeleteListing(id)).then(() => {
+						dispatch(fetchUserListings(sessionUser.id));
+						closeModal();
+					});
+				}}
+				onCancel={closeModal}
+			/>
+		);
 	};
 
 	const handleEditReview = (review) => {
@@ -62,7 +72,12 @@ export const ProfilePage = () => {
 				<h1>Welcome {sessionUser.first_name} to your GameRoom!</h1>
 			</div>
 			<div className='button-group'>
-				<button onClick={handleNewList}>Add New Listing</button>
+				<button
+					className='add-list-btn'
+					onClick={handleNewList}
+				>
+					Add New Listing
+				</button>
 				<button
 					className={`toggle-btn ${view === 'listings' ? 'selected' : ''}`}
 					onClick={() => setView('listings')}
@@ -81,7 +96,6 @@ export const ProfilePage = () => {
 				>
 					Your Wishlist
 				</button>
-				<button>Edit Profile</button>
 			</div>
 			<div className='profile-actions-wrapper'>
 				{view === 'listings' && (
@@ -93,7 +107,7 @@ export const ProfilePage = () => {
 									key={listing.id}
 								>
 									<h3>{listing.title}</h3>
-									<p>{listing.description}</p>
+
 									<img
 										className='prof-listing-image'
 										src={listing.image_url}

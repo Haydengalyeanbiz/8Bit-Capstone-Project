@@ -1,0 +1,24 @@
+.footer-wrapper {
+	background-color: var(--primary-clr);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 1rem;
+	padding: 1rem 0;
+	border-top: var(--heavy-accent-clr) solid 3px;
+}
+
+.social-structure {
+	display: flex;
+	gap: 3rem;
+}
+
+.social-link {
+	color: white;
+	font-size: var(--fs-large);
+}
+
+.social-link:hover {
+	color: var(--secondary-clr);
+}

@@ -111,10 +111,12 @@ export const ListingPage = () => {
 				<div className='listing-p-text-container'>
 					<div className='half-listing-text'>
 						<p>{listing.description}</p>
-						{averageRating && (
+						{reviews.length > 0 ? (
 							<p className='average-star-list'>
 								<FaStar /> {averageRating}
 							</p>
+						) : (
+							<p className='no-reviews'>No reviews</p>
 						)}
 					</div>
 					<div className='other-half-listing-text'>

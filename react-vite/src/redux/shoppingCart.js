@@ -3,6 +3,7 @@ const GET_CART = 'cart/GET_CART';
 const ADD_TO_CART = 'cart/ADD_TO_CART';
 const UPDATE_CART_ITEM = 'cart/UPDATE_CART_ITEM';
 const REMOVE_FROM_CART = 'cart/REMOVE_FROM_CART';
+const CLEAR_CART = 'cart/CLEAR_CART';
 
 // * ACTION CREATORS
 const getCart = (cart) => {
@@ -30,6 +31,12 @@ const removeFromCart = (itemId) => {
 	return {
 		type: REMOVE_FROM_CART,
 		payload: itemId,
+	};
+};
+
+const clearCart = () => {
+	return {
+		type: CLEAR_CART,
 	};
 };
 
@@ -118,6 +125,19 @@ export const fetchRemoveFromCart = (itemId) => async (dispatch) => {
 	}
 };
 
+// ? --------------CLEAR CART-----------------
+export const fetchClearCart = () => async (dispatch) => {
+	const response = await fetch(`/api/shopping-cart/clear`, {
+		method: 'DELETE',
+	});
+
+	if (response.ok) {
+		dispatch(clearCart());
+	} else {
+		console.error('Failed to clear cart:', response.statusText);
+	}
+};
+
 // * CART REDUCER
 
 const initialState = { cart: { cart_items: [] } };
@@ -155,6 +175,14 @@ export default function cartReducer(state = initialState, action) {
 					cart_items: state.cart.cart_items.filter(
 						(item) => item.id !== action.payload
 					),
+				},
+			};
+		case CLEAR_CART:
+			return {
+				...state,
+				cart: {
+					...state.cart,
+					cart_items: [],
 				},
 			};
 		default:

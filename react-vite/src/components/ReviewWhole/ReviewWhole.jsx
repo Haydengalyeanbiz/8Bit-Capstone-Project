@@ -47,14 +47,17 @@ export const ReviewWhole = ({ reviews, listingId, isOwner }) => {
 
 	return (
 		<div className='reviews-wrapper'>
-			{sessionUser && !isOwner && !hasReviewed && (
-				<button
-					className='leave-review-btn'
-					onClick={handleOpenReviewModal}
-				>
-					Leave a Review
-				</button>
-			)}
+			<div className='review-title-holder'>
+				<h1 className='reviews-title-h1'>Reviews</h1>
+				{sessionUser && !isOwner && !hasReviewed && (
+					<button
+						className='leave-review-btn'
+						onClick={handleOpenReviewModal}
+					>
+						Leave a Review
+					</button>
+				)}
+			</div>
 			<div className='review-whole-structure'>
 				{reviews && reviews.length > 0 ? (
 					reviews.map((review) => (

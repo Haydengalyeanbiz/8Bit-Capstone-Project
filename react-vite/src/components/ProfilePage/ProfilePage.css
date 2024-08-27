@@ -50,6 +50,18 @@
 	color: #fff;
 }
 
+.add-list-btn {
+	border: solid 2px var(--heavy-accent-clr);
+	border-radius: 12px;
+	padding: 0.5rem 1rem;
+	transition: all 0.2s ease;
+}
+
+.add-list-btn:hover {
+	border: solid 2px var(--light-accent-clr);
+	background-color: var(--light-accent-clr);
+}
+
 .profile-actions-wrapper {
 	display: flex;
 	flex-direction: column;
@@ -59,7 +71,7 @@
 	gap: 1rem;
 	background-color: var(--primary-clr);
 	border-top: solid 3px var(--light-accent-clr);
-	min-height: 800px;
+	min-height: 500px;
 }
 
 .profile-page-section {
@@ -80,11 +92,13 @@
 	padding: 1rem 0.5rem;
 	display: flex;
 	flex-direction: column;
+	justify-content: space-between;
 }
 
 .prof-listing-image {
 	height: 300px;
 	width: auto;
+	object-fit: contain;
 }
 
 .listing-btn-group {

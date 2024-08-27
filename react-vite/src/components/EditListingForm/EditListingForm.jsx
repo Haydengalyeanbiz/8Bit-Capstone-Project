@@ -99,6 +99,7 @@ export const EditListingForm = () => {
 				encType='multipart/form-data'
 			>
 				<div className='listing-form-input-holder'>
+					<h2>Edit your listing</h2>
 					<div className='listing-inputs'>
 						<div className='left-input-div'>
 							<label className='listing-label-div'>

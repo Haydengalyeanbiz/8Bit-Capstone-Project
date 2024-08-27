@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { fetchAddListing } from '../../redux/listing';
 import './ListingForm.css';
@@ -15,7 +15,8 @@ export const ListingForm = () => {
 	const [imagePreview, setImagePreview] = useState(null);
 	const [imageLoading, setImageLoading] = useState(false);
 	const [formErrors, setFormErrors] = useState({});
-	const [selectedCategories, setSelectedCategories] = useState([]); // State for selected categories
+	const [selectedCategories, setSelectedCategories] = useState([]);
+	const [hasSubmitted, setHasSubmitted] = useState(false);
 
 	const [touched, setTouched] = useState({
 		title: false,
@@ -25,8 +26,6 @@ export const ListingForm = () => {
 		image: false,
 		categories: false,
 	});
-
-	const user = useSelector((state) => state.session.user);
 
 	// Custom validation logic
 	useEffect(() => {
@@ -92,46 +91,85 @@ export const ListingForm = () => {
 	};
 
 	const handleSubmit = async (e) => {
-		if (user) {
-			e.preventDefault();
+		setHasSubmitted(true);
+		e.preventDefault();
 
-			const formData = new FormData();
-			formData.append('title', title);
-			formData.append('description', description);
-			formData.append('price', price);
-			formData.append('quantity', quantity);
-			formData.append('image', image);
-			selectedCategories.forEach((category) => {
-				formData.append('categories', category);
+		const errors = {};
+
+		// Validate title
+		if (title.length < 5 || title.length > 100) {
+			errors.title = 'Title must be between 5 and 20 characters.';
+		}
+
+		// Validate description
+		if (description.length < 20 || description.length > 500) {
+			errors.description = 'Description must be between 20 and 200 characters.';
+		}
+
+		// Validate price
+		if (price <= 0) {
+			errors.price = 'Price must be greater than 0.';
+		}
+
+		// Validate quantity
+		if (quantity < 1) {
+			errors.quantity = 'Quantity must be greater than or equal to 1.';
+		}
+
+		// Validate image
+		if (!image) {
+			errors.image = 'Image is required.';
+		}
+
+		// Validate categories
+		if (selectedCategories.length === 0) {
+			errors.categories = 'At least one category is required.';
+		}
+
+		// Set form errors state
+		setFormErrors(errors);
+
+		// Check if there are any errors
+		if (Object.keys(errors).length > 0) {
+			// Prevent submission if there are validation errors
+			return;
+		}
+
+		// Proceed with submission if no errors
+		const formData = new FormData();
+		formData.append('title', title);
+		formData.append('description', description);
+		formData.append('price', price);
+		formData.append('quantity', quantity);
+		formData.append('image', image);
+		selectedCategories.forEach((category) => {
+			formData.append('categories', category);
+		});
+
+		setImageLoading(true);
+		const response = await dispatch(fetchAddListing(formData));
+		setImageLoading(false);
+
+		if (response.errors) {
+			setFormErrors(response.errors);
+		} else {
+			setTitle('');
+			setDescription('');
+			setPrice('');
+			setQuantity('');
+			setImage(null);
+			setImagePreview(null);
+			setSelectedCategories([]);
+			setFormErrors({});
+			setTouched({
+				title: false,
+				description: false,
+				price: false,
+				quantity: false,
+				image: false,
+				categories: false,
 			});
-			for (let [key, value] of formData.entries()) {
-				console.log(`${key}: ${value}`);
-			}
-
-			setImageLoading(true);
-			const response = await dispatch(fetchAddListing(formData));
-			setImageLoading(false);
-
-			if (response.errors) {
-				setFormErrors(response.errors);
-			} else {
-				setTitle('');
-				setDescription('');
-				setPrice('');
-				setQuantity('');
-				setImage(null);
-				setImagePreview(null);
-				setSelectedCategories([]);
-				setFormErrors({});
-				setTouched({
-					title: false,
-					description: false,
-					price: false,
-					quantity: false,
-					image: false,
-				});
-				navigate(`/listings/${response.id}`);
-			}
+			navigate(`/listings/${response.id}`);
 		}
 	};
 
@@ -143,6 +181,7 @@ export const ListingForm = () => {
 				encType='multipart/form-data'
 			>
 				<div className='listing-form-input-holder'>
+					<h2>Add a new Listing</h2>
 					<div className='listing-inputs'>
 						<div className='left-input-div'>
 							<label className='listing-label-div'>
@@ -206,8 +245,6 @@ export const ListingForm = () => {
 								)}
 							</label>
 						</div>
-
-						{/* Hardcoded categories input */}
 						<div>
 							<label> Categories</label>
 							<label>
@@ -276,7 +313,7 @@ export const ListingForm = () => {
 										Console
 									</label>
 								</div>
-								{touched.categories && formErrors.categories && (
+								{hasSubmitted && formErrors.categories && (
 									<p className='error'>{formErrors.categories}</p>
 								)}
 							</label>

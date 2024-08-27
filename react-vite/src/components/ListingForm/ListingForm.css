@@ -8,8 +8,7 @@
 	justify-content: space-around;
 	border-radius: 12px;
 	border: solid 3px var(--light-accent-clr);
-
-	margin: 0 1rem;
+	margin: 1rem;
 	height: auto;
 }
 
@@ -114,6 +113,10 @@
 	border-radius: 12px;
 	background-color: var(--fs-primary);
 	color: white;
+}
+
+.listing-submit-btn:hover {
+	background-color: var(--light-accent-clr);
 }
 
 .image-preview {

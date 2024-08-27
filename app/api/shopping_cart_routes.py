@@ -121,3 +121,24 @@ def remove_from_cart(item_id):
     db.session.commit()
 
     return {'message': 'Item removed from cart'}, 200
+
+# ?-------------------CLEAR CART------------------
+@cart_routes.route('/clear', methods=['DELETE'])
+@login_required
+def clear_cart():
+    cart = Cart.query.filter_by(user_id=current_user.id).first()
+
+    if not cart:
+        return {'error': 'Cart not found'}, 404
+
+    # Restore the quantity of each listing in the cart
+    for item in cart.cart_items:
+        listing = Listing.query.get(item.listing_id)
+        if listing:
+            listing.quantity += item.quantity
+
+    # Remove all items from the cart
+    cart.cart_items.clear()
+    db.session.commit()
+
+    return {'message': 'Cart cleared'}, 200
