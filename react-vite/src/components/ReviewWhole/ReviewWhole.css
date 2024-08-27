@@ -3,7 +3,7 @@
 	flex-direction: column;
 	align-items: center;
 	padding-top: 2rem;
-	border-top: dotted var(--heavy-accent-clr) 10px;
+	border-top: solid var(--heavy-accent-clr) 10px;
 }
 
 .review-title-holder {

@@ -12,7 +12,7 @@ export const ListingForm = () => {
 	const [price, setPrice] = useState('');
 	const [quantity, setQuantity] = useState('');
 	const [image, setImage] = useState(null);
-	const [imagePreview, setImagePreview] = useState(null);
+	const [imagePreview, setImagePreview] = useState('/images/image-preview.png');
 	const [imageLoading, setImageLoading] = useState(false);
 	const [formErrors, setFormErrors] = useState({});
 	const [selectedCategories, setSelectedCategories] = useState([]);

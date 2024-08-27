@@ -89,3 +89,16 @@
 .total-price {
 	color: white;
 }
+
+.remove-item-btn {
+	padding: 0 0.5rem;
+	color: black;
+	border: 3px solid var(--primary-clr);
+	border-radius: 12px;
+	height: 40px;
+	transition: all 0.2s ease;
+}
+
+.remove-item-btn:hover {
+	background-color: #e74c3c;
+}

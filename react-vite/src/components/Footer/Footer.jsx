@@ -16,13 +16,13 @@ export const Footer = () => {
 				</a>
 				<a
 					className='social-link'
-					href='www.linkedin.com/in/hayden-galyean-42a518189'
+					href='https://www.linkedin.com/in/hayden-galyean-42a518189'
 				>
 					<FaLinkedin />
 				</a>
 				<a
 					className='social-link'
-					href='https://github.com/Haydengalyeanbiz'
+					href='https://haydengalyeanportfolio.onrender.com/'
 				>
 					<FaDesktop />
 				</a>

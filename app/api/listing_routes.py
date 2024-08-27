@@ -37,30 +37,26 @@ def create_listing():
 
     if form.validate_on_submit():
         try:
-            # Log the incoming form data
             print("Form Data:", form.data)
 
-            # Handle image upload
             image = request.files.get('image')
             if not image:
-                print("Error: Image file is required")  # Log missing image error
+                print("Error: Image file is required")  
                 return ({"errors": "Image file is required"}), 400
 
             if not allowed_file(image.filename):
-                print(f"Error: File type not permitted for filename {image.filename}")  # Log invalid file type error
+                print(f"Error: File type not permitted for filename {image.filename}")  
                 return ({"errors": "File type not permitted"}), 400
 
             image.filename = get_unique_filename(image.filename)
             upload_result = upload_file_to_s3(image)
 
             if 'url' not in upload_result:
-                print(f"Error: File upload failed with result {upload_result}")  # Log file upload error
+                print(f"Error: File upload failed with result {upload_result}")  
                 return ({"errors": upload_result.get('errors', 'File upload failed')}), 400
 
-            # Log the successful image upload URL
             print(f"Image uploaded successfully: {upload_result['url']}")
 
-            # Create the new listing
             new_listing = Listing(
                 user_id=current_user.id,
                 title=form.data['title'],
@@ -103,7 +99,6 @@ def create_listing():
         # If form validation fails
         print("Form validation failed with errors:", form.errors)  # Log validation errors
         return ({'errors': form.errors}), 400
-
 
 # ?---------------------------------UPDATE A LISTING---------------------------------
 @listing_routes.route('/<int:id>/edit', methods=['PUT'])

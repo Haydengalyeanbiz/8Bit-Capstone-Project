@@ -30,6 +30,10 @@ export const ShoppingCart = () => {
 		}
 	};
 
+	const handleRemoveItem = (itemId) => {
+		dispatch(fetchRemoveFromCart(itemId));
+	};
+
 	// Calculate the total price
 	const calculateTotal = () => {
 		return cart.cart_items
@@ -93,6 +97,12 @@ export const ShoppingCart = () => {
 											-
 										</button>
 									</div>
+									<button
+										className='remove-item-btn'
+										onClick={() => handleRemoveItem(item.id)}
+									>
+										Remove
+									</button>
 								</div>
 							</div>
 						))}
