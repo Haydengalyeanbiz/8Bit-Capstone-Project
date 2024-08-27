@@ -59,3 +59,8 @@ button {
 button:hover {
 	color: var(--light-accent-clr); /* Add hover effect for buttons */
 }
+
+.nav-cart-holder {
+	display: flex;
+	height: 30px;
+}

@@ -12,6 +12,8 @@ function Navigation({ isScrolled }) {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const user = useSelector((state) => state.session.user);
+	const cart = useSelector((state) => state.shoppingCart.cart.cart_items);
+
 	const handleClick = () => {
 		if (user) {
 			navigate('/');
@@ -61,12 +63,15 @@ function Navigation({ isScrolled }) {
 						>
 							<FaUserCircle />
 						</button>
-						<button
-							className='shopping-btn'
-							onClick={handleCartClick}
-						>
-							<FaShoppingCart />
-						</button>
+						<div className='nav-cart-holder'>
+							<button
+								className='shopping-btn'
+								onClick={handleCartClick}
+							>
+								<FaShoppingCart />
+							</button>
+							{cart.length > 0 && <p>{cart.length}</p>}
+						</div>
 					</div>
 				)}
 			</div>

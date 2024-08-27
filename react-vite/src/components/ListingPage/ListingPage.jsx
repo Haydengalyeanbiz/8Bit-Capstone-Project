@@ -10,6 +10,7 @@ import {
 	fetchDeleteFromWishlist,
 	fetchUserWishlist,
 } from '../../redux/wishlist';
+import { fetchAddToCart } from '../../redux/shoppingCart';
 import { useModal } from '../../context/Modal';
 import DeleteListingModal from '../DeleteListingModal/DeleteListingModal';
 import './ListingPage.css';
@@ -91,6 +92,10 @@ export const ListingPage = () => {
 		);
 	};
 
+	const handleAddToCart = () => {
+		dispatch(fetchAddToCart(listing.id));
+	};
+
 	if (!listing) {
 		return <div>Loading...</div>;
 	}
@@ -144,7 +149,12 @@ export const ListingPage = () => {
 								</button>
 							</div>
 						) : (
-							<button className='edit list-btn'>Add to cart</button>
+							<button
+								className='edit list-btn'
+								onClick={handleAddToCart}
+							>
+								Add to cart
+							</button>
 						)}
 					</div>
 				</div>
