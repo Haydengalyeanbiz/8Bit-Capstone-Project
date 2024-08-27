@@ -11,7 +11,7 @@ def seed_listings():
             'description': 'A brand new PlayStation 5 console.',
             'price': 499.99,
             'quantity': 5,
-            'image_url': 'https://capstonebitprojectbucket.s3.amazonaws.com/ps5-black.jpg',
+            'image_url': 'https://capstonebitprojectbucket.s3.amazonaws.com/playstation-5.png',
         },
         {
             'user_id': 1,
@@ -27,7 +27,7 @@ def seed_listings():
             'description': 'A brand new Nintendo Switch console.',
             'price': 299.99,
             'quantity': 10,
-            'image_url': 'aws-link-switch',
+            'image_url': 'https://capstonebitprojectbucket.s3.amazonaws.com/nintendo-switch.png',
         },
          {
             'user_id': 2,
@@ -35,7 +35,7 @@ def seed_listings():
             'description': 'A high-end PC gaming setup.',
             'price': 1499.99,
             'quantity': 3,
-            'image_url': 'aws-link-pc',
+            'image_url': 'https://capstonebitprojectbucket.s3.amazonaws.com/gaming-setup.png',
         },
          {
             'user_id': 2,
@@ -59,7 +59,7 @@ def seed_listings():
             'description': 'A comfortable gaming chair.',
             'price': 199.99,
             'quantity': 8,
-            'image_url': 'aws-link-chair',
+            'image_url': 'https://capstonebitprojectbucket.s3.amazonaws.com/gaming-chair.png',
         },
         {
             'user_id': 4,
@@ -67,7 +67,7 @@ def seed_listings():
             'description': 'An immersive VR headset.',
             'price': 399.99,
             'quantity': 7,
-            'image_url': 'aws-link-vr',
+            'image_url': 'https://capstonebitprojectbucket.s3.amazonaws.com/vr-headset.png',
         },
          {
             'user_id': 4,
@@ -75,7 +75,7 @@ def seed_listings():
             'description': 'A 4K gaming monitor.',
             'price': 299.99,
             'quantity': 12,
-            'image_url': 'aws-link-monitor',
+            'image_url': 'https://capstonebitprojectbucket.s3.amazonaws.com/gmaing-monitor.png',
         },
          {
             'user_id': 5,
@@ -83,7 +83,7 @@ def seed_listings():
             'description': 'A mechanical gaming keyboard.',
             'price': 129.99,
             'quantity': 10,
-            'image_url': 'aws-link-keyboard',
+            'image_url': 'https://capstonebitprojectbucket.s3.amazonaws.com/gaming-keyboard.png',
         },
         {
             'user_id': 5,
@@ -91,7 +91,7 @@ def seed_listings():
             'description': 'A sturdy pc gaming desk.',
             'price': 499.99,
             'quantity': 10,
-            'image_url': 'aws-link-desk',
+            'image_url': 'https://capstonebitprojectbucket.s3.amazonaws.com/gaming-desk.png',
         }
     ]
     for listing_data in listings_data:
