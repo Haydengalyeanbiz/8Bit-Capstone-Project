@@ -2,11 +2,14 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import './Listings.css';
-import { fetchAllListings } from '../../redux/listing';
+import { fetchAllListings, fetchDeleteListing } from '../../redux/listing';
 import { fetchAllCategories } from '../../redux/category';
 import { fetchAddToCart } from '../../redux/shoppingCart';
+import DeleteListingModal from '../DeleteListingModal/DeleteListingModal';
+import { useModal } from '../../context/Modal';
 
 export const Listings = () => {
+	const { setModalContent, closeModal } = useModal();
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const user = useSelector((state) => state.session.user);
@@ -27,7 +30,19 @@ export const Listings = () => {
 		navigate(`/listings/${id}/edit`);
 	};
 
-	// const handleDelete = ()
+	const handleDelete = (id) => {
+		setModalContent(
+			<DeleteListingModal
+				show={true}
+				onConfirm={() => {
+					dispatch(fetchDeleteListing(id));
+					closeModal();
+					navigate('/');
+				}}
+				onCancel={closeModal}
+			/>
+		);
+	};
 
 	const handleAddToCart = (listingId) => {
 		dispatch(fetchAddToCart(listingId));
@@ -84,7 +99,7 @@ export const Listings = () => {
 									src={listing.image_url}
 									alt={listing.title}
 								/>
-								<div>
+								<div className='listing-footer-info'>
 									<div className='listing-categories'>
 										{listing.categories && listing.categories.length > 0 ? (
 											listing.categories.map((category, index) => (
@@ -103,20 +118,30 @@ export const Listings = () => {
 										className='listing-footer-container'
 										onClick={(e) => e.stopPropagation()}
 									>
-										<p className='listing-price'>${listing.price}</p>
+										{!isOwner && <p>${listing.price}</p>}
 										{isOwner ? (
 											<>
 												<button
-													onClick={() =>
-														handleEdit(`/listings/${listing.id}/edit`)
-													}
+													className='list-btn edit'
+													onClick={() => handleEdit(listing.id)}
 												>
 													Edit Listing
 												</button>
-												<button>Delete Listing</button>
+												<button
+													className='list-btn delete'
+													onClick={(e) => {
+														e.stopPropagation();
+														handleDelete(listing.id);
+													}}
+												>
+													Delete Listing
+												</button>
 											</>
 										) : (
-											<button onClick={() => handleAddToCart(listing.id)}>
+											<button
+												className='add-to-cart-listing '
+												onClick={() => handleAddToCart(listing.id)}
+											>
 												Add to cart
 											</button>
 										)}

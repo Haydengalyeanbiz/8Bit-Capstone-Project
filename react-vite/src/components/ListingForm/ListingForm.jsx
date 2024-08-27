@@ -84,15 +84,13 @@ export const ListingForm = () => {
 				? prevSelectedCategories.filter((id) => id !== selectedValue)
 				: [...prevSelectedCategories, selectedValue]
 		);
-		console.log('SELECTED VALUE =====>', selectedValue);
 
-		// Mark categories as touched when a change occurs
 		setTouched((prevState) => ({
 			...prevState,
 			categories: true,
 		}));
 	};
-	console.log('THIS IS THE CATEGORIES ====>', selectedCategories);
+
 	const handleSubmit = async (e) => {
 		if (user) {
 			e.preventDefault();
