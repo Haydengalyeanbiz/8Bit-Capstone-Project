@@ -45,7 +45,7 @@
 
 .input-label {
 	position: absolute;
-	top: 35%;
+	top: 30%;
 	left: 10px;
 	transform: translateY(-50%);
 	color: var(--primary-clr);

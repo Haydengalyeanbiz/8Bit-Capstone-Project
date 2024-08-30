@@ -25,3 +25,9 @@
 	background-color: rgba(0, 0, 0, 0.5); /* Dark overlay with 50% opacity */
 	z-index: 1; /* Ensure the overlay is above the image */
 }
+
+@media screen and (max-width: 376px) {
+	.carousel-container {
+		display: none;
+	}
+}

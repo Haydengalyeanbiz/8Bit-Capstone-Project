@@ -23,11 +23,11 @@ export const HomeNU = () => {
 	};
 
 	return (
-		<div>
+		<div className='homenu-wrapper'>
 			<Carousel /> {/* Add the Carousel here */}
 			<div className='login-main-holder'>
 				<div className='login-forms-container'>
-					<div>
+					<div className='login-form-left'>
 						<h1 className='homenu-title'>Welcome to 8bit</h1>
 						<p>log-in now, or sign up!</p>
 						<div className='login-btns-container'>

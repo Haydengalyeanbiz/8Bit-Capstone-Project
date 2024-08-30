@@ -95,3 +95,24 @@ button:hover {
 label {
 	font-family: var(--ff-primary);
 }
+
+@media screen and (max-width: 376px) {
+	h1 {
+		font-size: var(--fs-huge);
+	}
+
+	h2 {
+		font-size: var(--fs-large);
+	}
+
+	h3 {
+		font-size: var(--fs-medium);
+	}
+
+	a,
+	p,
+	span,
+	label {
+		font-size: var(--fs-primary);
+	}
+}

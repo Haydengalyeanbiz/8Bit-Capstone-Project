@@ -44,3 +44,88 @@
 	background-color: var(--third-clr);
 	color: white;
 }
+
+@media screen and (max-width: 376px) {
+	/* ! Login form styles */
+	.login-main-holder {
+		height: auto;
+		margin-bottom: 1rem;
+	}
+
+	.login-forms-container {
+		height: auto;
+		flex-direction: column;
+	}
+
+	.login-form-left {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		text-align: center;
+	}
+
+	.homenu-btn {
+		padding: 0.2rem 0.5rem;
+	}
+
+	.login-form-wrapper {
+		width: 350px;
+		height: auto;
+		padding: 0.3rem 0;
+		align-items: center;
+		border: none;
+	}
+
+	.login-form-structure {
+		align-items: end;
+	}
+
+	.login-input {
+		width: 200px;
+	}
+
+	/* ! Sign-up form styles */
+
+	.signup-form-wrapper {
+		border: none;
+		height: 100%;
+		width: 350px;
+		padding: 0;
+	}
+
+	.signup-form-structure {
+		flex-direction: column;
+		align-items: end;
+		width: 100%;
+		gap: 0.4rem;
+	}
+
+	.su-form-left {
+		gap: 0.4rem;
+	}
+
+	.su-form-right {
+		gap: 0.4rem;
+	}
+
+	.signup-input {
+		width: 200px;
+	}
+
+	.input-label {
+		position: absolute;
+		left: -90px;
+		color: white;
+		max-width: 100px;
+	}
+	.signup-input:focus + .input-label,
+	.input-label.active {
+		top: 50%;
+	}
+
+	.errors {
+		font-size: var(--fs-tiny);
+		width: inherit;
+	}
+}
