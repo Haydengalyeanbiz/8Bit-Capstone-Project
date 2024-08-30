@@ -21,11 +21,6 @@
 	background-color: transparent;
 }
 
-.category-button:hover {
-	box-shadow: 5px 5px 10px var(--light-accent-clr),
-		-5px -5px 10px var(--light-accent-clr);
-}
-
 .category-button.active {
 	border-color: var(--heavy-accent-clr);
 	background-color: var(--light-accent-clr);
@@ -132,4 +127,21 @@
 .add-to-cart-listing:hover {
 	color: white;
 	background-color: var(--light-accent-clr);
+}
+
+@media screen and (max-width: 376px) {
+	.category-container {
+		justify-content: center;
+		flex-wrap: wrap;
+		width: 100%;
+	}
+
+	.listing-container {
+		margin: 0;
+		width: 345px;
+	}
+
+	.listing-structure {
+		width: 330px;
+	}
 }

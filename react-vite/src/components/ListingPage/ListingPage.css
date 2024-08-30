@@ -96,3 +96,6 @@
 .wishlist-toggle-btn:hover {
 	color: var(--heavy-accent-clr);
 }
+
+@media screen and (max-width: 376px) {
+}

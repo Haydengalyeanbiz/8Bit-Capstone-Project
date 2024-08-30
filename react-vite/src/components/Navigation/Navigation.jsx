@@ -1,7 +1,7 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { FaShoppingCart } from 'react-icons/fa';
-import { FaUserCircle } from 'react-icons/fa';
+import { FaShoppingCart, FaUserCircle, FaBars } from 'react-icons/fa';
 import { thunkLogout } from '../../redux/session';
 import './Navigation.css';
 import { useModal } from '../../context/Modal'; // Adjust the path as needed
@@ -13,6 +13,7 @@ function Navigation({ isScrolled }) {
 	const navigate = useNavigate();
 	const user = useSelector((state) => state.session.user);
 	const cart = useSelector((state) => state.shoppingCart.cart.cart_items);
+	const [menuOpen, setMenuOpen] = useState(false);
 
 	const handleClick = () => {
 		if (user) {
@@ -28,6 +29,7 @@ function Navigation({ isScrolled }) {
 
 	const handleCartClick = () => {
 		setModalContent(<ShoppingCart />);
+		setMenuOpen(false);
 	};
 	const logout = (e) => {
 		e.preventDefault();
@@ -35,34 +37,46 @@ function Navigation({ isScrolled }) {
 		navigate('/');
 	};
 
+	const toggleMenu = () => {
+		setMenuOpen((prev) => !prev);
+	};
+
 	return (
 		<div className={`nav-bar ${isScrolled ? 'scrolled' : ''}`}>
 			<div className='navbar-content'>
 				<h2
 					className='logo'
-					onClick={() => handleClick()}
+					onClick={handleClick}
 				>
 					8Bit
 				</h2>
 				{user && (
-					<div className='nav-bar-btns'>
-						<button onClick={logout}>Log Out</button>
+					<>
 						<button
-							className='profile-btn'
-							onClick={() => handleProfile(user.id)}
+							className='hamburger-btn'
+							onClick={toggleMenu}
 						>
-							<FaUserCircle />
+							<FaBars />
 						</button>
-						<div className='nav-cart-holder'>
+						<div className={`nav-bar-btns ${menuOpen ? 'open' : ''}`}>
+							<button onClick={logout}>Log Out</button>
 							<button
-								className='shopping-btn'
-								onClick={handleCartClick}
+								className='profile-btn'
+								onClick={() => handleProfile(user.id)}
 							>
-								<FaShoppingCart />
+								<FaUserCircle />
 							</button>
-							{cart.length > 0 && <p>{cart.length}</p>}
+							<div className='nav-cart-holder'>
+								<button
+									className='shopping-btn'
+									onClick={handleCartClick}
+								>
+									<FaShoppingCart />
+								</button>
+								{cart.length > 0 && <p>{cart.length}</p>}
+							</div>
 						</div>
-					</div>
+					</>
 				)}
 			</div>
 		</div>

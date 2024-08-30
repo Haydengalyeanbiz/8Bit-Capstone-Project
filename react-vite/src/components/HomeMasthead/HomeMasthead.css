@@ -5,3 +5,13 @@
 	align-items: center;
 	height: 60dvh;
 }
+
+@media screen and (max-width: 376px) {
+	.mast-title {
+		text-align: center;
+	}
+
+	.small-title {
+		font-size: var(--fs-small);
+	}
+}

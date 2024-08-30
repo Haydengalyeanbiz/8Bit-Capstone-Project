@@ -28,6 +28,10 @@ export const ListingPage = () => {
 
 	const { setModalContent, closeModal } = useModal();
 
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
+
 	// Fetch listing and reviews on component mount
 	useEffect(() => {
 		dispatch(fetchGetListing(id));
