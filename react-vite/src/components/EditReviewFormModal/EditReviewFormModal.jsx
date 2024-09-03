@@ -40,11 +40,9 @@ const EditReviewFormModal = ({ review }) => {
 				comment,
 			};
 
-			const result = await dispatch(fetchUpdateReview(review.id, formData)); //
+			const result = await dispatch(fetchUpdateReview(review.id, formData));
 
-			// Check for errors in the response
 			if (result.errors) {
-				console.log('Server Errors:', result.errors);
 				setFormErrors(result.errors);
 			} else {
 				closeModal();
@@ -72,7 +70,7 @@ const EditReviewFormModal = ({ review }) => {
 								name='rating'
 								value={ratingValue}
 								onClick={() => setRating(ratingValue)}
-								style={{ display: 'none' }} // Hide the radio buttons
+								style={{ display: 'none' }}
 							/>
 							<FaStar
 								className='star'

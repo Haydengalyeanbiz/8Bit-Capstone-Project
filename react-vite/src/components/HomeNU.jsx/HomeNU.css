@@ -15,9 +15,16 @@
 	align-items: center;
 	gap: 1rem;
 	z-index: 10;
-	border: solid 3px var(--third-clr);
+	/* border: solid 3px var(--third-clr); */
 	border-radius: 12px;
 	padding: 2rem;
+}
+
+.login-form-left {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 1rem;
 }
 
 .homenu-title {

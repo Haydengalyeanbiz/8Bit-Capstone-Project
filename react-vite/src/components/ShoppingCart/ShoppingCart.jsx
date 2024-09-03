@@ -74,7 +74,7 @@ export const ShoppingCart = () => {
 									alt={item.listing.title}
 								/>
 								<div className='cart-info'>
-									<div>
+									<div className='cart-item-info'>
 										<h3>{item.listing.title}</h3>
 										<p>Price: ${item.listing.price}</p>
 									</div>

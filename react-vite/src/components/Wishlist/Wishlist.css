@@ -16,6 +16,9 @@
 }
 
 .wishlist-item {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 	background-color: var(--primary-clr);
 	border: 3px solid var(--heavy-accent-clr);
 	border-radius: 8px;
@@ -24,6 +27,10 @@
 	max-width: 300px;
 	margin: 0 auto;
 	box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.wishlist-item:hover {
+	box-shadow: 5px 5px 15px var(--light-accent-clr);
 }
 
 .wishlist-item img {
@@ -35,7 +42,6 @@
 
 .wishlist-item h3 {
 	font-size: 1.2rem;
-	margin-bottom: 10px;
 }
 
 .wishlist-item p {

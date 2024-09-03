@@ -24,7 +24,7 @@ export const HomeNU = () => {
 
 	return (
 		<div className='homenu-wrapper'>
-			<Carousel /> {/* Add the Carousel here */}
+			<Carousel />
 			<div className='login-main-holder'>
 				<div className='login-forms-container'>
 					<div className='login-form-left'>

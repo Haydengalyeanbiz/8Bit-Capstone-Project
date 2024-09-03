@@ -29,15 +29,19 @@ export const Wishlist = () => {
 							key={item.id}
 							className='wishlist-item'
 						>
-							<h3>{item.listing.title}</h3>
-							<p>{item.listing.description}</p>
+							<div>
+								<h3>{item.listing.title}</h3>
+								<p>{item.listing.description}</p>
+							</div>
 							<img
 								className='wishlist-image'
 								src={item.listing.image_url}
 								alt={item.listing.title}
 							/>
-							<p>Price: ${item.listing.price}</p>
-							<button onClick={() => removeWishItem(item.id)}>Remove</button>
+							<div>
+								<p>Price: ${item.listing.price}</p>
+								<button onClick={() => removeWishItem(item.id)}>Remove</button>
+							</div>
 						</div>
 					))
 				) : (

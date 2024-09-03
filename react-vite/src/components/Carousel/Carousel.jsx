@@ -23,8 +23,8 @@ export const Carousel = () => {
 					prevIndex === images.length - 1 ? 0 : prevIndex + 1
 				);
 				setIsFading(false);
-			}, 1000); // Delay matches the transition duration (1 second)
-		}, 5000); // Change every 5 seconds
+			}, 1000);
+		}, 5000);
 
 		return () => clearInterval(interval);
 	}, []);

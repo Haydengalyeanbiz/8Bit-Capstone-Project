@@ -6,12 +6,11 @@ import { useParams, useNavigate } from 'react-router-dom';
 import '../ListingForm/ListingForm.css'; // Reuse styles
 
 export const EditListingForm = () => {
-	const { id } = useParams(); // Get listing ID from the URL
+	const { id } = useParams();
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const listing = useSelector((state) => state.listings.selectedListing);
 	const categories = useSelector((state) => state.categories.categories);
-	console.log('THIS IS THE CATEGORIES=========>', categories);
 
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
@@ -21,13 +20,11 @@ export const EditListingForm = () => {
 	const [imagePreview, setImagePreview] = useState(null);
 	const [selectedCategories, setSelectedCategories] = useState([]);
 
-	// Fetch the listing data when the component mounts
 	useEffect(() => {
 		dispatch(fetchAllCategories());
 		dispatch(fetchGetListing(id));
 	}, [dispatch, id]);
 
-	// Populate form fields once the listing data is fetched
 	useEffect(() => {
 		if (listing) {
 			setTitle(listing.title || '');
@@ -36,7 +33,6 @@ export const EditListingForm = () => {
 			setQuantity(listing.quantity || '');
 			setImagePreview(listing.image_url || '');
 
-			// Map category names to IDs
 			if (listing.categories && Array.isArray(listing.categories)) {
 				const selectedCategoryIds = categories
 					.filter((cat) => listing.categories.includes(cat.name))
@@ -44,12 +40,11 @@ export const EditListingForm = () => {
 
 				setSelectedCategories(selectedCategoryIds);
 			} else {
-				setSelectedCategories([]); // Set to empty array if no categories exist
+				setSelectedCategories([]);
 			}
 		}
 	}, [listing, categories]);
 
-	// Handle category change
 	const handleCategoryChange = (e) => {
 		const selectedValue = parseInt(e.target.value, 10);
 		setSelectedCategories((prevSelectedCategories) =>
@@ -57,9 +52,8 @@ export const EditListingForm = () => {
 				? prevSelectedCategories.filter((id) => id !== selectedValue)
 				: [...prevSelectedCategories, selectedValue]
 		);
-		console.log('THIS IS SELECTED VALUE', selectedValue);
 	};
-	console.log('THIS IS SELECTED CATEGORIES!', selectedCategories);
+
 	// Handle form submission
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -70,9 +64,8 @@ export const EditListingForm = () => {
 		formData.append('price', price);
 		formData.append('quantity', quantity);
 
-		// Check if the user has selected a new image
 		if (image_url) {
-			formData.append('image_url', image_url); // Use 'image_url' here
+			formData.append('image_url', image_url);
 		}
 
 		selectedCategories.forEach((category) => {
@@ -86,7 +79,6 @@ export const EditListingForm = () => {
 		}
 	};
 
-	// Add a check to ensure listing data is loaded before rendering the form
 	if (!listing || !categories) {
 		return <div>Loading...</div>;
 	}
@@ -189,7 +181,7 @@ export const EditListingForm = () => {
 							className='listing-input-field-photo'
 							type='file'
 							accept='image/*'
-							onChange={(e) => setImageUrl(e.target.files[0])} // Use 'setImageUrl' here
+							onChange={(e) => setImageUrl(e.target.files[0])}
 						/>
 					</label>
 				</div>

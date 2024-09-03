@@ -38,10 +38,13 @@
 	flex-direction: column;
 	gap: 1rem;
 	width: 90%;
+	max-height: 80%;
+	overflow-y: auto;
 }
 
 .shop-cart-image {
-	height: 60px;
+	height: 80px;
+	min-width: 100px;
 }
 
 .cart-quantity-btn {
@@ -59,9 +62,20 @@
 	padding-left: 1rem;
 }
 
+.cart-item-quantity {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.cart-item-info {
+	width: 180px;
+}
+
 .cart-info {
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 	width: 100%;
 	padding: 1rem;
 }
