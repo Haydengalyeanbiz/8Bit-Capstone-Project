@@ -19,14 +19,12 @@ The 8Bit E-Commerce website is a full-stack application built for video game ent
 
 
 
-## Featured Skills
+## Features
 
-1. **React**: Utilized for building the frontend interface, providing dynamic and interactive components.
-2. **Vite**: Employed as the build tool to optimize and bundle the project for production.
-3. **Tailwind CSS**: Integrated for responsive and customizable styling, enhancing the visual aesthetics of the website.
-4. **Full-stack Development**: Implemented both frontend and backend functionalities, ensuring end-to-end functionality and user experience.
-5. **User Authentication**: Implemented signup and login features to authenticate users and secure their accounts.
-6. **Wishlist and Cart Management**: Developed functionalities to add, remove, and update items in the wishlist and cart, enhancing user engagement and convenience.
+1. **Listings**: Browse through a collection of products with detailed descriptions, images, and pricing. Each listing includes relevant product information for users to make informed purchasing decisions.
+2. **Reviews**: Users can view and leave reviews on products, helping others make decisions based on community feedback. The review system includes ratings and user comments, adding credibility to the listings.
+3. **Wishlist Management**: Users easily save products they are interested in, and manage their wishlist by adding or removing items at any time.
+4. **Shopping Cart**: A fully functional shopping cart where users can add, remove, or update the quantity of products before proceeding to checkout. The cart system allows users to see a running total of their selected items.
 
 ## Technologies Used
 
@@ -48,13 +46,13 @@ To set up and run the project locally, follow these steps:
 1. Clone the repository to your local machine:
 
    ```bash
-   git clone https://github.com/MMansy19/E-Commerce-Website.git
+   git clone https://github.com/Haydengalyeanbiz/8bit-ecommerce.git
    ```
 
 2. Navigate to the project directory:
 
    ```bash
-   cd E-Commerce-Website
+   cd 8bit-ecommerce
    ```
 
 3. Install the project dependencies:
@@ -63,11 +61,9 @@ To set up and run the project locally, follow these steps:
    npm install
    ```
 
-4. Install `i18next` for internationalization:
+4. Set up environment variables:
 
-   ```bash
-   npm install i18next
-   ```
+-Create a .env file in the root directory and configure your environment variables for the backend, such as database connection details, API keys, etc.
 
 5. Install `react-i18next` for React integration with i18next:
 
