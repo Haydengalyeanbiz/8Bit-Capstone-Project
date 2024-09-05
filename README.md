@@ -55,36 +55,42 @@ To set up and run the project locally, follow these steps:
    cd 8bit-ecommerce
    ```
 
-3. Install the project dependencies:
+3. Install the front-end dependencies:
 
    ```bash
    npm install
    ```
+4. Install backend dependencies using pipenv:
+
+   Ensure you have Pipenv installed. Then run:
+   ```bash
+   pipenv install
+   ```
+5. Activate the virtual environment:
+  
+  ```bash
+  pipenv shell
+  ```
 
 4. Set up environment variables:
 
--Create a .env file in the root directory and configure your environment variables for the backend, such as database connection details, API keys, etc.
+    -Create a .env file in the root directory and configure your environment variables for the backend, such as database connection details, API keys, etc.
+   
 
-5. Install `react-i18next` for React integration with i18next:
+5. In a seperate console start the back-end development server: 
+  
+  ```bash
+  pipenv run flask run
+  ```
 
-   ```bash
-   npm install react-i18next
-   ```
-
-6. Install `flowbite-react` for UI components:
-
-   ```bash
-   npm install flowbite-react
-   ```
-
-7. Start the development server:
+6. In a seperate console start the front-end development server:
    ```bash
    npm run dev
    ```
 
 
 ## Screenshots
-1. E-Commerce HomePage
+1. 8Bit HomePage
   <img  src="public/assets/Screenshots/E-Commerce HomePage.jpg" alt="E-Commerce HomePage">
 2. Sign Up
   <img  src="public/assets/Screenshots/Sign Up.jpg" alt="Sign Up">
