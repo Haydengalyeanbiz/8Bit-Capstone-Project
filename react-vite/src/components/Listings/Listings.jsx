@@ -2,7 +2,11 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import './Listings.css';
-import { fetchAllListings, fetchDeleteListing } from '../../redux/listing';
+import {
+	fetchAllListings,
+	fetchDeleteListing,
+	fetchGetListing,
+} from '../../redux/listing';
 import { fetchAllCategories } from '../../redux/category';
 import { fetchAddToCart } from '../../redux/shoppingCart';
 import DeleteListingModal from '../DeleteListingModal/DeleteListingModal';
@@ -23,6 +27,7 @@ export const Listings = () => {
 	}, [dispatch]);
 
 	const handleNavigate = (id) => {
+		dispatch(fetchGetListing(id));
 		navigate(`/listings/${id}`);
 	};
 

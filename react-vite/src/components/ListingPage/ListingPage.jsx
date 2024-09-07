@@ -47,7 +47,6 @@ export const ListingPage = () => {
 		}
 	}, [listing?.id, wishlist]);
 
-	// Handle adding/removing from wishlist
 	const handleToggleWishlist = async () => {
 		if (isInWishlist) {
 			const wishlistItem = wishlist.find(
@@ -107,7 +106,6 @@ export const ListingPage = () => {
 	return (
 		<div className='whole-listing-page'>
 			<div className='listing-p-wrapper'>
-				<h1 className='listing-p-title'>{listing.title}</h1>
 				<div className='listing-p-image-container'>
 					{listing.image_url && (
 						<img
@@ -118,25 +116,24 @@ export const ListingPage = () => {
 					)}
 				</div>
 				<div className='listing-p-text-container'>
+					<h1 className='listing-p-title'>{listing.title}</h1>
 					<div className='half-listing-text'>
-						<p>{listing.description}</p>
+						<p className='list-p-description'>{listing.description}</p>
 						{reviews.length > 0 ? (
-							<p className='average-star-list'>
-								<FaStar /> {averageRating}
-							</p>
+							<div className='list-info-review-box'>
+								<p className='average-star-list'>
+									<FaStar /> {averageRating}
+								</p>
+								<p className='reviews-length'>{reviews.length} reviews</p>
+							</div>
 						) : (
 							<p className='no-reviews'>No reviews</p>
 						)}
+						<p>Sold by {listing.username}</p>
 					</div>
 					<div className='other-half-listing-text'>
-						{!isOwner && (
-							<button
-								onClick={handleToggleWishlist}
-								className='wishlist-toggle-btn'
-							>
-								{isInWishlist ? <FaHeart /> : <FaRegHeart />}
-							</button>
-						)}
+						<p className='listing-price-detail'>${listing.price}</p>
+
 						{isOwner ? (
 							<div className='edit-btns-container'>
 								<button
@@ -153,12 +150,20 @@ export const ListingPage = () => {
 								</button>
 							</div>
 						) : (
-							<button
-								className='edit list-btn'
-								onClick={handleAddToCart}
-							>
-								Add to cart
-							</button>
+							<div className='wish-add-btns'>
+								<button
+									onClick={handleToggleWishlist}
+									className='wishlist-toggle-btn'
+								>
+									{isInWishlist ? <FaHeart /> : <FaRegHeart />}
+								</button>
+								<button
+									className='edit list-btn'
+									onClick={handleAddToCart}
+								>
+									Add to cart
+								</button>
+							</div>
 						)}
 					</div>
 				</div>

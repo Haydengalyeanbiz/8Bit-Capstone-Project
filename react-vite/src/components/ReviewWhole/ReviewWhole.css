@@ -3,7 +3,8 @@
 	flex-direction: column;
 	align-items: center;
 	padding-top: 2rem;
-	border-top: solid var(--heavy-accent-clr) 10px;
+	border-top: solid var(--heavy-accent-clr) 3px;
+	background-color: var(--secondary-clr);
 }
 
 .review-title-holder {

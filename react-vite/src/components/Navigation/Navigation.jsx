@@ -6,6 +6,7 @@ import { thunkLogout } from '../../redux/session';
 import './Navigation.css';
 import { useModal } from '../../context/Modal'; // Adjust the path as needed
 import { ShoppingCart } from '../ShoppingCart/ShoppingCart';
+import { clearSelected } from '../../redux/listing';
 
 function Navigation({ isScrolled }) {
 	const { setModalContent } = useModal();
@@ -17,6 +18,7 @@ function Navigation({ isScrolled }) {
 
 	const handleClick = () => {
 		if (user) {
+			dispatch(clearSelected());
 			navigate('/');
 		}
 	};

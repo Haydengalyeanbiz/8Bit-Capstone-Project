@@ -4,6 +4,7 @@ const GET_A_LISTING = 'listings/GET_A_LISTING';
 const CREATE_NEW_LISTING = 'listings/CREATE_NEW_LISTING';
 const UPDATE_LISTING = 'listings/UPDATE_LISTING';
 const DELETE_LISTING = 'listings/DELETE_LISTING';
+const CLEAR_SELECTED = 'listings/CLEAR_SELECTED';
 
 // *ACTION CREATORS
 export const getAllListings = (lisitngs) => {
@@ -38,6 +39,12 @@ export const deleteListing = (listingId) => {
 	return {
 		type: DELETE_LISTING,
 		payload: listingId,
+	};
+};
+
+export const clearSelected = () => {
+	return {
+		type: CLEAR_SELECTED,
 	};
 };
 
@@ -161,6 +168,9 @@ function listingsReducer(state = initialState, action) {
 						? {}
 						: state.selectedListing,
 			};
+
+		case CLEAR_SELECTED:
+			return { ...state, selectedListing: {} };
 		default:
 			return state;
 	}

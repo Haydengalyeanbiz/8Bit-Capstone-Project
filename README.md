@@ -1,43 +1,58 @@
 # 8Bit E-Commerce Website 🎮🛒
 
-The 8Bit E-Commerce website is a full-stack application built for video game enthusiasts, providing users with the ability to explore, purchase, and manage their favorite games and gaming accessories. It is built using React with Vite as the bundler for a fast and optimized development process. The app also integrates Tailwind CSS and Material UI for a responsive, sleek, and modern user interface. The platform offers essential functionalities such as user authentication, wishlist and cart management, a search feature, and a seamless checkout process with purchasing capabilities.
+**8Bit** is a cutting-edge eCommerce platform designed for gamers and collectors alike. Whether you’re browsing for the latest video games or must-have accessories, 8Bit offers a seamless shopping experience. Featuring a sleek, modern interface built with performance and usability in mind, users can explore, review, and purchase their favorite products with ease.
 
+Built with **React** and powered by **Vite** for lightning-fast performance, 8Bit combines the efficiency of modern web technologies with a passion for gaming.
 
-  <img  src="public/assets/Screenshots/0.png" alt="Home">
+![8Bit Homepage](public/assets/Screenshots/0.png)
 
-## [🌟Live Website🌟]([https://e-commerce-mansy.vercel.app](https://eight-bit-ciqo.onrender.com/))
+[🌟Live Demo🌟](https://eight-bit-ciqo.onrender.com)
 
-
+---
 
 ## Table of Contents
 
 - [Features](#features)
 - [Technologies Used](#technologies-used)
-- [Set Up ](#set-up)
+- [Setup](#setup)
 - [Screenshots](#screenshots)
 - [Contact](#contact)
 
-
+---
 
 ## Features
 
-1. **Listings**: Browse through a collection of products with detailed descriptions, images, and pricing. Each listing includes relevant product information for users to make informed purchasing decisions.
-2. **Reviews**: Users can view and leave reviews on products, helping others make decisions based on community feedback. The review system includes ratings and user comments, adding credibility to the listings.
-3. **Wishlist Management**: Users easily save products they are interested in, and manage their wishlist by adding or removing items at any time.
-4. **Shopping Cart**: A fully functional shopping cart where users can add, remove, or update the quantity of products before proceeding to checkout. The cart system allows users to see a running total of their selected items.
+1. **Product Listings**  
+   Browse through an extensive collection of video games and accessories, each with detailed descriptions, images, and pricing.
+
+2. **User Reviews**  
+   Check out what other gamers are saying! Each product features user reviews, complete with star ratings and comments.
+
+3. **Wishlist Management**  
+   Easily manage your wishlist to save your favorite products for later. Add or remove items with a single click.
+
+4. **Shopping Cart**  
+   An intuitive shopping cart that allows you to manage your items, update quantities, and proceed to a hassle-free checkout.
+
+---
 
 ## Technologies Used
 
-- **React**: JavaScript library for building user interfaces.
-- **Vite**: Fast, modern build tooling for frontend development.
-- **React Router**: For handling navigation between pages.
-- **Redux**: State management tool used for managing global state efficiently.
-- **Flask**: Python-based backend framework handling API requests and responses.
-- **FlaskForm**: Used for building forms in Flask applications.
-- **SQLAlchemy**: ORM used for interacting with the database and managing user, product, and order data.
-- **AWS**: Used for storing and managing static files like product images.
-- **Git** (for version control)
-- **Responsive For Mobile**
+Here are the main technologies and tools used in building the 8Bit eCommerce platform:
+
+![React](https://img.shields.io/badge/React-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![Redux](https://img.shields.io/badge/Redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-%23F7DF1E.svg?style=for-the-badge&logo=javascript&logoColor=black)
+![Vite](https://img.shields.io/badge/Vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
+![HTML](https://img.shields.io/badge/HTML-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![CSS](https://img.shields.io/badge/CSS-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+![Python](https://img.shields.io/badge/Python-%233776AB.svg?style=for-the-badge&logo=python&logoColor=white)
+![Flask](https://img.shields.io/badge/Flask-%23000000.svg?style=for-the-badge&logo=flask&logoColor=white)
+![FlaskForms](https://img.shields.io/badge/FlaskForms-%23000000.svg?style=for-the-badge&logo=flask&logoColor=white)
+![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-%23D71F00.svg?style=for-the-badge&logo=sqlalchemy&logoColor=white)
+![Bcrypt](https://img.shields.io/badge/Bcrypt-%23000000.svg?style=for-the-badge&logoColor=white)
+
+---
 
 ## Set Up
 
@@ -55,64 +70,97 @@ To set up and run the project locally, follow these steps:
    cd 8bit-ecommerce
    ```
 
-3. Install the front-end dependencies:
+3. Install backend dependencies using pipenv:
+
+   Ensure you have Pipenv installed. Then run:
+
+   ```bash
+    pipenv install -r "requirements.txt"
+   ```
+
+4. Activate the virtual environment:
+
+   ```bash
+     pipenv shell
+   ```
+
+5. Set up the Developer Server
+
+- initialize the db
+  ```bash
+    Flask init
+  ```
+- run the migrations
+  ```bash
+    Flask migrate -m "descriptive
+  ```
+- seed the data
+  ```bash
+     pipenv shell
+  ```
+
+7. Install the front-end dependencies:
+
+   - navigate to the react-vite folder
+
+   ```bash
+   cd react-vite
+   ```
+
+   - then run
 
    ```bash
    npm install
    ```
-4. Install backend dependencies using pipenv:
 
-   Ensure you have Pipenv installed. Then run:
+8. Set up environment variables:
+
+-Create a .env file in the root directory and configure your environment variables for the backend, such as database connection details, API keys, etc.
+
+8. In a seperate console start the back-end development server:
+
    ```bash
-   pipenv install
+   pipenv run flask run
    ```
-5. Activate the virtual environment:
-  
-  ```bash
-  pipenv shell
-  ```
 
-4. Set up environment variables:
-
-    -Create a .env file in the root directory and configure your environment variables for the backend, such as database connection details, API keys, etc.
-   
-
-5. In a seperate console start the back-end development server: 
-  
-  ```bash
-  pipenv run flask run
-  ```
-
-6. In a seperate console start the front-end development server:
+9. In a seperate console start the front-end development server:
    ```bash
    npm run dev
    ```
 
-
 ## Screenshots
-1. 8Bit HomePage
-  <img  src="public/assets/Screenshots/E-Commerce HomePage.jpg" alt="E-Commerce HomePage">
-2. Sign Up
-  <img  src="public/assets/Screenshots/Sign Up.jpg" alt="Sign Up">
-3. Log In
-  <img  src="public/assets/Screenshots/Log In.jpg" alt="Log In">
-4. Product Details page
-  <img  src="public/assets/Screenshots/Product Details page.jpg" alt="Product Details page">
-5. Wishlist
-  <img  src="public/assets/Screenshots/Wishlist.jpg" alt="Wishlist">
-6. About
-  <img  src="public/assets/Screenshots/About.jpg" alt="About">
-7. Cart
-  <img  src="public/assets/Screenshots/Cart.jpg" alt="Cart">
-8. CheckOut
-  <img  src="public/assets/Screenshots/CheckOut.jpg" alt="CheckOut">
-9. Contact
-  <img  src="public/assets/Screenshots/Contact.jpg" alt="Contact">
-10. Account
-  <img  src="public/assets/Screenshots/Account.jpg" alt="Account">
 
+### Login Page
 
+  <img src="react-vite/public/assets/Login-page.png">
 
+### Home Page
+
+  <img src="react-vite/public/assets/Homepage.png">
+
+### Listings
+
+  <img>
+
+### Listing Page
+
+  <img>
+
+### Reviews
+
+  <img>
+
+### Shopping Cart
+
+  <img>
+
+### Profile Page
+
+  <img>
+
+### Wishlist
+
+  <img>
 
 ## Contact
 
