@@ -27,10 +27,17 @@
 	background-color: transparent;
 }
 
+.category-button:hover {
+	box-shadow: 5px 5px 20px var(--heavy-accent-clr),
+		-5px -5px 20px var(--heavy-accent-clr);
+}
+
 .category-button.active {
 	border-color: var(--heavy-accent-clr);
-	background-color: var(--light-accent-clr);
+	background-color: var(--heavy-accent-clr);
 	color: white;
+	box-shadow: 5px 5px 20px var(--heavy-accent-clr),
+		-5px -5px 20px var(--heavy-accent-clr);
 }
 
 .listing-container {

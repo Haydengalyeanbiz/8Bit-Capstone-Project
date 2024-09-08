@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import './Listings.css';
+import { motion } from 'framer-motion';
 import {
 	fetchAllListings,
 	fetchDeleteListing,
@@ -69,6 +70,12 @@ export const Listings = () => {
 	};
 
 	const filteredListings = filterListingsByCategory(listings, selectedCategory);
+
+	const listingVariants = {
+		hidden: { opacity: 0, x: 100 },
+		visible: { opacity: 1, x: 0 },
+	};
+
 	return (
 		<div className='home-listings-cat-wrapper'>
 			<div className='category-container'>
@@ -89,13 +96,18 @@ export const Listings = () => {
 			</div>
 			<div className='listing-container'>
 				{filteredListings && filteredListings.length > 0 ? (
-					filteredListings.map((listing) => {
+					filteredListings.map((listing, index) => {
 						const isOwner = user && user.id === listing.user_id;
+
 						return (
-							<div
+							<motion.div
 								className='listing-structure'
 								key={listing.id}
 								onClick={() => handleNavigate(listing.id)}
+								initial='hidden'
+								animate='visible'
+								transition={{ duration: 0.5, delay: index * 0.1 }}
+								variants={listingVariants}
 							>
 								<h2 className='listing-title'>{listing.title}</h2>
 
@@ -152,7 +164,7 @@ export const Listings = () => {
 										)}
 									</div>
 								</div>
-							</div>
+							</motion.div>
 						);
 					})
 				) : (

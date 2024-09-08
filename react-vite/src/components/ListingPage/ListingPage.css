@@ -22,13 +22,20 @@
 }
 
 .listing-p-title {
-	/* border: solid 3px var(--heavy-accent-clr); */
 	text-decoration: underline var(--light-accent-clr) 3px;
 	border-radius: 12px;
 	text-align: center;
-	background-color: var(--primary-clr);
-	padding: 0 2rem;
 	font-size: var(--fs-huge);
+	width: 100%;
+}
+
+.list-p-description {
+	text-align: center;
+}
+
+.listing-seller {
+	font-style: italic;
+	font-weight: 200;
 }
 
 .half-listing-text {

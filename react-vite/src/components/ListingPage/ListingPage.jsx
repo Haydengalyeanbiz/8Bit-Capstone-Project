@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { motion } from 'framer-motion';
 import { fetchGetListing, fetchDeleteListing } from '../../redux/listing';
 import { fetchReviews } from '../../redux/reviews';
 import { FaRegHeart, FaHeart } from 'react-icons/fa6';
@@ -30,16 +31,11 @@ export const ListingPage = () => {
 
 	useEffect(() => {
 		window.scrollTo(0, 0);
-	}, []);
-
-	// Fetch listing and reviews on component mount
-	useEffect(() => {
 		dispatch(fetchGetListing(id));
 		dispatch(fetchReviews(id));
-		dispatch(fetchUserWishlist(sessionUser.id)); // Fetch user's wishlist
+		dispatch(fetchUserWishlist(sessionUser.id));
 	}, [dispatch, id, sessionUser.id]);
 
-	// Check if the listing is in the wishlist after the listing and wishlist are fetched
 	useEffect(() => {
 		if (listing?.id && wishlist.length > 0) {
 			const isListed = wishlist.some((item) => item.listing_id === listing.id);
@@ -103,8 +99,27 @@ export const ListingPage = () => {
 		return <div>Loading...</div>;
 	}
 
+	const pageVariants = {
+		initial: {
+			opacity: 0,
+		},
+		in: {
+			opacity: 1,
+		},
+		out: {
+			opacity: 0,
+		},
+	};
+
 	return (
-		<div className='whole-listing-page'>
+		<motion.div
+			className='whole-listing-page'
+			initial='initial'
+			animate='in'
+			exit='out'
+			variants={pageVariants}
+			transition={{ duration: 0.5 }}
+		>
 			<div className='listing-p-wrapper'>
 				<div className='listing-p-image-container'>
 					{listing.image_url && (
@@ -129,7 +144,7 @@ export const ListingPage = () => {
 						) : (
 							<p className='no-reviews'>No reviews</p>
 						)}
-						<p>Sold by {listing.username}</p>
+						<p className='listing-seller'>Sold by {listing.username}</p>
 					</div>
 					<div className='other-half-listing-text'>
 						<p className='listing-price-detail'>${listing.price}</p>
@@ -173,7 +188,7 @@ export const ListingPage = () => {
 				listingId={id}
 				isOwner={isOwner}
 			/>
-		</div>
+		</motion.div>
 	);
 };
 
