@@ -21,6 +21,8 @@ export const Listings = () => {
 	const listings = useSelector((state) => state.listings.AllListings);
 	const categories = useSelector((state) => state.categories.categories);
 	const [selectedCategory, setSelectedCategory] = useState(null);
+	const [isClicked, setIsClicked] = useState(false);
+	const [clickedButtonId, setClickedButtonId] = useState(null);
 
 	useEffect(() => {
 		dispatch(fetchAllCategories());
@@ -55,6 +57,8 @@ export const Listings = () => {
 	};
 
 	const handleCategoryClick = (category) => {
+		setIsClicked(!isClicked);
+		setClickedButtonId(category.id);
 		setSelectedCategory((prevCategory) =>
 			prevCategory === category ? null : category
 		);
@@ -72,18 +76,39 @@ export const Listings = () => {
 	const filteredListings = filterListingsByCategory(listings, selectedCategory);
 
 	const listingVariants = {
-		hidden: { opacity: 0, x: 100 },
-		visible: { opacity: 1, x: 0 },
+		hidden: { x: 80, opacity: 0 },
+		visible: { x: 0, opacity: 1 },
+	};
+
+	const categoryVariants = {
+		hidden: { y: 80, opacity: 0 },
+		visible: { y: 0, opacity: 1 },
+	};
+
+	const boxVariants = {
+		initial: { rotate: 0 },
+		clicked: { rotate: 360 },
 	};
 
 	return (
 		<div className='home-listings-cat-wrapper'>
-			<div className='category-container'>
+			<motion.div
+				className='category-container'
+				initial='hidden'
+				whileInView='visible'
+				transition={{ duration: 0.2, delay: 0.2 }}
+				variants={categoryVariants}
+			>
 				{categories &&
 					categories.map((category) => (
-						<button
+						<motion.button
 							key={category.id}
 							onClick={() => handleCategoryClick(category)}
+							animate={clickedButtonId === category.id ? 'clicked' : 'initial'}
+							viewport={{ once: true }}
+							transition={{ duration: 0.5 }}
+							variants={boxVariants}
+							initial='initial'
 							className={
 								selectedCategory === category
 									? 'category-button active'
@@ -91,12 +116,12 @@ export const Listings = () => {
 							}
 						>
 							{category.name}
-						</button>
+						</motion.button>
 					))}
-			</div>
+			</motion.div>
 			<div className='listing-container'>
 				{filteredListings && filteredListings.length > 0 ? (
-					filteredListings.map((listing, index) => {
+					filteredListings.map((listing) => {
 						const isOwner = user && user.id === listing.user_id;
 
 						return (
@@ -105,8 +130,9 @@ export const Listings = () => {
 								key={listing.id}
 								onClick={() => handleNavigate(listing.id)}
 								initial='hidden'
-								animate='visible'
-								transition={{ duration: 0.5, delay: index * 0.1 }}
+								whileInView='visible'
+								viewport={{ once: true, amount: 0.15 }}
+								transition={{ duration: 0.2, delay: 0.2 }}
 								variants={listingVariants}
 							>
 								<h2 className='listing-title'>{listing.title}</h2>
