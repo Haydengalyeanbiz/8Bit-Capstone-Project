@@ -4,7 +4,7 @@
 
 Built with **React** and powered by **Vite** for lightning-fast performance, 8Bit combines the efficiency of modern web technologies with a passion for gaming.
 
-![8Bit Homepage](public/assets/Screenshots/0.png)
+![8Bit Homepage](react-vite/public/assets/homepagegif.gif)
 
 [🌟Live Demo🌟](https://eight-bit-ciqo.onrender.com)
 
@@ -140,31 +140,31 @@ To set up and run the project locally, follow these steps:
 
 ### Listings
 
-  <img>
+  <img src="react-vite/public/assets/truelistings.png">
 
 ### Listing Page
 
-  <img>
+  <img src="react-vite/public/assets/ListingPage.png">
 
 ### Reviews
 
-  <img>
+  <img src="react-vite/public/assets/Reviews.png">
 
 ### Shopping Cart
 
-  <img>
+  <img src="react-vite/public/assets/Shopping cart.png">
 
 ### Profile Page
 
-  <img>
+  <img src="react-vite/public/assets/profilepage.png">
 
 ### Wishlist
 
-  <img>
+  <img src="react-vite/public/assets/wishlist.png">
 
 ## Contact
 
-- [Author](https://github.com/MMansy19)
-- [Website](https://mahmoud-mansy-portfolio.netlify.app/)
-- [Email](mailto:mahmoud2abdalfattah@gmail.com)
-- [LinkedIn](https://www.linkedin.com/in/mahmoud-mansy-a189a5232)
+- [Author](https://github.com/Haydengalyeanbiz)
+- [Website](https://eight-bit-ciqo.onrender.com/)
+- [Email](mailto:haydengalyeanbiz@gmail.com)
+- [LinkedIn](https://www.linkedin.com/in/hayden-galyean)
