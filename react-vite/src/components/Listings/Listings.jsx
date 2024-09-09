@@ -76,8 +76,10 @@ export const Listings = () => {
 	const filteredListings = filterListingsByCategory(listings, selectedCategory);
 
 	const listingVariants = {
-		hidden: { x: 80, opacity: 0 },
-		visible: { x: 0, opacity: 1 },
+		hidden: { opacity: 0 },
+		visible: { opacity: 1 },
+		hoverOn: { y: -20, transition: { duration: 0.1 } },
+		hoverOff: { y: 0, transition: { duration: 0.1 } },
 	};
 
 	const categoryVariants = {
@@ -96,6 +98,7 @@ export const Listings = () => {
 				className='category-container'
 				initial='hidden'
 				whileInView='visible'
+				viewport={{ once: true }}
 				transition={{ duration: 0.2, delay: 0.2 }}
 				variants={categoryVariants}
 			>
@@ -105,7 +108,6 @@ export const Listings = () => {
 							key={category.id}
 							onClick={() => handleCategoryClick(category)}
 							animate={clickedButtonId === category.id ? 'clicked' : 'initial'}
-							viewport={{ once: true }}
 							transition={{ duration: 0.5 }}
 							variants={boxVariants}
 							initial='initial'
@@ -129,10 +131,11 @@ export const Listings = () => {
 								className='listing-structure'
 								key={listing.id}
 								onClick={() => handleNavigate(listing.id)}
+								whileHover='hoverOn'
 								initial='hidden'
-								whileInView='visible'
+								animate='visible'
 								viewport={{ once: true, amount: 0.15 }}
-								transition={{ duration: 0.2, delay: 0.2 }}
+								transition={{ duration: 0.1, delay: 0.1 }}
 								variants={listingVariants}
 							>
 								<h2 className='listing-title'>{listing.title}</h2>
