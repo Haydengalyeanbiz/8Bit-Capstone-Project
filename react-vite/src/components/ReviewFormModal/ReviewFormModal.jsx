@@ -40,17 +40,11 @@ const ReviewForm = ({ listingId }) => {
 				comment,
 			};
 
-			const result = await dispatch(fetchCreateReview(listingId, formData));
+			await dispatch(fetchCreateReview(listingId, formData));
 
-			// Check for errors in the response
-			if (result.errors) {
-				console.log('Server Errors:', result.errors);
-			} else {
-				// Reset form fields if successful
-				closeModal();
-				setRating(0);
-				setComment('');
-			}
+			closeModal();
+			setRating(0);
+			setComment('');
 		}
 	};
 

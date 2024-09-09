@@ -16,6 +16,7 @@ Built with **React** and powered by **Vite** for lightning-fast performance, 8Bi
 - [Technologies Used](#technologies-used)
 - [Setup](#setup)
 - [Screenshots](#screenshots)
+- [Endpoints](#endpoints)
 - [Contact](#contact)
 
 ---
@@ -168,6 +169,59 @@ To set up and run the project locally, follow these steps:
 ### Wishlist
 
   <img src="react-vite/public/assets/wishlist.png">
+
+## Endpoints
+
+### Listings
+
+| Request                                    | Purpose                                                                            | Return Value                                                                                                  |
+| ------------------------------------------ | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| **GET** `/api/listings/`                   | Retrieves all listings.                                                            | `[ { 'id': INT, 'user_id': INT, 'title': STRING, 'description': STRING, ... }, ... ]`                         |
+| **GET** `/api/listings/user/<int:user_id>` | Retrieves all listings created by a specific user.                                 | `{ 'listings': [ { 'id': INT, 'user_id': INT, 'title': STRING, 'description': STRING, ... }, ... ] }`         |
+| **GET** `/api/listings/<int:id>`           | Retrieves details of a single listing by its ID.                                   | `{ 'id': INT, 'user_id': INT, 'title': STRING, 'description': STRING, 'price': FLOAT, 'quantity': INT, ... }` |
+| **POST** `/api/listings/new`               | Creates a new listing. Requires authentication.                                    | `{ 'id': INT, 'user_id': INT, 'title': STRING, 'description': STRING, 'price': FLOAT, 'quantity': INT, ... }` |
+| **PUT** `/api/listings/<int:id>/edit`      | Updates an existing listing. Requires authentication and ownership of the listing. | `{ 'id': INT, 'user_id': INT, 'title': STRING, 'description': STRING, 'price': FLOAT, 'quantity': INT, ... }` |
+| **DELETE** `/api/listings/<int:id>`        | Deletes an existing listing. Requires authentication and ownership of the listing. | `{ 'message': 'Listing deleted successfully' }`                                                               |
+
+---
+
+### Reviews
+
+| Request                                   | Purpose                                                                          | Return Value                                                                                                      |
+| ----------------------------------------- | -------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| **POST** `/api/reviews/<int:listing_id>`  | Creates a review for a specific listing. Requires authentication.                | `{ 'id': INT, 'user_id': INT, 'listing_id': INT, 'rating': INT, 'comment': STRING, ... }`                         |
+| **GET** `/api/reviews/<int:listing_id>`   | Retrieves all reviews for a specific listing.                                    | `{ 'reviews': [ { 'id': INT, 'user_id': INT, 'listing_id': INT, 'rating': INT, 'comment': STRING, ... }, ... ] }` |
+| **PUT** `/api/reviews/<int:review_id>`    | Updates an existing review. Requires authentication and ownership of the review. | `{ 'id': INT, 'user_id': INT, 'listing_id': INT, 'rating': INT, 'comment': STRING, ... }`                         |
+| **GET** `/api/reviews/user/<int:user_id>` | Retrieves all reviews created by a specific user.                                | `{ 'reviews': [ { 'id': INT, 'user_id': INT, 'listing_id': INT, 'rating': INT, 'comment': STRING, ... }, ... ] }` |
+| **DELETE** `/api/reviews/<int:review_id>` | Deletes an existing review. Requires authentication and ownership of the review. | `{ 'message': 'Review deleted' }`                                                                                 |
+
+---
+
+### Shopping Cart
+
+| Request                               | Purpose                                                                               | Return Value                                                                                        |
+| ------------------------------------- | ------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| **GET** `/api/carts/<int:id>`         | Retrieves the shopping cart for a specific user. If no cart exists, it creates one.   | `{ 'id': INT, 'user_id': INT, 'cart_items': [ { 'listing_id': INT, 'quantity': INT, ... }, ... ] }` |
+| **POST** `/api/carts/add`             | Adds an item to the user's cart. If the item already exists, it updates the quantity. | `{ 'id': INT, 'user_id': INT, 'cart_items': [ { 'listing_id': INT, 'quantity': INT, ... }, ... ] }` |
+| **PUT** `/api/carts/<int:item_id>`    | Updates the quantity of a specific cart item. Requires authentication and ownership.  | `{ 'id': INT, 'listing_id': INT, 'quantity': INT, ... }`                                            |
+| **DELETE** `/api/carts/<int:item_id>` | Removes an item from the cart. Requires authentication and ownership.                 | `{ 'message': 'Item removed from cart' }`                                                           |
+| **DELETE** `/api/carts/clear`         | Clears all items from the user's cart. Requires authentication.                       | `{ 'message': 'Cart cleared' }`                                                                     |
+
+---
+
+### Wishlist
+
+| Request                                          | Purpose                                                                   | Return Value                                                     |
+| ------------------------------------------------ | ------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| **GET** `/api/wishlists/<int:user_id>`           | Retrieves the wishlist for a specific user. Requires authentication.      | `[ { 'id': INT, 'user_id': INT, 'listing_id': INT, ... }, ... ]` |
+| **POST** `/api/wishlists/add`                    | Adds a new item to the authenticated user's wishlist.                     | `{ 'id': INT, 'user_id': INT, 'listing_id': INT, ... }`          |
+| **DELETE** `/api/wishlists/<int:item_id>/delete` | Removes an item from the wishlist. Requires authentication and ownership. | `{ 'id': INT, 'message': 'Item removed from wishlist' }`         |
+
+---
+
+This table covers all routes for Listings, Reviews, Shopping Cart, and Wishlist with their corresponding purpose and return values. You can also view the wiki api docs for further information.
+
+## [Wiki Api Docs](#https://github.com/Haydengalyeanbiz/8Bit-Capstone-Project/wiki/API-routes)
 
 ## Contact
 
