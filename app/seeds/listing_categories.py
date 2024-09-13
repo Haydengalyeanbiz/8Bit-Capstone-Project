@@ -17,7 +17,7 @@ def seed_listing_categories():
         {'listing_id': 6, 'category_id': 6},
         {'listing_id': 6, 'category_id': 5},
         {'listing_id': 7, 'category_id': 5},
-        {'listing_id': 7, 'category_id': 7},
+        {'listing_id': 7, 'category_id': 6},
         {'listing_id': 8, 'category_id': 5},
         {'listing_id': 8, 'category_id': 6},
         {'listing_id': 9, 'category_id': 5},
@@ -42,7 +42,7 @@ def seed_listing_categories():
         {'listing_id': 19, 'category_id': 5},
         {'listing_id': 19, 'category_id': 6},
         {'listing_id': 20, 'category_id': 1},
-        {'listing_id': 20, 'category_id': 6},
+        {'listing_id': 20, 'category_id': 3},
         # Add more as needed
     ]
 
