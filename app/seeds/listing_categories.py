@@ -42,7 +42,7 @@ def seed_listing_categories():
         {'listing_id': 19, 'category_id': 5},
         {'listing_id': 19, 'category_id': 6},
         {'listing_id': 20, 'category_id': 1},
-        {'listing_id': 20, 'category_id': 3},
+        {'listing_id': 20, 'category_id': 6},
         # Add more as needed
     ]
 
